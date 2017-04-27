@@ -107,4 +107,9 @@ public extension String {
 
         return newString
     }
+
+    /// Returns URL with String as the path.
+    public var pathURL: URL {
+        return URL(fileURLWithPath: self)
+    }
 }
