@@ -15,9 +15,6 @@ extension Array {
     /// - Parameter newElements: Elements appended to the returned array.
     /// - Returns: Array with the elements appended.
     public func appending<S>(contentsOf newElements: S) -> Array<Element> where S : Sequence, S.Iterator.Element == Element {
-        var array = self
-        array.append(contentsOf: newElements)
-
-        return array
+        return self + newElements
     }
 }
