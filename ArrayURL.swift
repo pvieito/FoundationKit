@@ -25,4 +25,19 @@ extension Array where Element == URL {
             return nil
         }
     }
+
+    /// Returns the URL paths ordered by their last path component.
+    public var alphabeticallyOrdered: [URL] {
+        return self.sorted { $0.0.lastPathComponent < $0.1.lastPathComponent }
+    }
+
+    /// Return the path of each URL in the array.
+    public var paths: [String] {
+        return self.map({ $0.path })
+    }
+
+    /// Return the last path component of each URL in the array.
+    public var lastPathComponents: [String] {
+        return self.map({ $0.lastPathComponent })
+    }
 }
