@@ -38,7 +38,7 @@ public extension String {
     }
     #endif
 
-    /// Returns an array of components of the string with a maximum lenght each.
+    /// Returns an array of components of the string with a maximum length each.
     ///
     /// - Parameter withMaximumLength: Maximum length of each component.
     /// - Returns: Array of string components.
