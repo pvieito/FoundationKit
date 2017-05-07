@@ -8,7 +8,7 @@
 
 import Foundation
 
-@available(watchOSApplicationExtension 10.0, *)
+@available(watchOSApplicationExtension 3.0, *)
 @available(iOSApplicationExtension 10.0, *)
 @available(tvOSApplicationExtension 10.0, *)
 @available(macOSApplicationExtension 10.12, *)
