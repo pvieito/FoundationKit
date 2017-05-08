@@ -23,5 +23,10 @@ xcuserdata/
 *.xccheckout
 *.xcscmblueprint
 
+## Swift Package Manager
+Packages/
+Package.pins
+.build/
+
 /Assets
 /Extra
