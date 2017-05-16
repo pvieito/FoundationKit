@@ -1,0 +1,17 @@
+//
+//  Error.swift
+//  CommonKit
+//
+//  Created by Pedro José Pereira Vieito on 14/4/17.
+//  Copyright © 2017 Pedro José Pereira Vieito. All rights reserved.
+//
+
+import Foundation
+
+extension LocalizedError {
+
+    /// NSError with localized description from a Swift native LocalizedError.
+    public var cocoaError: NSError {
+        return NSError(domain: self.localizedDescription, code: -1, userInfo: [NSLocalizedDescriptionKey: self.localizedDescription])
+    }
+}
