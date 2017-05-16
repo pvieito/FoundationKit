@@ -36,6 +36,19 @@ public extension String {
 
         return !(regex?.matches(in: self, options: [], range: range) ?? []).isEmpty
     }
+
+    /// Resulting matches of a Regular Expression applied to the String.
+    ///
+    /// - Parameters:
+    ///   - pattern: Regular Expression to match.
+    /// - Returns: The resulting matches.
+    public func matchesForRegularExpression(pattern: String) -> [NSTextCheckingResult] {
+        let range = NSMakeRange(0, self.characters.count)
+
+        let regex = try? NSRegularExpression(pattern: pattern, options: .caseInsensitive)
+
+        return regex?.matches(in: self, options: [], range: range) ?? []
+    }
     #endif
 
     /// Returns an array of components of the string with a maximum length each.
