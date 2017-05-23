@@ -63,7 +63,7 @@ public extension String {
             return stride(from: 0, to: self.characters.count, by: withMaximumLength).map { i -> String in
                 let startIndex = self.index(self.startIndex, offsetBy: i)
                 let endIndex = self.index(startIndex, offsetBy: withMaximumLength, limitedBy: self.endIndex) ?? self.endIndex
-                return self[startIndex..<endIndex]
+                return String(self[startIndex..<endIndex])
             }
         }
     }

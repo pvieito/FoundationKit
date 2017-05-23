@@ -28,7 +28,7 @@ extension Array where Element == URL {
 
     /// Returns the URL paths ordered by their last path component.
     public var alphabeticallyOrdered: [URL] {
-        return self.sorted { $0.0.lastPathComponent < $0.1.lastPathComponent }
+        return self.sorted { $0.lastPathComponent < $1.lastPathComponent }
     }
 
     /// Return the path of each URL in the array.
