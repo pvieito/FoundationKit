@@ -13,7 +13,7 @@ extension UserDefaults {
     #if os(macOS)
     /// Return the User Defaults of a Sandboxed app with the specified container identifier.
     ///
-    /// Note: The returned User Defaults will be invalid in a Sanboxed environment.
+    /// - Note: The returned User Defaults will be invalid in a Sanboxed environment.
     public convenience init?(containerIdentifier: String) {
 
         guard let libraryURL = try? FileManager.default.url(for: .libraryDirectory, in: .userDomainMask, appropriateFor: nil, create: false) else {

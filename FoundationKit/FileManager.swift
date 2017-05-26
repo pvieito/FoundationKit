@@ -13,11 +13,11 @@ extension FileManager {
     #if os(macOS)
     /// Returns the predicted ubiquity container of the specified identifier.
     ///
-    /// Note: The returned container will be invalid in a Sanboxed environment.
+    /// - Note: The returned container will be invalid in a Sanboxed environment.
     ///
     /// - Parameter identifier: Identifier of the ubiquity container.
     /// - Returns: Predicted container URL.
-    public func url(forUnentitledUbiquityContainerIdentifier identifier: String) -> URL? {
+    public func predictedURL(forUbiquityContainerIdentifier identifier: String) -> URL? {
 
         guard let libraryURL = try? FileManager.default.url(for: .libraryDirectory, in: .userDomainMask, appropriateFor: nil, create: false) else {
             return nil
