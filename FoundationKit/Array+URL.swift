@@ -15,6 +15,9 @@ extension Array where Element == URL {
 
         let stringPaths = self.map({ $0.path })
 
+        if self.count == 1, let url = self.first {
+            return url.hasDirectoryPath ? url : url.deletingLastPathComponent()
+        }
         if var commonPath = stringPaths.reduce(stringPaths.max(), { $0?.commonPrefix(with: $1) }) {
             if commonPath.characters.last != "/" {
                 commonPath = commonPath.components(separatedBy: "/").dropLast().joined(separator: "/")
