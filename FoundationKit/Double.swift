@@ -1,6 +1,6 @@
 //
 //  Double.swift
-//  CommonKit
+//  FoundationKit
 //
 //  Created by Pedro José Pereira Vieito on 12/3/17.
 //  Copyright © 2017 Pedro José Pereira Vieito. All rights reserved.
