@@ -7,17 +7,55 @@
 //
 
 import Foundation
+import CoreFoundation
 
 extension URL {
 
-    #if os(macOS)
-    /// AppleScript style path of the URL.
-    public var appleScriptPath: String? {
+    /// Path Styles for a file URL.
+    public enum PathStyle: Int, CustomStringConvertible {
+        case posix = 0
+        case hfs
+        case windows
 
-        let appleScript = NSAppleScript(source: "set pathString to \"\(self.path)\"\nset pathURL to POSIX file pathString\nreturn pathURL as string")
-        let response = appleScript?.executeAndReturnError(nil)
+        fileprivate var cfPathStyle: CFURLPathStyle? {
+            return CFURLPathStyle(rawValue: self.rawValue)
+        }
 
-        return response?.stringValue
+        public var description: String {
+            switch self {
+            case .posix:
+                return "POSIX"
+            case .hfs:
+                return "HFS"
+            case .windows:
+                return "Windows"
+            }
+        }
     }
-    #endif
+
+    /// Returns the path of a given URL.
+    /// 
+    /// This function returns the URL's path as a file system path for a given path style.
+    ///
+    /// - Parameter style: The operating system path style to be used to create the path.
+    /// - Returns: The path in the specified style.
+    public func path(style: PathStyle) -> String? {
+
+        guard let cfPathStyle = style.cfPathStyle else {
+            return nil
+        }
+
+        guard self.isFileURL else {
+            return nil
+        }
+
+        guard let unmanagedFileURL = CFURLCreateFilePathURL(kCFAllocatorDefault, self as CFURL, nil) else {
+            return nil
+        }
+
+        let fileURL = unmanagedFileURL.takeRetainedValue()
+        let path = CFURLCopyFileSystemPath(fileURL, cfPathStyle)
+
+        return path as String?
+    }
 }
