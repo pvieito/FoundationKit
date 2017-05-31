@@ -45,10 +45,10 @@ public extension String {
         return nil
     }
 
-    /// Returns the a Camel Case string converted to Title Case.
+    /// Returns a Camel Case string converted to Title Case.
     ///
     /// For example it will be "Camel Case" for "camelCase".
-    public var decamelizedString: String {
+    public var decamelized: String {
         var inputString: String = self
 
         var outputString: String = ""
