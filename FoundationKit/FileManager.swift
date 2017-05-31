@@ -10,21 +10,25 @@ import Foundation
 
 extension FileManager {
 
-    /// Returns the predicted ubiquity container of the specified identifier.
-    ///
-    /// - Note: The returned container will be invalid in a Sanboxed environment.
+    /// Returns the ubiquity container of an external app with the specified identifier.
     ///
     /// - Parameter identifier: Identifier of the ubiquity container.
-    /// - Returns: Predicted container URL.
+    /// - Returns: Container URL.
     @available(macOSApplicationExtension 10.9, *)
-    public func predictedURL(forUbiquityContainerIdentifier identifier: String) -> URL? {
+    public func url(forExternalUbiquityContainerIdentifier identifier: String) -> URL? {
 
         guard let libraryURL = try? FileManager.default.url(for: .libraryDirectory, in: .userDomainMask, appropriateFor: nil, create: false) else {
             return nil
         }
 
         let containerName = identifier.replacingOccurrences(of: ".", with: "~")
-        return libraryURL.appendingPathComponent("Mobile Documents").appendingPathComponent(containerName)
+        let containerURL = libraryURL.appendingPathComponent("Mobile Documents").appendingPathComponent(containerName)
+
+        guard FileManager.default.fileExists(atPath: containerURL.path) else {
+            return nil
+        }
+
+        return containerURL
     }
 
     /// Real URL to the user home directory, even in a Sanboxed environment.
@@ -34,6 +38,12 @@ extension FileManager {
             return nil
         }
 
-        return URL(fileURLWithPath: String(cString: userPath))
+        let homeDirectory = URL(fileURLWithPath: String(cString: userPath))
+
+        guard FileManager.default.fileExists(atPath: homeDirectory.path) else {
+            return nil
+        }
+
+        return homeDirectory
     }
 }
