@@ -10,10 +10,10 @@ import Foundation
 
 extension UserDefaults {
 
-    #if os(macOS)
     /// Return the User Defaults of a Sandboxed app with the specified container identifier.
     ///
     /// - Note: The returned User Defaults will be invalid in a Sanboxed environment.
+    @available(macOSApplicationExtension 10.9, *)
     public convenience init?(containerIdentifier: String) {
 
         guard let libraryURL = try? FileManager.default.url(for: .libraryDirectory, in: .userDomainMask, appropriateFor: nil, create: false) else {
@@ -23,5 +23,4 @@ extension UserDefaults {
         let suiteName = libraryURL.appendingPathComponent("Containers").appendingPathComponent(containerIdentifier).appendingPathComponent("Data/Library/Preferences").appendingPathComponent(containerIdentifier).path
         self.init(suiteName: suiteName)
     }
-    #endif
 }

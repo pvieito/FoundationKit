@@ -10,47 +10,6 @@ import Foundation
 
 public extension String {
 
-    #if !os(Linux)
-    /// Returns the String with the subsitutions applied.
-    ///
-    /// - Parameters:
-    ///   - pattern: Regular Expression to match.
-    ///   - sustitution: Substitution to apply.
-    /// - Returns: String with the Regular Expression subsitution applied.
-    public func applyingRegularExpression(pattern: String, sustitution: String) -> String {
-        let range = NSMakeRange(0, self.characters.count)
-        let regex = try? NSRegularExpression(pattern: pattern, options: .caseInsensitive)
-
-        return regex?.stringByReplacingMatches(in: self, options: [], range: range, withTemplate: sustitution) ?? self
-    }
-
-    /// True if the string has some Regular Expression match.
-    ///
-    /// - Parameters:
-    ///   - pattern: Regular Expression to match.
-    /// - Returns: A boolean indicating if there is some match.
-    public func matchesRegularExpression(pattern: String) -> Bool {
-        let range = NSMakeRange(0, self.characters.count)
-
-        let regex = try? NSRegularExpression(pattern: pattern, options: .caseInsensitive)
-
-        return !(regex?.matches(in: self, options: [], range: range) ?? []).isEmpty
-    }
-
-    /// Resulting matches of a Regular Expression applied to the String.
-    ///
-    /// - Parameters:
-    ///   - pattern: Regular Expression to match.
-    /// - Returns: The resulting matches.
-    public func matchesForRegularExpression(pattern: String) -> [NSTextCheckingResult] {
-        let range = NSMakeRange(0, self.characters.count)
-
-        let regex = try? NSRegularExpression(pattern: pattern, options: .caseInsensitive)
-
-        return regex?.matches(in: self, options: [], range: range) ?? []
-    }
-    #endif
-
     /// Returns an array of components of the string with a maximum length each.
     ///
     /// - Parameter withMaximumLength: Maximum length of each component.
@@ -92,7 +51,7 @@ public extension String {
     public var decamelizedString: String {
         var inputString: String = self
 
-        var newString: String = ""
+        var outputString: String = ""
 
         if let firstUnicodeScalar = self.unicodeScalars.first,
             CharacterSet.uppercaseLetters.contains(firstUnicodeScalar),
@@ -104,21 +63,21 @@ public extension String {
         let upperCase = CharacterSet.uppercaseLetters
         for scalar in inputString.unicodeScalars {
             if upperCase.contains(scalar) {
-                newString.append(" ")
+                outputString.append(" ")
             }
 
             let character = Character(scalar)
-            newString.append(character)
+            outputString.append(character)
         }
 
-        if let firstUnicodeScalar = newString.unicodeScalars.first,
+        if let firstUnicodeScalar = outputString.unicodeScalars.first,
             CharacterSet.lowercaseLetters.contains(firstUnicodeScalar),
-            let firstCharacter = newString.characters.first {
-            newString.remove(at: newString.startIndex)
-            newString.insert(contentsOf: String(firstCharacter).uppercased().characters, at: inputString.startIndex)
+            let firstCharacter = outputString.characters.first {
+            outputString.remove(at: outputString.startIndex)
+            outputString.insert(contentsOf: String(firstCharacter).uppercased().characters, at: inputString.startIndex)
         }
 
-        return newString
+        return outputString
     }
 
     /// Returns URL with String as the path.
