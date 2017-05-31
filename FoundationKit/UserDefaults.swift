@@ -13,7 +13,9 @@ extension UserDefaults {
     /// Return the User Defaults of a Sandboxed app with the specified container identifier.
     ///
     /// - Note: The returned User Defaults will be invalid in a Sanboxed environment.
-    @available(macOSApplicationExtension 10.9, *)
+    @available(iOS, unavailable)
+    @available(watchOS, unavailable)
+    @available(tvOS, unavailable)
     public convenience init?(containerIdentifier: String) {
 
         guard let libraryURL = try? FileManager.default.url(for: .libraryDirectory, in: .userDomainMask, appropriateFor: nil, create: false) else {

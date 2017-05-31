@@ -8,10 +8,10 @@
 
 import Foundation
 
-@available(watchOSApplicationExtension 3.0, *)
-@available(iOSApplicationExtension 10.0, *)
-@available(tvOSApplicationExtension 10.0, *)
-@available(macOSApplicationExtension 10.12, *)
+@available(watchOS 3.0, *)
+@available(iOS 10.0, *)
+@available(tvOS 10.0, *)
+@available(macOS 10.12, *)
 extension MeasurementFormatter {
 
     public func valueUnitStrings<UnitType>(from measurement: Measurement<UnitType>) -> (value: String, unit: String) {
