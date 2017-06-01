@@ -12,6 +12,8 @@ extension FileManager {
 
     /// Returns the ubiquity container of an external app with the specified identifier.
     ///
+    /// - Note: Not available in a Sanboxed environment.
+    ///
     /// - Parameter identifier: Identifier of the ubiquity container.
     /// - Returns: Container URL.
     @available(iOS, unavailable)

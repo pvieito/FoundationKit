@@ -12,7 +12,7 @@ extension UserDefaults {
 
     /// Return the User Defaults of a Sandboxed app with the specified container identifier.
     ///
-    /// - Note: The returned User Defaults will be invalid in a Sanboxed environment.
+    /// - Note: Not available in a Sanboxed environment.
     @available(iOS, unavailable)
     @available(watchOS, unavailable)
     @available(tvOS, unavailable)
@@ -22,7 +22,12 @@ extension UserDefaults {
             return nil
         }
 
-        let suiteName = libraryURL.appendingPathComponent("Containers").appendingPathComponent(containerIdentifier).appendingPathComponent("Data/Library/Preferences").appendingPathComponent(containerIdentifier).path
-        self.init(suiteName: suiteName)
+        let suitePreferences = libraryURL.appendingPathComponent("Containers").appendingPathComponent(containerIdentifier).appendingPathComponent("Data/Library/Preferences").appendingPathComponent(containerIdentifier).appendingPathExtension("plist")
+
+        guard FileManager.default.fileExists(atPath: suitePreferences.path) else {
+            return nil
+        }
+
+        self.init(suiteName: suitePreferences.path)
     }
 }
