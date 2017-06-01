@@ -10,6 +10,62 @@ import Foundation
 
 extension FileManager {
 
+    /// URL to the library of Ubiquity Containers for the user.
+    @available(iOS, unavailable)
+    @available(watchOS, unavailable)
+    @available(tvOS, unavailable)
+    public var ubiquityContainersLibrary: URL? {
+
+        guard let libraryURL = try? FileManager.default.url(for: .libraryDirectory, in: .userDomainMask, appropriateFor: nil, create: false) else {
+            return nil
+        }
+
+        let ubiquityContainersLibrary = libraryURL.appendingPathComponent("Mobile Documents")
+
+        guard FileManager.default.fileExists(atPath: ubiquityContainersLibrary.path) else {
+            return nil
+        }
+
+        return ubiquityContainersLibrary
+    }
+
+    /// List of available Ubiquity Containers.
+    @available(iOS, unavailable)
+    @available(watchOS, unavailable)
+    @available(tvOS, unavailable)
+    public var availableUbiquityContainers: [URL] {
+
+        guard let ubiquityContainersLibrary = ubiquityContainersLibrary else {
+            return []
+        }
+
+        guard let contents = try? FileManager.default.contentsOfDirectory(atPath: ubiquityContainersLibrary.path) else {
+            return []
+        }
+
+        var availableUbiquityContainers: [URL] = []
+
+        for item in contents {
+            let itemURL = ubiquityContainersLibrary.appendingPathComponent(item)
+            var isDirectory: ObjCBool = false
+            FileManager.default.fileExists(atPath: itemURL.path, isDirectory: &isDirectory)
+
+            if isDirectory.boolValue {
+                availableUbiquityContainers.append(itemURL)
+            }
+        }
+        
+        return availableUbiquityContainers
+    }
+
+    /// List of identifiers of the available Ubiquity Containers.
+    @available(iOS, unavailable)
+    @available(watchOS, unavailable)
+    @available(tvOS, unavailable)
+    public var availableUbiquityContainersIdentifiers: [String] {
+        return self.availableUbiquityContainers.map({ $0.lastPathComponent.replacingOccurrences(of: "~", with: ".") })
+    }
+
     /// Returns the ubiquity container of an external app with the specified identifier.
     ///
     /// - Note: Not available in a Sanboxed environment.
@@ -21,12 +77,12 @@ extension FileManager {
     @available(tvOS, unavailable)
     public func url(forExternalUbiquityContainerIdentifier identifier: String) -> URL? {
 
-        guard let libraryURL = try? FileManager.default.url(for: .libraryDirectory, in: .userDomainMask, appropriateFor: nil, create: false) else {
+        guard let ubiquityContainersLibrary = self.ubiquityContainersLibrary else {
             return nil
         }
 
         let containerName = identifier.replacingOccurrences(of: ".", with: "~")
-        let containerURL = libraryURL.appendingPathComponent("Mobile Documents").appendingPathComponent(containerName)
+        let containerURL = ubiquityContainersLibrary.appendingPathComponent(containerName)
 
         guard FileManager.default.fileExists(atPath: containerURL.path) else {
             return nil
