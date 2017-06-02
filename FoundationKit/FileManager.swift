@@ -82,7 +82,7 @@ extension FileManager {
         }
 
         let containerName = identifier.replacingOccurrences(of: ".", with: "~")
-        let containerURL = ubiquityContainersLibrary.appendingPathComponent(containerName)
+        let containerURL = ubiquityContainersLibrary.appendingPathComponent(containerName).resolvingSymlinksInPath()
 
         guard FileManager.default.fileExists(atPath: containerURL.path) else {
             return nil
