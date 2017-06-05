@@ -11,9 +11,6 @@ import Foundation
 extension FileManager {
 
     /// URL to the library of Ubiquity Containers for the user.
-    @available(iOS, unavailable)
-    @available(watchOS, unavailable)
-    @available(tvOS, unavailable)
     public var ubiquityContainersLibrary: URL? {
 
         guard let libraryURL = try? FileManager.default.url(for: .libraryDirectory, in: .userDomainMask, appropriateFor: nil, create: false) else {
@@ -30,12 +27,9 @@ extension FileManager {
     }
 
     /// List of available Ubiquity Containers.
-    @available(iOS, unavailable)
-    @available(watchOS, unavailable)
-    @available(tvOS, unavailable)
     public var availableUbiquityContainers: [URL] {
 
-        guard let ubiquityContainersLibrary = ubiquityContainersLibrary else {
+        guard let ubiquityContainersLibrary = self.ubiquityContainersLibrary else {
             return []
         }
 
@@ -59,9 +53,6 @@ extension FileManager {
     }
 
     /// List of identifiers of the available Ubiquity Containers.
-    @available(iOS, unavailable)
-    @available(watchOS, unavailable)
-    @available(tvOS, unavailable)
     public var availableUbiquityContainersIdentifiers: [String] {
         return self.availableUbiquityContainers.map({ $0.lastPathComponent.replacingOccurrences(of: "~", with: ".") })
     }
@@ -72,9 +63,6 @@ extension FileManager {
     ///
     /// - Parameter identifier: Identifier of the ubiquity container.
     /// - Returns: Container URL.
-    @available(iOS, unavailable)
-    @available(watchOS, unavailable)
-    @available(tvOS, unavailable)
     public func url(forExternalUbiquityContainerIdentifier identifier: String) -> URL? {
 
         guard let ubiquityContainersLibrary = self.ubiquityContainersLibrary else {
@@ -92,11 +80,8 @@ extension FileManager {
     }
 
     /// Real URL to the user home directory, even in a Sanboxed environment.
-    @available(iOS, unavailable)
-    @available(watchOS, unavailable)
-    @available(tvOS, unavailable)
     public var unsandboxedHomeDirectory: URL? {
-        guard let userPath = getpwuid(getuid()).pointee.pw_dir else {
+        guard let userPath = getpwuid(getuid())?.pointee.pw_dir else {
             return nil
         }
 
