@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension LocalizedError {
+extension Error {
 
     /// NSError with localized description from a Swift native LocalizedError.
     public var cocoaError: NSError {
