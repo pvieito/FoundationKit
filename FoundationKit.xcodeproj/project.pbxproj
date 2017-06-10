@@ -16,6 +16,19 @@
 		AA4F54CD1ED8BCD7000C1333 /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4F54CC1ED8BCD7000C1333 /* FileManager.swift */; };
 		AA50B63B1EB2240C00F5F6F4 /* Array+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA50B63A1EB2240C00F5F6F4 /* Array+String.swift */; };
 		AA7F02081EE78B5300597173 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7F02071EE78B5300597173 /* Data.swift */; };
+		AA912C221EE96D17002DD639 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABBD9A71E5761D000AE5B46 /* String.swift */; };
+		AA912C231EE96D17002DD639 /* String+RegularExpressions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA22A2F91EDED314007A3F13 /* String+RegularExpressions.swift */; };
+		AA912C241EE96D17002DD639 /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB638781EBBDD28008365EB /* URL.swift */; };
+		AA912C251EE96D17002DD639 /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAEF0C141E757A3500CF4C6A /* Double.swift */; };
+		AA912C261EE96D17002DD639 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0D3D671EA033B700FB7EBD /* Error.swift */; };
+		AA912C271EE96D17002DD639 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0D3D691EA039FD00FB7EBD /* Array.swift */; };
+		AA912C281EE96D17002DD639 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7F02071EE78B5300597173 /* Data.swift */; };
+		AA912C291EE96D17002DD639 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4F54791ED8A06D000C1333 /* UserDefaults.swift */; };
+		AA912C2A1EE96D17002DD639 /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4F54CC1ED8BCD7000C1333 /* FileManager.swift */; };
+		AA912C2B1EE96D17002DD639 /* Array+URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB894A21EB156FA00F155B0 /* Array+URL.swift */; };
+		AA912C2C1EE96D17002DD639 /* Array+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA50B63A1EB2240C00F5F6F4 /* Array+String.swift */; };
+		AA912C2D1EE96D17002DD639 /* CommandLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2565A41E57AA7C0037CBED /* CommandLine.swift */; };
+		AA912C2E1EE96D17002DD639 /* MeasurementFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA03AB11EBD23200005BF72 /* MeasurementFormatter.swift */; };
 		AAA03AB21EBD23200005BF72 /* MeasurementFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA03AB11EBD23200005BF72 /* MeasurementFormatter.swift */; };
 		AAB638791EBBDD28008365EB /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB638781EBBDD28008365EB /* URL.swift */; };
 		AAB894A31EB156FA00F155B0 /* Array+URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB894A21EB156FA00F155B0 /* Array+URL.swift */; };
@@ -32,6 +45,7 @@
 		AA4F54CC1ED8BCD7000C1333 /* FileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
 		AA50B63A1EB2240C00F5F6F4 /* Array+String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+String.swift"; sourceTree = "<group>"; };
 		AA7F02071EE78B5300597173 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
+		AA912C1A1EE96CF2002DD639 /* FoundationKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FoundationKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAA03AB11EBD23200005BF72 /* MeasurementFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeasurementFormatter.swift; sourceTree = "<group>"; };
 		AAB638781EBBDD28008365EB /* URL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
 		AAB894A21EB156FA00F155B0 /* Array+URL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+URL.swift"; sourceTree = "<group>"; };
@@ -43,6 +57,13 @@
 
 /* Begin PBXFrameworksBuildPhase section */
 		AA2563C71E57639E0037CBED /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AA912C161EE96CF2002DD639 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -65,6 +86,7 @@
 			isa = PBXGroup;
 			children = (
 				AA2563CF1E57639E0037CBED /* FoundationKit.framework */,
+				AA912C1A1EE96CF2002DD639 /* FoundationKit.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -108,6 +130,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		AA912C171EE96CF2002DD639 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
@@ -129,6 +158,24 @@
 			productReference = AA2563CF1E57639E0037CBED /* FoundationKit.framework */;
 			productType = "com.apple.product-type.framework";
 		};
+		AA912C191EE96CF2002DD639 /* FoundationKitWatch */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AA912C211EE96CF2002DD639 /* Build configuration list for PBXNativeTarget "FoundationKitWatch" */;
+			buildPhases = (
+				AA912C151EE96CF2002DD639 /* Sources */,
+				AA912C161EE96CF2002DD639 /* Frameworks */,
+				AA912C171EE96CF2002DD639 /* Headers */,
+				AA912C181EE96CF2002DD639 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FoundationKitWatch;
+			productName = FoundationKitWatch;
+			productReference = AA912C1A1EE96CF2002DD639 /* FoundationKit.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -141,7 +188,12 @@
 					AA2563C41E57639E0037CBED = {
 						DevelopmentTeam = T7MC635YG5;
 						LastSwiftMigration = 0900;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
+					};
+					AA912C191EE96CF2002DD639 = {
+						CreatedOnToolsVersion = 9.0;
+						DevelopmentTeam = T7MC635YG5;
+						ProvisioningStyle = Manual;
 					};
 				};
 			};
@@ -158,12 +210,20 @@
 			projectRoot = "";
 			targets = (
 				AA2563C41E57639E0037CBED /* FoundationKit */,
+				AA912C191EE96CF2002DD639 /* FoundationKitWatch */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		AA2563C91E57639E0037CBED /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AA912C181EE96CF2002DD639 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -193,6 +253,26 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		AA912C151EE96CF2002DD639 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA912C281EE96D17002DD639 /* Data.swift in Sources */,
+				AA912C221EE96D17002DD639 /* String.swift in Sources */,
+				AA912C231EE96D17002DD639 /* String+RegularExpressions.swift in Sources */,
+				AA912C2D1EE96D17002DD639 /* CommandLine.swift in Sources */,
+				AA912C251EE96D17002DD639 /* Double.swift in Sources */,
+				AA912C291EE96D17002DD639 /* UserDefaults.swift in Sources */,
+				AA912C2B1EE96D17002DD639 /* Array+URL.swift in Sources */,
+				AA912C271EE96D17002DD639 /* Array.swift in Sources */,
+				AA912C2A1EE96D17002DD639 /* FileManager.swift in Sources */,
+				AA912C261EE96D17002DD639 /* Error.swift in Sources */,
+				AA912C241EE96D17002DD639 /* URL.swift in Sources */,
+				AA912C2E1EE96D17002DD639 /* MeasurementFormatter.swift in Sources */,
+				AA912C2C1EE96D17002DD639 /* Array+String.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
@@ -200,9 +280,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = T7MC635YG5;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 2;
 				FRAMEWORK_VERSION = A;
@@ -211,8 +291,11 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.pvieito.FoundationKit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator appletvos appletvsimulator";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2,3";
+				VALID_ARCHS = "i386 x86_64 arm64 armv7s armv7";
 			};
 			name = Debug;
 		};
@@ -220,9 +303,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = T7MC635YG5;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 2;
 				FRAMEWORK_VERSION = A;
@@ -231,7 +314,65 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.pvieito.FoundationKit;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator appletvos appletvsimulator";
 				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = "1,2,3";
+				VALID_ARCHS = "i386 x86_64 arm64 armv7s armv7";
+			};
+			name = Release;
+		};
+		AA912C1F1EE96CF2002DD639 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "$(SRCROOT)/FoundationKit/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.pvieito.FoundationKit;
+				PRODUCT_NAME = FoundationKit;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "watchsimulator watchos";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				VALID_ARCHS = armv7k;
+			};
+			name = Debug;
+		};
+		AA912C201EE96CF2002DD639 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "$(SRCROOT)/FoundationKit/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.pvieito.FoundationKit;
+				PRODUCT_NAME = FoundationKit;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SUPPORTED_PLATFORMS = "watchsimulator watchos";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = armv7k;
 			};
 			name = Release;
 		};
@@ -371,6 +512,15 @@
 			buildConfigurations = (
 				AA2563CD1E57639E0037CBED /* Debug */,
 				AA2563CE1E57639E0037CBED /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AA912C211EE96CF2002DD639 /* Build configuration list for PBXNativeTarget "FoundationKitWatch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA912C1F1EE96CF2002DD639 /* Debug */,
+				AA912C201EE96CF2002DD639 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
