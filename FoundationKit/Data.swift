@@ -70,7 +70,7 @@ extension Data {
     /// Initializes a Data struct with the specified number of random bytes.
     ///
     /// - Parameter count: Number of random bytes.
-    public init(randomBytes count: Int) {
+    public init(randomBytesCount count: Int) {
         let bytes = [UInt32](repeating: 0, count: count).map { _ in arc4random() }
         self.init(bytes: bytes, count: count)
     }
