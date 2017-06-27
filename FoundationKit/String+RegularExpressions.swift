@@ -19,6 +19,7 @@ public extension String {
     /// - Returns: String with the Regular Expression subsitution applied.
     public func applyingRegularExpression(pattern: String, sustitution: String) -> String {
         let range = NSMakeRange(0, self.characters.count)
+        
         let regex = try? NSRegularExpression(pattern: pattern, options: .caseInsensitive)
 
         return regex?.stringByReplacingMatches(in: self, options: [], range: range, withTemplate: sustitution) ?? self
