@@ -344,7 +344,7 @@
 				SUPPORTED_PLATFORMS = "watchsimulator watchos";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 4;
-				VALID_ARCHS = armv7k;
+				VALID_ARCHS = "armv7k i386";
 			};
 			name = Debug;
 		};
@@ -372,7 +372,7 @@
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 4;
 				VALIDATE_PRODUCT = YES;
-				VALID_ARCHS = armv7k;
+				VALID_ARCHS = "armv7k i386";
 			};
 			name = Release;
 		};
