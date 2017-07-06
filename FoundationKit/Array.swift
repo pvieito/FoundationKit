@@ -26,3 +26,20 @@ extension Array {
         return self + [newElement]
     }
 }
+
+extension Array where Element: Hashable {
+    
+    /// The most frequent element in the array.
+    public var frequencies: [Element: Int] {
+        return self.reduce([:], { (partialFrequencies, element) -> [Element: Int] in
+            var partialFrequencies = partialFrequencies
+            partialFrequencies[element] = (partialFrequencies[element] ?? 0) + 1
+            return partialFrequencies
+        })
+    }
+    
+    /// The most frequent element in the array.
+    public var mode: Element? {
+        return self.frequencies.max { $0.value < $1.value }?.key
+    }
+}
