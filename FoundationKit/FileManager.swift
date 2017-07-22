@@ -80,7 +80,7 @@ extension FileManager {
     }
 
     /// Real URL to the user home directory, even in a Sanboxed environment.
-    public var unsandboxedHomeDirectory: URL? {
+    public var realHomeDirectoryForCurrentUser: URL? {
         guard let userPath = getpwuid(getuid())?.pointee.pw_dir else {
             return nil
         }
@@ -92,5 +92,15 @@ extension FileManager {
         }
 
         return homeDirectory
+    }
+    
+    /// Returns the Library directory for the current user.
+    public var libraryDirectoryForCurrentUser: URL? {
+        
+        guard let libraryDirectory = try? FileManager.default.url(for: .libraryDirectory, in: .userDomainMask, appropriateFor: nil, create: false) else {
+            return nil
+        }
+        
+        return libraryDirectory
     }
 }
