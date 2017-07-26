@@ -12,16 +12,16 @@ public extension String {
 
     /// Returns an array of components of the string with a maximum length each.
     ///
-    /// - Parameter withMaximumLength: Maximum length of each component.
+    /// - Parameter length: Maximum length of each component.
     /// - Returns: Array of string components.
-    public func components(withMaximumLength: Int) -> [String] {
+    public func components(of length: Int) -> [String] {
         if self.characters.count == 0 {
             return [self]
         }
         else {
-            return stride(from: 0, to: self.characters.count, by: withMaximumLength).map { i -> String in
+            return stride(from: 0, to: self.characters.count, by: length).map { i -> String in
                 let startIndex = self.index(self.startIndex, offsetBy: i)
-                let endIndex = self.index(startIndex, offsetBy: withMaximumLength, limitedBy: self.endIndex) ?? self.endIndex
+                let endIndex = self.index(startIndex, offsetBy: length, limitedBy: self.endIndex) ?? self.endIndex
                 return String(self[startIndex..<endIndex])
             }
         }
@@ -29,10 +29,10 @@ public extension String {
 
     /// Returns the string abbreviated with a maximum length.
     ///
-    /// - Parameter withMaximumLength: Maximum length of the returned string.
+    /// - Parameter length: Maximum length of the returned string.
     /// - Returns: Abbreviated string.
-    public func abbreviated(withMaximumLength: Int) -> String {
-        let stringComponents = self.components(withMaximumLength: withMaximumLength)
+    public func abbreviated(to length: Int) -> String {
+        let stringComponents = self.components(of: length)
 
         return (stringComponents.count > 1 ? stringComponents.first?.appending("…") : stringComponents.first) ?? self
     }
