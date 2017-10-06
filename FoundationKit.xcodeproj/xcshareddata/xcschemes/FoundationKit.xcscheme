@@ -29,7 +29,26 @@
       language = ""
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "AAD31D241F883C8800C056DD"
+               BuildableName = "FoundationKitTests.xctest"
+               BlueprintName = "FoundationKitTests"
+               ReferencedContainer = "container:FoundationKit.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "AA2563C41E57639E0037CBED"
+            BuildableName = "FoundationKit.framework"
+            BlueprintName = "FoundationKit"
+            ReferencedContainer = "container:FoundationKit.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
