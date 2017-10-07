@@ -10,6 +10,11 @@ import Foundation
 
 #if !os(Linux)
 public extension String {
+    
+    /// NSRange of the full string.
+    private var fullRange: NSRange {
+        return NSRange(self.startIndex..<self.endIndex, in: self)
+    }
 
     /// Returns the String with the subsitutions applied.
     ///
@@ -18,11 +23,10 @@ public extension String {
     ///   - sustitution: Substitution to apply.
     /// - Returns: String with the Regular Expression subsitution applied.
     public func applyingRegularExpression(pattern: String, sustitution: String) -> String {
-        let range = NSMakeRange(0, self.characters.count)
         
         let regex = try? NSRegularExpression(pattern: pattern, options: .caseInsensitive)
 
-        return regex?.stringByReplacingMatches(in: self, options: [], range: range, withTemplate: sustitution) ?? self
+        return regex?.stringByReplacingMatches(in: self, options: [], range: self.fullRange, withTemplate: sustitution) ?? self
     }
 
     /// True if the string has some Regular Expression match.
@@ -31,11 +35,10 @@ public extension String {
     ///   - pattern: Regular Expression to match.
     /// - Returns: A boolean indicating if there is some match.
     public func matchesRegularExpression(pattern: String) -> Bool {
-        let range = NSMakeRange(0, self.characters.count)
 
         let regex = try? NSRegularExpression(pattern: pattern, options: .caseInsensitive)
 
-        return !(regex?.matches(in: self, options: [], range: range) ?? []).isEmpty
+        return !(regex?.matches(in: self, options: [], range: self.fullRange) ?? []).isEmpty
     }
 
     /// Resulting matches of a Regular Expression applied to the String.
@@ -44,11 +47,10 @@ public extension String {
     ///   - pattern: Regular Expression to match.
     /// - Returns: The resulting matches.
     public func matchesForRegularExpression(pattern: String) -> [NSTextCheckingResult] {
-        let range = NSMakeRange(0, self.characters.count)
 
         let regex = try? NSRegularExpression(pattern: pattern, options: .caseInsensitive)
 
-        return regex?.matches(in: self, options: [], range: range) ?? []
+        return regex?.matches(in: self, options: [], range: self.fullRange) ?? []
     }
 }
 #endif
