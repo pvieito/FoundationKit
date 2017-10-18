@@ -49,12 +49,7 @@ extension URL {
             return nil
         }
 
-        guard let unmanagedFileURL = CFURLCreateFilePathURL(kCFAllocatorDefault, self as CFURL, nil) else {
-            return nil
-        }
-
-        let fileURL = unmanagedFileURL.takeRetainedValue()
-        let path = CFURLCopyFileSystemPath(fileURL, cfPathStyle)
+        let path = CFURLCopyFileSystemPath(self as CFURL, cfPathStyle)
 
         return path as String?
     }
