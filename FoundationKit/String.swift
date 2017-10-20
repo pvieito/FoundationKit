@@ -15,8 +15,13 @@ public extension String {
     /// - Parameter length: Maximum length of each component.
     /// - Returns: Array of string components.
     public func components(of length: Int) -> [String] {
-        if self.characters.count == 0 {
-            return [self]
+        
+        guard length > 0 else {
+            return []
+        }
+        
+        if self.isEmpty {
+            return []
         }
         else {
             return stride(from: 0, to: self.characters.count, by: length).map { i -> String in
@@ -32,9 +37,18 @@ public extension String {
     /// - Parameter length: Maximum length of the returned string.
     /// - Returns: Abbreviated string.
     public func abbreviated(to length: Int) -> String {
-        let stringComponents = self.components(of: length)
-
-        return (stringComponents.count > 1 ? stringComponents.first?.appending("…") : stringComponents.first) ?? self
+        
+        guard self.count > length else {
+            return self
+        }
+        
+        guard length > 0 else {
+            return ""
+        }
+        
+        let components = self.components(of: length - 1)
+        
+        return components.first?.appending("…") ?? "…"
     }
 
     /// Returns the string with a lossy conversion to ASCII.
