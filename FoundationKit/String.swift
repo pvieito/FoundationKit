@@ -47,8 +47,13 @@ public extension String {
         }
         
         let components = self.components(of: length - 1)
+        let ellipsis = "…"
         
-        return components.first?.appending("…") ?? "…"
+        guard let abbreviatedString = components.first else {
+            return ellipsis
+        }
+        
+        return abbreviatedString.trimmingCharacters(in: .whitespacesAndNewlines).appending(ellipsis)
     }
 
     /// Returns the string with a lossy conversion to ASCII.
