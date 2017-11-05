@@ -24,7 +24,7 @@ public extension String {
             return []
         }
         else {
-            return stride(from: 0, to: self.characters.count, by: length).map { i -> String in
+            return stride(from: 0, to: self.count, by: length).map { i -> String in
                 let startIndex = self.index(self.startIndex, offsetBy: i)
                 let endIndex = self.index(startIndex, offsetBy: length, limitedBy: self.endIndex) ?? self.endIndex
                 return String(self[startIndex..<endIndex])
@@ -74,9 +74,9 @@ public extension String {
 
         if let firstUnicodeScalar = self.unicodeScalars.first,
             CharacterSet.uppercaseLetters.contains(firstUnicodeScalar),
-            let firstCharacter = self.characters.first {
+            let firstCharacter = self.first {
             inputString.remove(at: inputString.startIndex)
-            inputString.insert(contentsOf: String(firstCharacter).lowercased().characters, at: inputString.startIndex)
+            inputString.insert(contentsOf: String(firstCharacter).lowercased(), at: inputString.startIndex)
         }
 
         let upperCase = CharacterSet.uppercaseLetters
@@ -91,9 +91,9 @@ public extension String {
 
         if let firstUnicodeScalar = outputString.unicodeScalars.first,
             CharacterSet.lowercaseLetters.contains(firstUnicodeScalar),
-            let firstCharacter = outputString.characters.first {
+            let firstCharacter = outputString.first {
             outputString.remove(at: outputString.startIndex)
-            outputString.insert(contentsOf: String(firstCharacter).uppercased().characters, at: inputString.startIndex)
+            outputString.insert(contentsOf: String(firstCharacter).uppercased(), at: inputString.startIndex)
         }
 
         return outputString

@@ -19,7 +19,7 @@ extension Array where Element == URL {
             return url.hasDirectoryPath ? url : url.deletingLastPathComponent()
         }
         if var commonPath = stringPaths.reduce(stringPaths.max(), { $0?.commonPrefix(with: $1) }) {
-            if commonPath.characters.last != "/" {
+            if commonPath.last != "/" {
                 commonPath = commonPath.components(separatedBy: "/").dropLast().joined(separator: "/")
             }
             return URL(fileURLWithPath: commonPath)
