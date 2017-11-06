@@ -59,7 +59,13 @@ class StringTests: XCTestCase {
                 print("\"\(string)\".components(of: \(i)) -> \(components)")
                 
                 if i > 0 {
-                    XCTAssertTrue(components.count == Int(ceil(Double(string.count) / Double(i))))
+                    if string.isEmpty {
+                        XCTAssertTrue(components.count == 1)
+                    }
+                    else {
+                        XCTAssertTrue(components.count == Int(ceil(Double(string.count) / Double(i))))
+                    }
+
                     XCTAssertTrue(components.joined() == string)
                 }
                 else {

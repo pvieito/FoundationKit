@@ -21,7 +21,7 @@ public extension String {
         }
         
         if self.isEmpty {
-            return []
+            return [""]
         }
         else {
             return stride(from: 0, to: self.count, by: length).map { i -> String in
