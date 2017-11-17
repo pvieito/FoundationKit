@@ -57,6 +57,10 @@ extension Data {
     /// Hexadecimal representation of the Data as a String.
     public var hexString: String {
         
+        guard !self.isEmpty else {
+            return ""
+        }
+        
         return "0x" + String(data: self.hexData, encoding: .ascii)!.uppercased()
     }
     
