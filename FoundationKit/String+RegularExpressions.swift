@@ -24,7 +24,7 @@ public extension String {
     /// - Returns: String with the Regular Expression subsitution applied.
     public func applyingRegularExpression(pattern: String, sustitution: String) -> String {
         
-        let regex = try? NSRegularExpression(pattern: pattern, options: .caseInsensitive)
+        let regex = try? NSRegularExpression(pattern: pattern, options: [])
 
         return regex?.stringByReplacingMatches(in: self, options: [], range: self.fullRange, withTemplate: sustitution) ?? self
     }
@@ -36,7 +36,7 @@ public extension String {
     /// - Returns: A boolean indicating if there is some match.
     public func matchesRegularExpression(pattern: String) -> Bool {
 
-        let regex = try? NSRegularExpression(pattern: pattern, options: .caseInsensitive)
+        let regex = try? NSRegularExpression(pattern: pattern, options: [])
 
         return !(regex?.matches(in: self, options: [], range: self.fullRange) ?? []).isEmpty
     }
@@ -48,7 +48,7 @@ public extension String {
     /// - Returns: The resulting matches.
     public func matchesForRegularExpression(pattern: String) -> [NSTextCheckingResult] {
 
-        let regex = try? NSRegularExpression(pattern: pattern, options: .caseInsensitive)
+        let regex = try? NSRegularExpression(pattern: pattern, options: [])
 
         return regex?.matches(in: self, options: [], range: self.fullRange) ?? []
     }
