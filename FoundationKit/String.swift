@@ -103,4 +103,13 @@ public extension String {
     public var pathURL: URL {
         return URL(fileURLWithPath: self)
     }
+    
+    /// Returns same string if not empty, else nil.
+    public var nonEmptyString: String? {
+        guard !self.isEmpty else {
+            return nil
+        }
+        
+        return self
+    }
 }
