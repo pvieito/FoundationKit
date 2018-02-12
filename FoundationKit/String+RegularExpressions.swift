@@ -8,7 +8,6 @@
 
 import Foundation
 
-#if !os(Linux)
 public extension String {
     
     /// NSRange of the full string.
@@ -53,4 +52,3 @@ public extension String {
         return regex?.matches(in: self, options: [], range: self.fullRange) ?? []
     }
 }
-#endif

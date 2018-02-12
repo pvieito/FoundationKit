@@ -11,6 +11,8 @@ import CoreFoundation
 
 extension URL {
 
+    #if !os(Linux)
+    
     /// Path Styles for a file URL.
     public enum PathStyle: Int, CustomStringConvertible {
         case posix = 0
@@ -53,4 +55,6 @@ extension URL {
 
         return path as String?
     }
+    
+    #endif
 }

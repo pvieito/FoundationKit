@@ -10,6 +10,8 @@ import Foundation
 
 extension FileManager {
 
+    #if !os(Linux)
+
     /// URL to the library of Ubiquity Containers for the user.
     public var ubiquityContainersLibrary: URL? {
 
@@ -103,4 +105,6 @@ extension FileManager {
         
         return libraryDirectory
     }
+    
+    #endif
 }

@@ -10,6 +10,8 @@ import Foundation
 
 extension Data {
     
+    #if !os(Linux)
+    
     @available(*, deprecated, message: "Use Data.random(count:)")
     public init(randomBytesCount count: Int) {
         self = Data.random(count: count)
@@ -22,4 +24,6 @@ extension Data {
         let bytes = [UInt32](repeating: 0, count: count).map { _ in arc4random() }
         return Data(bytes: bytes, count: count)
     }
+    
+    #endif
 }
