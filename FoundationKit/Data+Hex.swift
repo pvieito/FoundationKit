@@ -79,18 +79,18 @@ extension Data {
     /// - Parameter hexString: Hexadecimal string.
     public init?(hexString: String) {
         
+        var hexString = hexString
+        
         guard !hexString.isEmpty else {
             return nil
         }
         
-        guard hexString.utf16.count % 2 == 0 else {
-            return nil
-        }
-        
-        var hexString = hexString
-        
         if hexString.hasPrefix("0x") {
             hexString = String(hexString.dropFirst(2))
+        }
+        
+        if hexString.utf16.count % 2 != 0 {
+            hexString = "0" + hexString
         }
         
         self.init()
