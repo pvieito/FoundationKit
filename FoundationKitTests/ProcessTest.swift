@@ -10,7 +10,6 @@ import XCTest
 
 class ProcessTests: XCTestCase {
     
-    
     func testGetExecutableURL() {
         
         let whichExecutablePath = "/usr/bin/which"
