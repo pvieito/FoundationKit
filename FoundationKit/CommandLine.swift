@@ -18,12 +18,14 @@ public extension CommandLine {
     ///   - year: Year of creation of the tool. It will show as part of the copyright with the author.
     ///   - description: Description of the tool.
     public static func print(usage: String, author: String, year: Int, description: String) {
-        if arguments.count > 0 {
-            let name = URL(fileURLWithPath: arguments[0]).lastPathComponent
-            Swift.print("\(name) - \(author) © \(year)")
-            Swift.print("    \(description)\n")
-            Swift.print("    Usage: \(name) \(usage)")
+        guard !arguments.isEmpty else {
+            return
         }
+        
+        let name = URL(fileURLWithPath: arguments[0]).lastPathComponent
+        Swift.print("\(name) - \(author) © \(year)")
+        Swift.print("    \(description)\n")
+        Swift.print("    Usage: \(name) \(usage)")
     }
 
     /// Prints an empty line.

@@ -15,6 +15,8 @@
 		AA4F547A1ED8A06D000C1333 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4F54791ED8A06D000C1333 /* UserDefaults.swift */; };
 		AA4F54CD1ED8BCD7000C1333 /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4F54CC1ED8BCD7000C1333 /* FileManager.swift */; };
 		AA50B63B1EB2240C00F5F6F4 /* Array+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA50B63A1EB2240C00F5F6F4 /* Array+String.swift */; };
+		AA640565207195EE00F17D45 /* Process.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA640564207195EE00F17D45 /* Process.swift */; };
+		AA64057320719BB000F17D45 /* ProcessTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA64057220719BB000F17D45 /* ProcessTest.swift */; };
 		AA7F02081EE78B5300597173 /* Data+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7F02071EE78B5300597173 /* Data+Hex.swift */; };
 		AA912C221EE96D17002DD639 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABBD9A71E5761D000AE5B46 /* String.swift */; };
 		AA912C231EE96D17002DD639 /* String+RegularExpressions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA22A2F91EDED314007A3F13 /* String+RegularExpressions.swift */; };
@@ -58,6 +60,8 @@
 		AA4F54791ED8A06D000C1333 /* UserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		AA4F54CC1ED8BCD7000C1333 /* FileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
 		AA50B63A1EB2240C00F5F6F4 /* Array+String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+String.swift"; sourceTree = "<group>"; };
+		AA640564207195EE00F17D45 /* Process.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Process.swift; sourceTree = "<group>"; };
+		AA64057220719BB000F17D45 /* ProcessTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessTest.swift; sourceTree = "<group>"; };
 		AA7F02071EE78B5300597173 /* Data+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Hex.swift"; sourceTree = "<group>"; };
 		AA912C1A1EE96CF2002DD639 /* FoundationKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FoundationKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AAA03AB11EBD23200005BF72 /* MeasurementFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeasurementFormatter.swift; sourceTree = "<group>"; };
@@ -135,6 +139,7 @@
 				AA7F02071EE78B5300597173 /* Data+Hex.swift */,
 				AA4F54791ED8A06D000C1333 /* UserDefaults.swift */,
 				AA4F54CC1ED8BCD7000C1333 /* FileManager.swift */,
+				AA640564207195EE00F17D45 /* Process.swift */,
 				AA2565A41E57AA7C0037CBED /* CommandLine.swift */,
 				AAA03AB11EBD23200005BF72 /* MeasurementFormatter.swift */,
 				AABBD9A61E5761D000AE5B46 /* Info.plist */,
@@ -147,6 +152,7 @@
 			children = (
 				AAD31D271F883C8800C056DD /* StringTests.swift */,
 				AABFE0BA1F9A44DC00F1C1B2 /* DataTests.swift */,
+				AA64057220719BB000F17D45 /* ProcessTest.swift */,
 				AAD31D291F883C8800C056DD /* Info.plist */,
 			);
 			path = FoundationKitTests;
@@ -310,6 +316,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AA0D3D681EA033B700FB7EBD /* Error.swift in Sources */,
+				AA640565207195EE00F17D45 /* Process.swift in Sources */,
 				AAB894A31EB156FA00F155B0 /* Array+URL.swift in Sources */,
 				AA4F547A1ED8A06D000C1333 /* UserDefaults.swift in Sources */,
 				AA0D3D6A1EA039FD00FB7EBD /* Array.swift in Sources */,
@@ -350,6 +357,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA64057320719BB000F17D45 /* ProcessTest.swift in Sources */,
 				AAB1D98D1F884269004DCA9B /* StringTests.swift in Sources */,
 				AABFE0BB1F9A44DC00F1C1B2 /* DataTests.swift in Sources */,
 			);
@@ -588,7 +596,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited)";
 				MACOSX_DEPLOYMENT_TARGET = 10.11;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2,3,4";
