@@ -6,6 +6,8 @@
 //  Copyright © 2018 Pedro José Pereira Vieito. All rights reserved.
 //
 
+#if !os(iOS) && !os(tvOS) && !os(watchOS)
+
 import Foundation
 
 extension Process {
@@ -38,3 +40,5 @@ extension Process {
         return URL(fileURLWithPath: executablePath)
     }
 }
+
+#endif
