@@ -11,14 +11,6 @@ import CoreFoundation
 
 extension URL {
     
-    public var cfURL: CFURL {
-        #if canImport(Darwin)
-        return self as CFURL
-        #else
-        return unsafeBitCast(self, to: CFURL.self)
-        #endif
-    }
-    
     /// Path Styles for a file URL.
     public enum PathStyle: Int, CustomStringConvertible {
         case posix = 0
@@ -61,11 +53,12 @@ extension URL {
             return nil
         }
         
-        let fileSystemPath = CFURLCopyFileSystemPath(self.cfURL, cfPathStyle)
-
         #if canImport(Darwin)
-        return fileSystemPath as String?
+        return CFURLCopyFileSystemPath(self as CFURL, cfPathStyle) as String?
         #else
+        let cfURL = unsafeBitCast(self, to: CFURL.self)
+        let fileSystemPath = CFURLCopyFileSystemPath(cfURL, cfPathStyle)
+        
         guard let cfPath = fileSystemPath else {
             return nil
         }
