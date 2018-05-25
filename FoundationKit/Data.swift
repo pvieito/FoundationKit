@@ -26,7 +26,7 @@ extension Data {
             #if swift(>=4.2)
             return UInt8.random(in: .min ... .max)
             #else
-            return 0 //UInt8(arc4random() & 0xFF)
+            return UInt8(arc4random() & 0xFF)
             #endif
         }
         
