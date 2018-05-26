@@ -9,19 +9,32 @@
 import Foundation
 
 extension FileManager {
+    
+    /// Returns a Boolean value that indicates whether a file or directory exists at a specified URL.
+    public func fileExists(at url: URL) -> Bool {
+        return self.fileExists(atPath: url.path)
+    }
+    
+    /// Returns a Boolean value that indicates whether a directory exists at a specified URL.
+    public func directoryExists(at url: URL) -> Bool {
+        var isDirectory: ObjCBool = false
+        self.fileExists(atPath: url.path, isDirectory: &isDirectory)
+        
+        return isDirectory.boolValue
+    }
 
-    #if !os(Linux)
+    #if os(macOS)
 
     /// URL to the library of Ubiquity Containers for the user.
     public var ubiquityContainersLibrary: URL? {
 
-        guard let libraryURL = try? FileManager.default.url(for: .libraryDirectory, in: .userDomainMask, appropriateFor: nil, create: false) else {
+        guard let libraryURL = try? self.url(for: .libraryDirectory, in: .userDomainMask, appropriateFor: nil, create: false) else {
             return nil
         }
 
         let ubiquityContainersLibrary = libraryURL.appendingPathComponent("Mobile Documents")
 
-        guard FileManager.default.fileExists(atPath: ubiquityContainersLibrary.path) else {
+        guard self.fileExists(atPath: ubiquityContainersLibrary.path) else {
             return nil
         }
 
@@ -35,7 +48,7 @@ extension FileManager {
             return []
         }
 
-        guard let contents = try? FileManager.default.contentsOfDirectory(atPath: ubiquityContainersLibrary.path) else {
+        guard let contents = try? self.contentsOfDirectory(atPath: ubiquityContainersLibrary.path) else {
             return []
         }
 
@@ -44,7 +57,7 @@ extension FileManager {
         for item in contents {
             let itemURL = ubiquityContainersLibrary.appendingPathComponent(item)
             var isDirectory: ObjCBool = false
-            FileManager.default.fileExists(atPath: itemURL.path, isDirectory: &isDirectory)
+            self.fileExists(atPath: itemURL.path, isDirectory: &isDirectory)
 
             if isDirectory.boolValue {
                 availableUbiquityContainers.append(itemURL)
@@ -74,7 +87,7 @@ extension FileManager {
         let containerName = identifier.replacingOccurrences(of: ".", with: "~")
         let containerURL = ubiquityContainersLibrary.appendingPathComponent(containerName).resolvingSymlinksInPath()
 
-        guard FileManager.default.fileExists(atPath: containerURL.path) else {
+        guard self.fileExists(atPath: containerURL.path) else {
             return nil
         }
 
@@ -89,7 +102,7 @@ extension FileManager {
 
         let homeDirectory = URL(fileURLWithPath: String(cString: userPath))
 
-        guard FileManager.default.fileExists(atPath: homeDirectory.path) else {
+        guard self.fileExists(atPath: homeDirectory.path) else {
             return nil
         }
 
@@ -99,7 +112,7 @@ extension FileManager {
     /// Returns the Library directory for the current user.
     public var libraryDirectoryForCurrentUser: URL? {
         
-        guard let libraryDirectory = try? FileManager.default.url(for: .libraryDirectory, in: .userDomainMask, appropriateFor: nil, create: false) else {
+        guard let libraryDirectory = try? self.url(for: .libraryDirectory, in: .userDomainMask, appropriateFor: nil, create: false) else {
             return nil
         }
         
