@@ -254,7 +254,7 @@
 				ORGANIZATIONNAME = "Pedro José Pereira Vieito";
 				TargetAttributes = {
 					AA2563C41E57639E0037CBED = {
-						LastSwiftMigration = 0900;
+						LastSwiftMigration = 1000;
 						ProvisioningStyle = Automatic;
 					};
 					AA912C191EE96CF2002DD639 = {
@@ -264,6 +264,7 @@
 					AAD31D241F883C8800C056DD = {
 						CreatedOnToolsVersion = 9.0;
 						DevelopmentTeam = T7MC635YG5;
+						LastSwiftMigration = 1000;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -398,7 +399,7 @@
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator appletvos appletvsimulator";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2,3";
 				VALID_ARCHS = "i386 x86_64 arm64 armv7s armv7";
 			};
@@ -425,7 +426,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SUPPORTED_PLATFORMS = "macosx iphoneos iphonesimulator appletvos appletvsimulator";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2,3";
 				VALID_ARCHS = "i386 x86_64 arm64 armv7s armv7";
 			};
@@ -640,7 +641,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.pvieito.FoundationKitTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -662,7 +663,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.pvieito.FoundationKitTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};
