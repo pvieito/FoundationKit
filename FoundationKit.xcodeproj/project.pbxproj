@@ -13,6 +13,7 @@
 		AA2563C61E57639E0037CBED /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABBD9A71E5761D000AE5B46 /* String.swift */; };
 		AA2565A51E57AA7C0037CBED /* CommandLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2565A41E57AA7C0037CBED /* CommandLine.swift */; };
 		AA46065120836FB0003C5014 /* FileManager.AutocleanedTemporaryDirectory.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA46065020836FB0003C5014 /* FileManager.AutocleanedTemporaryDirectory.swift */; };
+		AA4E843D2138505400E6DCFC /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4E843C2138505400E6DCFC /* Bundle.swift */; };
 		AA4F547A1ED8A06D000C1333 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4F54791ED8A06D000C1333 /* UserDefaults.swift */; };
 		AA4F54CD1ED8BCD7000C1333 /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4F54CC1ED8BCD7000C1333 /* FileManager.swift */; };
 		AA50B63B1EB2240C00F5F6F4 /* Array+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA50B63A1EB2240C00F5F6F4 /* Array+String.swift */; };
@@ -59,6 +60,7 @@
 		AA2563CF1E57639E0037CBED /* FoundationKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FoundationKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA2565A41E57AA7C0037CBED /* CommandLine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandLine.swift; sourceTree = "<group>"; };
 		AA46065020836FB0003C5014 /* FileManager.AutocleanedTemporaryDirectory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManager.AutocleanedTemporaryDirectory.swift; sourceTree = "<group>"; };
+		AA4E843C2138505400E6DCFC /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
 		AA4F54791ED8A06D000C1333 /* UserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		AA4F54CC1ED8BCD7000C1333 /* FileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
 		AA50B63A1EB2240C00F5F6F4 /* Array+String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+String.swift"; sourceTree = "<group>"; };
@@ -129,6 +131,7 @@
 		AABBD9A51E5761D000AE5B46 /* FoundationKit */ = {
 			isa = PBXGroup;
 			children = (
+				AA4E843C2138505400E6DCFC /* Bundle.swift */,
 				AABBD9A71E5761D000AE5B46 /* String.swift */,
 				AA22A2F91EDED314007A3F13 /* String+RegularExpressions.swift */,
 				AAB638781EBBDD28008365EB /* URL.swift */,
@@ -331,6 +334,7 @@
 				AA4F54CD1ED8BCD7000C1333 /* FileManager.swift in Sources */,
 				AA7F02081EE78B5300597173 /* Data+Hex.swift in Sources */,
 				AA2565A51E57AA7C0037CBED /* CommandLine.swift in Sources */,
+				AA4E843D2138505400E6DCFC /* Bundle.swift in Sources */,
 				AA22A2FA1EDED314007A3F13 /* String+RegularExpressions.swift in Sources */,
 				AAA03AB21EBD23200005BF72 /* MeasurementFormatter.swift in Sources */,
 				AAB638791EBBDD28008365EB /* URL.swift in Sources */,
