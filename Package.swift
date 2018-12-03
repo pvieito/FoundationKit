@@ -1,4 +1,4 @@
-// swift-tools-version:4.0
+// swift-tools-version:4.2
 
 import PackageDescription
 
@@ -9,6 +9,5 @@ let package = Package(
     ],
     targets: [
         .target(name: "FoundationKit", path: "FoundationKit")
-    ],
-    swiftLanguageVersions: [4]
+    ]
 )
