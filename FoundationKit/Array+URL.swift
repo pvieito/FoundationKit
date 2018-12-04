@@ -11,6 +11,7 @@ import Foundation
 extension Array where Element == URL {
 
     /// Returns the first common parent directory of all URLs in the array.
+    @available(macOS 10.11, *)
     public var commonAntecessor: URL? {
 
         let stringPaths = self.map({ $0.path })
