@@ -8,7 +8,7 @@
 
 import Foundation
 
-public extension CommandLine {
+extension CommandLine {
 
     /// Print a usage help text in the Command Line.
     ///

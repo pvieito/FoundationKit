@@ -8,7 +8,7 @@
 
 import Foundation
 
-public extension Double {
+extension Double {
 
     /// Returns the number rounded with the decimal places specified.
     ///

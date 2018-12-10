@@ -8,7 +8,7 @@
 
 import Foundation
 
-public extension String {
+extension String {
     
     /// NSRange of the full string.
     private var fullRange: NSRange {

@@ -8,7 +8,7 @@
 
 import Foundation
 
-public extension String {
+extension String {
 
     /// Returns an array of components of the string with a maximum length each.
     ///
