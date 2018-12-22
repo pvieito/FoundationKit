@@ -34,6 +34,7 @@
 		AA912C2C1EE96D17002DD639 /* Array+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA50B63A1EB2240C00F5F6F4 /* Array+String.swift */; };
 		AA912C2D1EE96D17002DD639 /* CommandLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2565A41E57AA7C0037CBED /* CommandLine.swift */; };
 		AA912C2E1EE96D17002DD639 /* MeasurementFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA03AB11EBD23200005BF72 /* MeasurementFormatter.swift */; };
+		AA912D6421CECBC300ABFCC7 /* PropertyListCoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA912D6321CECBC300ABFCC7 /* PropertyListCoder.swift */; };
 		AAA03AB21EBD23200005BF72 /* MeasurementFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA03AB11EBD23200005BF72 /* MeasurementFormatter.swift */; };
 		AAB1D98D1F884269004DCA9B /* StringTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAD31D271F883C8800C056DD /* StringTests.swift */; };
 		AAB638791EBBDD28008365EB /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB638781EBBDD28008365EB /* URL.swift */; };
@@ -70,6 +71,7 @@
 		AA72432121812A6600084F58 /* UUID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUID.swift; sourceTree = "<group>"; };
 		AA7F02071EE78B5300597173 /* Data+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Hex.swift"; sourceTree = "<group>"; };
 		AA912C1A1EE96CF2002DD639 /* FoundationKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FoundationKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA912D6321CECBC300ABFCC7 /* PropertyListCoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropertyListCoder.swift; sourceTree = "<group>"; };
 		AAA03AB11EBD23200005BF72 /* MeasurementFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeasurementFormatter.swift; sourceTree = "<group>"; };
 		AAB638781EBBDD28008365EB /* URL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
 		AAB894A21EB156FA00F155B0 /* Array+URL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Array+URL.swift"; sourceTree = "<group>"; };
@@ -151,6 +153,7 @@
 				AA2565A41E57AA7C0037CBED /* CommandLine.swift */,
 				AAA03AB11EBD23200005BF72 /* MeasurementFormatter.swift */,
 				AA72432121812A6600084F58 /* UUID.swift */,
+				AA912D6321CECBC300ABFCC7 /* PropertyListCoder.swift */,
 				AABBD9A61E5761D000AE5B46 /* Info.plist */,
 			);
 			path = FoundationKit;
@@ -335,6 +338,7 @@
 				AA2563C61E57639E0037CBED /* String.swift in Sources */,
 				AAEF0C151E757A3500CF4C6A /* Double.swift in Sources */,
 				AABFE0BD1F9A494200F1C1B2 /* Data.swift in Sources */,
+				AA912D6421CECBC300ABFCC7 /* PropertyListCoder.swift in Sources */,
 				AA4F54CD1ED8BCD7000C1333 /* FileManager.swift in Sources */,
 				AA7F02081EE78B5300597173 /* Data+Hex.swift in Sources */,
 				AA2565A51E57AA7C0037CBED /* CommandLine.swift in Sources */,
