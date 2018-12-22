@@ -6,14 +6,21 @@
 //  Copyright © 2018 Pedro José Pereira Vieito. All rights reserved.
 //
 
-#if !os(iOS) && !os(tvOS) && !os(watchOS)
-
+#if !canImport(MobileCoreServices)
 import Foundation
 
 extension Process {
+
+    public convenience init?(executableName: String) {
+        guard let executableURL = Process.getExecutableURL(name: executableName) else {
+            return nil
+        }
+        
+        self.init()
+        self.launchPath = executableURL.path
+    }
     
     public static func getExecutableURL(name: String) -> URL? {
-        
         let whichProcess = Process()
         let outputPipe = Pipe()
 
@@ -39,6 +46,17 @@ extension Process {
         
         return URL(fileURLWithPath: executablePath)
     }
+    
+    #if os(macOS)
+    public static func killProcess(name: String) {
+        guard let killallProcess = Process(executableName: "killall") else {
+            return
+        }
+        
+        killallProcess.arguments = [name]
+        killallProcess.launch()
+        killallProcess.waitUntilExit()
+    }
+    #endif
 }
-
 #endif
