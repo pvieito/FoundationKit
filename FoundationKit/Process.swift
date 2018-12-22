@@ -10,10 +10,20 @@
 import Foundation
 
 extension Process {
+    enum Error: LocalizedError {
+        case executableNotFound(String)
+        
+        var errorDescription: String? {
+            switch self {
+            case .executableNotFound(let executableName):
+                return "Executable “\(executableName)” not found"
+            }
+        }
+    }
     
-    public convenience init?(executableName: String) {
+    public convenience init(executableName: String) throws {
         guard let executableURL = Process.getExecutableURL(name: executableName) else {
-            return nil
+            throw Error.executableNotFound(executableName)
         }
         
         self.init()
@@ -59,12 +69,18 @@ extension Process {
         }
     }
     
+    public func runAndGetOutputData() throws -> Data {
+        let outputPipe = Pipe()
+        self.standardOutput = outputPipe
+        try self.runAndWaitUntilExit()
+        
+        let outputData = outputPipe.fileHandleForReading.readDataToEndOfFile()
+        return outputData
+    }
+    
     #if os(macOS)
     public static func killProcess(name: String) throws {
-        guard let killallProcess = Process(executableName: "killall") else {
-            return
-        }
-        
+        let killallProcess = try Process(executableName: "killall")
         killallProcess.arguments = [name]
         try killallProcess.runAndWaitUntilExit()
     }
