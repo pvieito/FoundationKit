@@ -10,7 +10,7 @@
 import Foundation
 
 extension Process {
-
+    
     public convenience init?(executableName: String) {
         guard let executableURL = Process.getExecutableURL(name: executableName) else {
             return nil
@@ -23,7 +23,7 @@ extension Process {
     public static func getExecutableURL(name: String) -> URL? {
         let whichProcess = Process()
         let outputPipe = Pipe()
-
+        
         whichProcess.launchPath = "/usr/bin/which"
         whichProcess.arguments = [name]
         whichProcess.standardOutput = outputPipe
@@ -31,7 +31,6 @@ extension Process {
         whichProcess.waitUntilExit()
         
         let outputData = outputPipe.fileHandleForReading.readDataToEndOfFile()
-        
         guard let executablePath = String(data: outputData, encoding: .utf8)?.trimmingCharacters(in: .newlines) else {
             return nil
         }
@@ -46,16 +45,28 @@ extension Process {
         
         return URL(fileURLWithPath: executablePath)
     }
+}
+
+@available(macOS 10.13, *)
+extension Process {
+
+    public func runAndWaitUntilExit() throws {
+        try self.run()
+        self.waitUntilExit()
+        
+        guard self.terminationStatus == 0 else {
+            throw CocoaError(.executableLoad)
+        }
+    }
     
     #if os(macOS)
-    public static func killProcess(name: String) {
+    public static func killProcess(name: String) throws {
         guard let killallProcess = Process(executableName: "killall") else {
             return
         }
         
         killallProcess.arguments = [name]
-        killallProcess.launch()
-        killallProcess.waitUntilExit()
+        try killallProcess.runAndWaitUntilExit()
     }
     #endif
 }
