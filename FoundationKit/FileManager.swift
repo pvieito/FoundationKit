@@ -22,6 +22,11 @@ extension FileManager {
         
         return isDirectory.boolValue
     }
+    
+    /// Returns the current directory URL.
+    public var currentDirectoryURL: URL {
+        return URL(fileURLWithPath: self.currentDirectoryPath)
+    }
 
     #if os(macOS)
 
