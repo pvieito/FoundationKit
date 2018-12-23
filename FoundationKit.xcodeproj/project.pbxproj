@@ -43,6 +43,7 @@
 		AABFE0BD1F9A494200F1C1B2 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABFE0BC1F9A494200F1C1B2 /* Data.swift */; };
 		AAD31D2A1F883C8800C056DD /* FoundationKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA2563CF1E57639E0037CBED /* FoundationKit.framework */; };
 		AAEF0C151E757A3500CF4C6A /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAEF0C141E757A3500CF4C6A /* Double.swift */; };
+		AAF3951421CFE15A003B7933 /* URLTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF3951321CFE15A003B7933 /* URLTest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -83,6 +84,7 @@
 		AAD31D271F883C8800C056DD /* StringTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringTests.swift; sourceTree = "<group>"; };
 		AAD31D291F883C8800C056DD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AAEF0C141E757A3500CF4C6A /* Double.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Double.swift; sourceTree = "<group>"; };
+		AAF3951321CFE15A003B7933 /* URLTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLTest.swift; sourceTree = "<group>"; };
 		AAF74F7F1E8C814C00EA9436 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -165,6 +167,7 @@
 				AAD31D271F883C8800C056DD /* StringTests.swift */,
 				AABFE0BA1F9A44DC00F1C1B2 /* DataTests.swift */,
 				AA64057220719BB000F17D45 /* ProcessTest.swift */,
+				AAF3951321CFE15A003B7933 /* URLTest.swift */,
 				AAD31D291F883C8800C056DD /* Info.plist */,
 			);
 			path = FoundationKitTests;
@@ -376,6 +379,7 @@
 				AA64057320719BB000F17D45 /* ProcessTest.swift in Sources */,
 				AAB1D98D1F884269004DCA9B /* StringTests.swift in Sources */,
 				AABFE0BB1F9A44DC00F1C1B2 /* DataTests.swift in Sources */,
+				AAF3951421CFE15A003B7933 /* URLTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -393,7 +397,7 @@
 		AA2563CD1E57639E0037CBED /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				APPLICATION_EXTENSION_API_ONLY = YES;
+				APPLICATION_EXTENSION_API_ONLY = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_IDENTITY = "";
@@ -421,7 +425,7 @@
 		AA2563CE1E57639E0037CBED /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				APPLICATION_EXTENSION_API_ONLY = YES;
+				APPLICATION_EXTENSION_API_ONLY = NO;
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_IDENTITY = "";

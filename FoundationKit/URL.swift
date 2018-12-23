@@ -9,8 +9,65 @@
 import Foundation
 import CoreFoundation
 
+#if canImport(UIKit)
+import UIKit
+#elseif canImport(Cocoa)
+import Cocoa
+#endif
+
+#if os(watchOS)
+import WatchKit
+#endif
+
 extension URL {
+    public enum Error: LocalizedError {
+        case openingFailure(URL)
+        
+        public var errorDescription: String? {
+            switch self {
+            case .openingFailure(let url):
+                return "Error opening URL “\(url.absoluteString)”."
+            }
+        }
+    }
+}
+
+extension URL {
+    /// Attempts to open the resource at the specified URL asynchronously.
+    public func open() throws {
+        var success = false
+        
+        #if os(watchOS)
+        WKExtension.shared().openSystemURL(self)
+        #elseif canImport(UIKit)
+        success = UIApplication.shared.openURL(self)
+        #elseif canImport(Cocoa)
+        success = NSWorkspace.shared.open(self)
+        #endif
+        
+        if !success {
+            throw Error.openingFailure(self)
+        }
+    }
     
+    /// Returns a Boolean value indicating whether an app is available to handle a URL scheme.
+    public var isSupported: Bool {
+        #if canImport(UIKit) || !os(watchOS)
+        return UIApplication.shared.canOpenURL(self)
+        #elseif canImport(Cocoa)
+        guard let scheme = self.scheme else { return false }
+        guard let schemeHandlers =
+            LSCopyAllHandlersForURLScheme(scheme as CFString)?.takeRetainedValue() as? [String] else {
+            return false
+        }
+        return !schemeHandlers.isEmpty
+        #else
+        return false
+        #endif
+    }
+}
+
+extension URL {
     /// Path Styles for a file URL.
     public enum PathStyle: Int, CustomStringConvertible {
         case posix = 0
