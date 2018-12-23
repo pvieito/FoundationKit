@@ -12,11 +12,14 @@ import Foundation
 extension Process {
     enum Error: LocalizedError {
         case executableNotFound(String)
-        
+        case processFailure(Int32)
+
         var errorDescription: String? {
             switch self {
             case .executableNotFound(let executableName):
                 return "Executable “\(executableName)” not found."
+            case .processFailure(let errorCode):
+                return "Process terminated with failure (termination status code: \(errorCode))."
             }
         }
     }
@@ -65,7 +68,7 @@ extension Process {
         self.waitUntilExit()
         
         guard self.terminationStatus == 0 else {
-            throw CocoaError(.executableLoad)
+            throw Error.processFailure(self.terminationStatus)
         }
     }
     
