@@ -21,6 +21,7 @@
 		AA64057320719BB000F17D45 /* ProcessTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA64057220719BB000F17D45 /* ProcessTest.swift */; };
 		AA72432221812A6600084F58 /* UUID.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA72432121812A6600084F58 /* UUID.swift */; };
 		AA7F02081EE78B5300597173 /* Data+Hex.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA7F02071EE78B5300597173 /* Data+Hex.swift */; };
+		AA87BE7121D03DB800EF404A /* NSAppleScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA87BE7021D03D1600EF404A /* NSAppleScript.swift */; };
 		AA912C221EE96D17002DD639 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABBD9A71E5761D000AE5B46 /* String.swift */; };
 		AA912C231EE96D17002DD639 /* String+RegularExpressions.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA22A2F91EDED314007A3F13 /* String+RegularExpressions.swift */; };
 		AA912C241EE96D17002DD639 /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB638781EBBDD28008365EB /* URL.swift */; };
@@ -71,6 +72,7 @@
 		AA64057220719BB000F17D45 /* ProcessTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessTest.swift; sourceTree = "<group>"; };
 		AA72432121812A6600084F58 /* UUID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUID.swift; sourceTree = "<group>"; };
 		AA7F02071EE78B5300597173 /* Data+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Hex.swift"; sourceTree = "<group>"; };
+		AA87BE7021D03D1600EF404A /* NSAppleScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSAppleScript.swift; sourceTree = "<group>"; };
 		AA912C1A1EE96CF2002DD639 /* FoundationKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FoundationKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA912D6321CECBC300ABFCC7 /* PropertyListCoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropertyListCoder.swift; sourceTree = "<group>"; };
 		AAA03AB11EBD23200005BF72 /* MeasurementFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeasurementFormatter.swift; sourceTree = "<group>"; };
@@ -156,6 +158,7 @@
 				AAA03AB11EBD23200005BF72 /* MeasurementFormatter.swift */,
 				AA72432121812A6600084F58 /* UUID.swift */,
 				AA912D6321CECBC300ABFCC7 /* PropertyListCoder.swift */,
+				AA87BE7021D03D1600EF404A /* NSAppleScript.swift */,
 				AABBD9A61E5761D000AE5B46 /* Info.plist */,
 			);
 			path = FoundationKit;
@@ -344,6 +347,7 @@
 				AA912D6421CECBC300ABFCC7 /* PropertyListCoder.swift in Sources */,
 				AA4F54CD1ED8BCD7000C1333 /* FileManager.swift in Sources */,
 				AA7F02081EE78B5300597173 /* Data+Hex.swift in Sources */,
+				AA87BE7121D03DB800EF404A /* NSAppleScript.swift in Sources */,
 				AA2565A51E57AA7C0037CBED /* CommandLine.swift in Sources */,
 				AA4E843D2138505400E6DCFC /* Bundle.swift in Sources */,
 				AA22A2FA1EDED314007A3F13 /* String+RegularExpressions.swift in Sources */,

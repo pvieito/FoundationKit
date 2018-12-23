@@ -14,4 +14,11 @@ extension Array where Element == String {
     public var pathURLs: [URL] {
         return self.map({ $0.pathURL })
     }
+    
+    /// Returns array of URLs intialized with the valid Strings.
+    public var validURLs: [URL] {
+        return self.compactMap {
+            return FileManager.default.fileExists(atPath: $0) ? URL(fileURLWithPath: $0) : URL(string: $0)
+        }
+    }
 }
