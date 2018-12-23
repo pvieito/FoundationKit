@@ -52,7 +52,7 @@ extension URL {
     
     /// Returns a Boolean value indicating whether an app is available to handle a URL scheme.
     public var isSupported: Bool {
-        #if canImport(UIKit) || !os(watchOS)
+        #if canImport(UIKit) && !os(watchOS)
         return UIApplication.shared.canOpenURL(self)
         #elseif canImport(Cocoa)
         guard let scheme = self.scheme else { return false }
