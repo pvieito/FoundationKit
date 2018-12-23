@@ -16,7 +16,7 @@ extension Process {
         var errorDescription: String? {
             switch self {
             case .executableNotFound(let executableName):
-                return "Executable “\(executableName)” not found"
+                return "Executable “\(executableName)” not found."
             }
         }
     }
