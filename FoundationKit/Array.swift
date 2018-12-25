@@ -29,7 +29,7 @@ extension Array {
 
 extension Array where Element: Hashable {
     
-    /// The most frequent element in the array.
+    /// The frequency distribution of elements in the array.
     public var frequencies: [Element: Int] {
         return self.reduce([:], { (partialFrequencies, element) -> [Element: Int] in
             var partialFrequencies = partialFrequencies
