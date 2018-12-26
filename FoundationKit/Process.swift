@@ -24,13 +24,14 @@ extension Process {
         }
     }
     
-    public convenience init(executableName: String) throws {
+    public convenience init(executableName: String, arguments: [String]? = nil) throws {
         guard let executableURL = Process.getExecutableURL(name: executableName) else {
             throw Error.executableNotFound(executableName)
         }
         
         self.init()
         self.launchPath = executableURL.path
+        self.arguments = arguments
     }
     
     public static func getExecutableURL(name: String) -> URL? {
