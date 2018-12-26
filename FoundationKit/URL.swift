@@ -20,10 +20,10 @@ import WatchKit
 #endif
 
 extension URL {
-    public enum Error: LocalizedError {
+    enum Error: LocalizedError {
         case openingFailure(URL)
         
-        public var errorDescription: String? {
+        var errorDescription: String? {
             switch self {
             case .openingFailure(let url):
                 return "Error opening URL “\(url.absoluteString)”."
