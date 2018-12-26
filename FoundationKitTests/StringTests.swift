@@ -12,9 +12,11 @@ import Foundation
 
 class StringTests: XCTestCase {
     
-    let strings = ["Put teardown code here. This method is called after the invocation of each test method in the class.",
-                   "",
-                   "123"]
+    let strings = [
+        "Put teardown code here. This method is called after the invocation of each test method in the class.",
+        "",
+        "123"
+    ]
     
     override func setUp() {
         super.setUp()
@@ -65,7 +67,7 @@ class StringTests: XCTestCase {
                     else {
                         XCTAssertTrue(components.count == Int(ceil(Double(string.count) / Double(i))))
                     }
-
+                    
                     XCTAssertTrue(components.joined() == string)
                 }
                 else {

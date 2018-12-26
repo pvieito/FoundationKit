@@ -9,12 +9,13 @@
 import Foundation
 
 extension Error {
-
+    
     /// NSError with localized description from a Swift native LocalizedError.
     public var cocoaError: NSError {
-        let userInfo = [NSLocalizedFailureReasonErrorKey: self.localizedDescription,
-                        NSLocalizedDescriptionKey: self.localizedDescription]
-        
+        let userInfo = [
+            NSLocalizedFailureReasonErrorKey: self.localizedDescription,
+            NSLocalizedDescriptionKey: self.localizedDescription
+        ]
         return NSError(domain: NSCocoaErrorDomain, code: -1, userInfo: userInfo)
     }
 }

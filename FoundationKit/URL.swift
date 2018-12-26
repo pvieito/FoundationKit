@@ -33,6 +33,28 @@ extension URL {
 }
 
 extension URL {
+    public func appendingPathComponents(_ pathComponents: [String]) -> URL {
+        var url = self
+        for pathComponent in pathComponents {
+            url.appendPathComponent(pathComponent)
+        }
+        return url
+    }
+    
+    public func appendingPathComponents(_ pathComponents: String...) -> URL {
+        return self.appendingPathComponents(pathComponents)
+    }
+    
+    public mutating func appendPathComponents(_ pathComponents: [String]) {
+        self = self.appendingPathComponents(pathComponents)
+    }
+    
+    public mutating func appendPathComponents(_ pathComponents: String...) {
+        self.appendPathComponents(pathComponents)
+    }
+}
+
+extension URL {
     /// Attempts to open the resource at the specified URL asynchronously.
     @available(iOSApplicationExtension, unavailable)
     public func open() throws {

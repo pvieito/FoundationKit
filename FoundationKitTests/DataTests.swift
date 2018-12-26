@@ -23,9 +23,7 @@ class DataTests: XCTestCase {
     }
 
     func testRandomData() {
-
         let randomCount = 1000
-        
         let randomDataA = Data.random(count: randomCount)
         let randomDataB = Data.random(count: randomCount)
 
@@ -35,9 +33,7 @@ class DataTests: XCTestCase {
     }
     
     func testHexStringPerformance() {
-        
         self.measure {
-            
             for _ in 0...100 {
                 let _ = randomData.hexString
             }
@@ -45,9 +41,7 @@ class DataTests: XCTestCase {
     }
     
     func testHexDataPerformance() {
-        
         self.measure {
-            
             for _ in 0...100 {
                 let _ = randomData.hexData
             }

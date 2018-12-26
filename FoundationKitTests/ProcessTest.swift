@@ -11,13 +11,10 @@ import XCTest
 class ProcessTests: XCTestCase {
     
     func testGetExecutableURL() {
-        
         let whichExecutablePath = "/usr/bin/which"
         let whichExecutableURL = URL(fileURLWithPath: whichExecutablePath)
         let whichExecutableName = whichExecutableURL.lastPathComponent
-
         let executableURL = Process.getExecutableURL(name: whichExecutableName)
-        
         XCTAssertEqual(executableURL?.resolvingSymlinksInPath().path, whichExecutableURL.path)
     }
 }

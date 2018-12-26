@@ -9,13 +9,11 @@
 import Foundation
 
 extension String {
-
     /// Returns an array of components of the string with a maximum length each.
     ///
     /// - Parameter length: Maximum length of each component.
     /// - Returns: Array of string components.
     public func components(of length: Int) -> [String] {
-        
         guard length > 0 else {
             return []
         }
@@ -37,7 +35,6 @@ extension String {
     /// - Parameter length: Maximum length of the returned string.
     /// - Returns: Abbreviated string.
     public func abbreviated(to length: Int) -> String {
-        
         guard self.count > length else {
             return self
         }
@@ -52,7 +49,6 @@ extension String {
         guard let abbreviatedString = components.first else {
             return ellipsis
         }
-        
         return abbreviatedString.trimmingCharacters(in: .whitespacesAndNewlines).appending(ellipsis)
     }
 
@@ -69,7 +65,6 @@ extension String {
     /// For example it will be "Camel Case" for "camelCase".
     public var decamelized: String {
         var inputString: String = self
-
         var outputString: String = ""
 
         if let firstUnicodeScalar = self.unicodeScalars.first,
@@ -109,7 +104,44 @@ extension String {
         guard !self.isEmpty else {
             return nil
         }
-        
         return self
+    }
+}
+
+extension String {
+    /// NSRange of the full string.
+    private var fullRange: NSRange {
+        return NSRange(self.startIndex..<self.endIndex, in: self)
+    }
+    
+    /// Returns the String with the subsitutions applied.
+    ///
+    /// - Parameters:
+    ///   - pattern: Regular Expression to match.
+    ///   - sustitution: Substitution to apply.
+    /// - Returns: String with the Regular Expression subsitution applied.
+    public func applyingRegularExpression(pattern: String, sustitution: String) -> String {
+        let regex = try? NSRegularExpression(pattern: pattern, options: [])
+        return regex?.stringByReplacingMatches(in: self, options: [], range: self.fullRange, withTemplate: sustitution) ?? self
+    }
+    
+    /// True if the string has some Regular Expression match.
+    ///
+    /// - Parameters:
+    ///   - pattern: Regular Expression to match.
+    /// - Returns: A boolean indicating if there is some match.
+    public func matchesRegularExpression(pattern: String) -> Bool {
+        let regex = try? NSRegularExpression(pattern: pattern, options: [])
+        return !(regex?.matches(in: self, options: [], range: self.fullRange) ?? []).isEmpty
+    }
+    
+    /// Resulting matches of a Regular Expression applied to the String.
+    ///
+    /// - Parameters:
+    ///   - pattern: Regular Expression to match.
+    /// - Returns: The resulting matches.
+    public func matchesForRegularExpression(pattern: String) -> [NSTextCheckingResult] {
+        let regex = try? NSRegularExpression(pattern: pattern, options: [])
+        return regex?.matches(in: self, options: [], range: self.fullRange) ?? []
     }
 }

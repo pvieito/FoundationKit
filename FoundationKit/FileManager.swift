@@ -9,7 +9,6 @@
 import Foundation
 
 extension FileManager {
-    
     /// Returns a Boolean value that indicates whether a file or directory exists at a specified URL.
     public func fileExists(at url: URL) -> Bool {
         return self.fileExists(atPath: url.path)
@@ -27,12 +26,45 @@ extension FileManager {
     public var currentDirectoryURL: URL {
         return URL(fileURLWithPath: self.currentDirectoryPath)
     }
+}
 
-    #if os(macOS)
+extension FileManager {
+    /// Returns the temporary directory for the current user.
+    ///
+    /// This directory will be cleaned in the next execution of the same process or when the general temporary directory is cleaned.
+    public var autocleanedTemporaryDirectory: URL {
+        return AutocleanedTemporaryDirectory.autocleanedTemporaryDirectory
+    }
+    
+    private struct AutocleanedTemporaryDirectory {
+        
+        private static var directoryName = "AutocleanedTemporaryDirectory"
+        private static var isCleaned = false
+        
+        static var autocleanedTemporaryDirectory: URL {
+            
+            let processName = Bundle.main.bundleIdentifier ?? ProcessInfo.processInfo.processName
+            
+            let temporaryDirectoryURL = URL(fileURLWithPath: NSTemporaryDirectory())
+                .appendingPathComponent(directoryName)
+                .appendingPathComponent(processName)
+            
+            if !isCleaned && FileManager.default.fileExists(atPath: temporaryDirectoryURL.path) {
+                try? FileManager.default.removeItem(at: temporaryDirectoryURL)
+            }
+            
+            isCleaned = true
+            
+            try? FileManager.default.createDirectory(at: temporaryDirectoryURL, withIntermediateDirectories: true, attributes: nil)
+            return temporaryDirectoryURL
+        }
+    }
+}
 
+#if os(macOS)
+extension FileManager {
     /// URL to the library of Ubiquity Containers for the user.
     public var ubiquityContainersLibrary: URL? {
-
         guard let libraryURL = try? self.url(for: .libraryDirectory, in: .userDomainMask, appropriateFor: nil, create: false) else {
             return nil
         }
@@ -48,7 +80,6 @@ extension FileManager {
 
     /// List of available Ubiquity Containers.
     public var availableUbiquityContainers: [URL] {
-
         guard let ubiquityContainersLibrary = self.ubiquityContainersLibrary else {
             return []
         }
@@ -84,7 +115,6 @@ extension FileManager {
     /// - Parameter identifier: Identifier of the ubiquity container.
     /// - Returns: Container URL.
     public func url(forExternalUbiquityContainerIdentifier identifier: String) -> URL? {
-
         guard let ubiquityContainersLibrary = self.ubiquityContainersLibrary else {
             return nil
         }
@@ -116,13 +146,11 @@ extension FileManager {
     
     /// Returns the Library directory for the current user.
     public var libraryDirectoryForCurrentUser: URL? {
-        
         guard let libraryDirectory = try? self.url(for: .libraryDirectory, in: .userDomainMask, appropriateFor: nil, create: false) else {
             return nil
         }
         
         return libraryDirectory
     }
-    
-    #endif
 }
+#endif

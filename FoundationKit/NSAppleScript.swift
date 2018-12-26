@@ -1,14 +1,14 @@
 //
-//  UUID.swift
+//  NSAppleScript.swift
 //  FoundationKit
 //
 //  Created by Pedro José Pereira Vieito on 25/10/2018.
 //  Copyright © 2018 Pedro José Pereira Vieito. All rights reserved.
 //
 
-#if canImport(Cocoa)
 import Foundation
 
+#if canImport(Cocoa)
 extension NSAppleScript {
     @discardableResult
     public func execute() throws -> NSAppleEventDescriptor {

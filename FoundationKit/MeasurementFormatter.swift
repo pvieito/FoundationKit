@@ -13,8 +13,8 @@ import Foundation
 @available(tvOS 10.0, *)
 @available(macOS 10.12, *)
 extension MeasurementFormatter {
-
-    public func valueUnitStrings<UnitType>(from measurement: Measurement<UnitType>) -> (value: String, unit: String) {
+    public func valueUnitStrings<UnitType>(from measurement: Measurement<UnitType>)
+        -> (value: String, unit: String) {
         let formattedString = self.string(from: measurement)
 
         if formattedString == "" {
