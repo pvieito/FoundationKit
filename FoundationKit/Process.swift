@@ -69,7 +69,6 @@ extension Process {
 
 @available(macOS 10.13, *)
 extension Process {
-
     public func runAndWaitUntilExit() throws {
         try self.run()
         self.waitUntilExit()
