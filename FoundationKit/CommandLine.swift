@@ -29,13 +29,11 @@ extension CommandLine {
     }
 
     /// Prints an empty line.
-    @available(*, deprecated)
     public static func printEmptyLine() {
         Swift.print()
     }
 
     /// Sets the Command Line output at start of the line. This does not work in the Xcode console.
-    @available(*, deprecated)
     public static func printReturnLine() {
         Swift.print("\r", terminator: "")
     }

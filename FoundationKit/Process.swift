@@ -13,6 +13,7 @@ extension Process {
     enum Error: LocalizedError {
         case executableNotFound(String)
         case processFailure(Int32)
+        case invalidOutputString
 
         var errorDescription: String? {
             switch self {
@@ -20,6 +21,8 @@ extension Process {
                 return "Executable “\(executableName)” not found."
             case .processFailure(let errorCode):
                 return "Process terminated with failure (termination status code: \(errorCode))."
+            case .invalidOutputString:
+                return "Process output is not a decodable string."
             }
         }
     }
@@ -31,7 +34,10 @@ extension Process {
         
         self.init()
         self.launchPath = executableURL.path
-        self.arguments = arguments
+        
+        if let arguments = arguments {
+            self.arguments = arguments
+        }
     }
     
     public static func getExecutableURL(name: String) -> URL? {
@@ -80,6 +86,14 @@ extension Process {
         
         let outputData = outputPipe.fileHandleForReading.readDataToEndOfFile()
         return outputData
+    }
+    
+    public func runAndGetOutputString(encoding: String.Encoding = .utf8) throws -> String {
+        let outputData = try self.runAndGetOutputData()
+        guard let outputString = String(data: outputData, encoding: encoding) else {
+            throw Error.invalidOutputString
+        }
+        return outputString.trimmingCharacters(in: .newlines)
     }
     
     #if os(macOS)
