@@ -73,7 +73,6 @@
 		AAD31D291F883C8800C056DD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AAEF0C141E757A3500CF4C6A /* Double.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Double.swift; sourceTree = "<group>"; };
 		AAF3951321CFE15A003B7933 /* URLTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLTest.swift; sourceTree = "<group>"; };
-		AAF74F7F1E8C814C00EA9436 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,7 +107,6 @@
 				AABBD9A51E5761D000AE5B46 /* FoundationKit */,
 				AAD31D261F883C8800C056DD /* FoundationKitTests */,
 				AABB23211E2E7AFE007B7F68 /* Products */,
-				AAF74F7E1E8C814C00EA9436 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -155,14 +153,6 @@
 				AAD31D291F883C8800C056DD /* Info.plist */,
 			);
 			path = FoundationKitTests;
-			sourceTree = "<group>";
-		};
-		AAF74F7E1E8C814C00EA9436 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				AAF74F7F1E8C814C00EA9436 /* Cocoa.framework */,
-			);
-			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
