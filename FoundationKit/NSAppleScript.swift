@@ -10,11 +10,12 @@
 import Foundation
 
 extension NSAppleScript {
-    public func execute() throws {
+    @discardableResult
+    public func execute() throws -> NSAppleEventDescriptor {
         var errorReferenceDictionary: NSDictionary?
-        self.executeAndReturnError(&errorReferenceDictionary)
+        let descriptor = self.executeAndReturnError(&errorReferenceDictionary)
         guard let errorDictionary = errorReferenceDictionary as? [String : Any] else {
-            return
+            return descriptor
         }
         
         let errorCode = errorDictionary["NSAppleScriptErrorNumber"] as? Int ?? CocoaError.Code.coderInvalidValue.rawValue
