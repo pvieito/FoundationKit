@@ -9,7 +9,6 @@
 import Foundation
 
 extension Error {
-    
     /// NSError with localized description from a Swift native LocalizedError.
     public var cocoaError: NSError {
         let userInfo = [
@@ -17,5 +16,17 @@ extension Error {
             NSLocalizedDescriptionKey: self.localizedDescription
         ]
         return NSError(domain: NSCocoaErrorDomain, code: -1, userInfo: userInfo)
+    }
+}
+
+extension NSError {
+    public convenience init(description: String) {
+        self.init(
+            domain: NSCocoaErrorDomain,
+            code: -1,
+            userInfo: [
+                NSLocalizedDescriptionKey: description
+            ]
+        )
     }
 }
