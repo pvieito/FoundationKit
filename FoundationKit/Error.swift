@@ -20,13 +20,37 @@ extension Error {
 }
 
 extension NSError {
-    public convenience init(description: String) {
+    public convenience init(description: String, code: Int = -1) {
         self.init(
             domain: NSCocoaErrorDomain,
-            code: -1,
+            code: code,
             userInfo: [
                 NSLocalizedDescriptionKey: description
             ]
         )
     }
+}
+
+#if canImport(Darwin)
+extension OSStatus {
+    public func enforce() throws {
+        guard self == noErr else {
+            var description: String
+            if #available(watchOS 4.3, iOS 11.3, tvOS 11.3, *),
+                let securityDescription = SecCopyErrorMessageString(self, nil) {
+                    description = securityDescription as String
+            }
+            else {
+                description = "Operation could not be completed (OSError \(self))."
+            }
+            
+            throw NSError(description: description, code: Int(self))
+        }
+    }
+}
+#endif
+
+public func printError(_ items: CustomStringConvertible...) {
+    let errorString = items.map({ $0.description }).joined(separator: " ") + "\n"
+    FileHandle.standardError.write(errorString.data(using: .utf8)!)
 }

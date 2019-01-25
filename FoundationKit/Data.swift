@@ -8,6 +8,14 @@
 
 import Foundation
 
+extension Data {
+    public func readingPipe() -> Pipe {
+        let pipe = Pipe()
+        pipe.fileHandleForWriting.write(self)
+        return pipe
+    }
+}
+
 #if canImport(Darwin) || swift(>=4.2)
 extension Data {
     @available(*, deprecated, message: "Use Data.random(count:)")
