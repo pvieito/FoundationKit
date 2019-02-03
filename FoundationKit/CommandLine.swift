@@ -8,6 +8,7 @@
 
 import Foundation
 
+@available(*, deprecated, message: "Use LoggerKit instead.")
 extension CommandLine {
     /// Print a usage help text in the Command Line.
     ///
@@ -16,7 +17,6 @@ extension CommandLine {
     ///   - author: Author of the tool.
     ///   - year: Year of creation of the tool. It will show as part of the copyright with the author.
     ///   - description: Description of the tool.
-    @available(*, deprecated)
     public static func print(usage: String, author: String, year: Int, description: String) {
         guard !arguments.isEmpty else {
             return
