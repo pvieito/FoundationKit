@@ -30,12 +30,9 @@ class URLTest: XCTestCase {
     }
     
     func testURL_isSupported() {
+        #if canImport(Cocoa) || canImport(UIKit)
         XCTAssertTrue(URLTest.supportedURL.isSupported)
         XCTAssertFalse(URLTest.unsupportedURL.isSupported)
-    }
-    
-    func testURL_open() {
-        XCTAssertNoThrow(try URLTest.supportedURL.open())
-        XCTAssertThrowsError(try URLTest.unsupportedURL.open())
+        #endif
     }
 }

@@ -62,6 +62,7 @@
 		AA87BE7021D03D1600EF404A /* NSAppleScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSAppleScript.swift; sourceTree = "<group>"; };
 		AA912C1A1EE96CF2002DD639 /* FoundationKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FoundationKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA912D6321CECBC300ABFCC7 /* PropertyListCoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropertyListCoder.swift; sourceTree = "<group>"; };
+		AA9F086C222F36B100245ED0 /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		AAA03AB11EBD23200005BF72 /* MeasurementFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeasurementFormatter.swift; sourceTree = "<group>"; };
 		AAB638781EBBDD28008365EB /* URL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
 		AABBD9A61E5761D000AE5B46 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -104,6 +105,7 @@
 		AABB23161E2E7AFE007B7F68 = {
 			isa = PBXGroup;
 			children = (
+				AA9F086C222F36B100245ED0 /* Package.swift */,
 				AABBD9A51E5761D000AE5B46 /* FoundationKit */,
 				AAD31D261F883C8800C056DD /* FoundationKitTests */,
 				AABB23211E2E7AFE007B7F68 /* Products */,
@@ -152,7 +154,8 @@
 				AAF3951321CFE15A003B7933 /* URLTest.swift */,
 				AAD31D291F883C8800C056DD /* Info.plist */,
 			);
-			path = FoundationKitTests;
+			name = FoundationKitTests;
+			path = Tests/FoundationKitTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -615,7 +618,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = T7MC635YG5;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = FoundationKitTests/Info.plist;
+				INFOPLIST_FILE = Tests/FoundationKitTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pvieito.FoundationKitTests;
@@ -637,7 +640,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = T7MC635YG5;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = FoundationKitTests/Info.plist;
+				INFOPLIST_FILE = Tests/FoundationKitTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pvieito.FoundationKitTests;

@@ -8,6 +8,13 @@ let package = Package(
         .library(name: "FoundationKit", targets: ["FoundationKit"]),
     ],
     targets: [
-        .target(name: "FoundationKit", path: "FoundationKit")
+        .target(
+            name: "FoundationKit",
+            path: "FoundationKit"
+        ),
+        .testTarget(
+            name: "FoundationKitTests",
+            dependencies: ["FoundationKit"]
+        ),
     ]
 )
