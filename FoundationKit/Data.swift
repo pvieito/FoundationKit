@@ -34,7 +34,7 @@ extension Data {
             return UInt8(arc4random() & 0xFF)
             #endif
         }
-        return Data(bytes: bytes)
+        return Data(bytes)
     }
 }
 #endif
