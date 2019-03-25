@@ -57,6 +57,8 @@ extension URL {
 extension URL {
     /// Attempts to open the resource at the specified URL asynchronously.
     @available(iOSApplicationExtension, unavailable)
+    @available(tvOSApplicationExtension, unavailable)
+    @available(watchOSApplicationExtension, unavailable)
     public func open() throws {
         var success = false
         
@@ -75,6 +77,8 @@ extension URL {
     
     /// Returns a Boolean value indicating whether an app is available to handle a URL scheme.
     @available(iOSApplicationExtension, unavailable)
+    @available(tvOSApplicationExtension, unavailable)
+    @available(watchOS, unavailable)
     public var isSupported: Bool {
         #if canImport(UIKit) && !os(watchOS)
         return UIApplication.shared.canOpenURL(self)
