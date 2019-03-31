@@ -93,6 +93,18 @@ extension URL {
         return false
         #endif
     }
+    
+    /// Attempts to reveal the specified URL in a file browser.
+    @available(iOS, unavailable)
+    @available(tvOS, unavailable)
+    @available(watchOS, unavailable)
+    public func reveal() throws {
+        #if canImport(Cocoa)
+        NSWorkspace.shared.activateFileViewerSelecting([self.absoluteURL])
+        #else
+        throw Error.openingFailure(self)
+        #endif
+    }
 }
 
 extension URL {
