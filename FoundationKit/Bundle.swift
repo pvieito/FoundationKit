@@ -12,10 +12,9 @@ private let kCFBundleNameKey = "CFBundleName"
 private let kCFBundleDisplayNameKey = "CFBundleDisplayName"
 private let kCFBundleVersionKey = "CFBundleVersion"
 private let kCFBundleShortVersionStringKey = "CFBundleShortVersionString"
-private let NSPrincipalClass = "NSPrincipalClass"
+private let kNSPrincipalClassKey = "NSPrincipalClass"
 
 extension Bundle {
-    
     private var bundleDisplayName: String? {
         return self.object(forInfoDictionaryKey: kCFBundleDisplayNameKey) as? String
     }
@@ -36,12 +35,8 @@ extension Bundle {
     }
     
     public var bundleVersion: String? {
-        
-        guard let bundleVersion = self.object(forInfoDictionaryKey: kCFBundleVersionKey) as? String else {
-            return nil
-        }
-        
-        guard bundleVersion != "" else {
+        guard let bundleVersion = self.object(forInfoDictionaryKey: kCFBundleVersionKey) as? String,
+            bundleVersion != "" else {
             return nil
         }
         
@@ -49,12 +44,8 @@ extension Bundle {
     }
     
     public var bundleShortVersion: String? {
-        
-        guard let bundleShortVersion = self.object(forInfoDictionaryKey: kCFBundleShortVersionStringKey) as? String else {
-            return nil
-        }
-            
-        guard bundleShortVersion != "" else {
+        guard let bundleShortVersion = self.object(forInfoDictionaryKey: kCFBundleShortVersionStringKey) as? String,
+            bundleShortVersion != "" else {
             return nil
         }
         
@@ -62,15 +53,19 @@ extension Bundle {
     }
     
     public var principalClassString: String? {
-        
-        guard let principalClassString = self.object(forInfoDictionaryKey: NSPrincipalClass) as? String else {
-            return nil
-        }
-            
-        guard principalClassString != "" else {
+        guard let principalClassString = self.object(forInfoDictionaryKey: kNSPrincipalClassKey) as? String,
+            principalClassString != "" else {
             return nil
         }
         
         return principalClassString
+    }
+}
+
+extension Bundle {
+    public static func currentSourceFileDirectoryBundle(file: String = #file) -> Bundle {
+        let codeFileURL = URL(fileURLWithPath: file)
+        let bundleURL = codeFileURL.deletingLastPathComponent()
+        return Bundle(url: bundleURL)!
     }
 }
