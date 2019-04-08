@@ -64,7 +64,7 @@ extension Bundle {
 
 extension Bundle {
     #if canImport(Darwin)
-    static var allLoadedBundles: [Bundle] {
+    static var allLoadedBundles: [Bundle] {
         return allBundles + allFrameworks
     }
     #endif
