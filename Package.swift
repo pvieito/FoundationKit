@@ -5,7 +5,10 @@ import PackageDescription
 let package = Package(
     name: "FoundationKit",
     products: [
-        .library(name: "FoundationKit", targets: ["FoundationKit"]),
+        .library(
+            name: "FoundationKit",
+            targets: ["FoundationKit"]
+        )
     ],
     targets: [
         .target(
@@ -15,6 +18,6 @@ let package = Package(
         .testTarget(
             name: "FoundationKitTests",
             dependencies: ["FoundationKit"]
-        ),
+        )
     ]
 )
