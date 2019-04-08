@@ -63,9 +63,32 @@ extension Bundle {
 }
 
 extension Bundle {
-    public static func currentSourceFileDirectoryBundle(file: String = #file) -> Bundle {
-        let codeFileURL = URL(fileURLWithPath: file)
-        let bundleURL = codeFileURL.deletingLastPathComponent()
-        return Bundle(url: bundleURL)!
+    /// Finds the current module bundle using different techniques.
+    ///
+    /// The techniques used to find the module bundle are the following:
+    /// - On supported platforms, it tries to find a loaded bundle with an identifier ending with then module name.
+    /// - The directory of the source file.
+    /// - The main bundle.
+    ///
+    /// The module name is inferred from the directory name of the calling source file.
+    ///
+    /// - Returns: The inferred module bundle.
+    public static func currentModuleBundle(file: String = #file) -> Bundle {
+        let sourceFileURL = URL(fileURLWithPath: file)
+        let moduleDirectoryURL = sourceFileURL.deletingLastPathComponent()
+        let moduleName = moduleDirectoryURL.lastPathComponent
+        
+        #if canImport(Darwin)
+        if let moduleBundle = Bundle.allBundles
+            .filter({ $0.bundleIdentifier?.hasSuffix(".\(moduleName)") ?? false }).first {
+            return moduleBundle
+        }
+        #endif
+        
+        if let sourceModuleBundle = Bundle(url: moduleDirectoryURL) {
+            return sourceModuleBundle
+        }
+        
+        return Bundle.main
     }
 }

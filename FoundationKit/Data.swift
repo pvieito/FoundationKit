@@ -16,7 +16,6 @@ extension Data {
     }
 }
 
-#if canImport(Darwin) || swift(>=4.2)
 extension Data {
     @available(*, deprecated, message: "Use Data.random(count:)")
     public init(randomBytesCount count: Int) {
@@ -37,7 +36,6 @@ extension Data {
         return Data(bytes)
     }
 }
-#endif
 
 fileprivate let hexadecimalConversionArray: [[UInt8]] = [
     [48, 48], [48, 49], [48, 50], [48, 51], [48, 52], [48, 53],

@@ -9,10 +9,9 @@
 import Foundation
 
 extension UserDefaults {
-    
-    /// Return the User Defaults of a Sandboxed app with the specified container identifier.
+    /// Return the User Defaults of a sandboxed app with the specified container identifier.
     ///
-    /// - Note: Not available in a Sanboxed environment.
+    /// - Note: Not available in a sanboxed environment.
     @available(iOS, unavailable)
     @available(watchOS, unavailable)
     @available(tvOS, unavailable)

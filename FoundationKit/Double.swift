@@ -9,7 +9,6 @@
 import Foundation
 
 extension Double {
-
     /// Returns the number rounded with the decimal places specified.
     ///
     /// - Parameter decimalPlaces: Decimal places to return.

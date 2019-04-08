@@ -8,7 +8,7 @@
 
 import Foundation
 
-#if canImport(Cocoa)
+#if os(macOS)
 extension NSAppleScript {
     @discardableResult
     public func execute() throws -> NSAppleEventDescriptor {

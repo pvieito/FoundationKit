@@ -6,7 +6,7 @@
 //  Copyright © 2018 Pedro José Pereira Vieito. All rights reserved.
 //
 
-#if !canImport(Darwin)
+#if !canImport(Darwin) && swift(<5.1)
 import Foundation
 import CoreFoundation
 
