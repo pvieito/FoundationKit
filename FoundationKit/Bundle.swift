@@ -37,7 +37,7 @@ extension Bundle {
     public var bundleVersion: String? {
         guard let bundleVersion = self.object(forInfoDictionaryKey: kCFBundleVersionKey) as? String,
             bundleVersion != "" else {
-            return nil
+                return nil
         }
         
         return bundleVersion
@@ -46,7 +46,7 @@ extension Bundle {
     public var bundleShortVersion: String? {
         guard let bundleShortVersion = self.object(forInfoDictionaryKey: kCFBundleShortVersionStringKey) as? String,
             bundleShortVersion != "" else {
-            return nil
+                return nil
         }
         
         return bundleShortVersion
@@ -55,7 +55,7 @@ extension Bundle {
     public var principalClassString: String? {
         guard let principalClassString = self.object(forInfoDictionaryKey: kNSPrincipalClassKey) as? String,
             principalClassString != "" else {
-            return nil
+                return nil
         }
         
         return principalClassString
@@ -68,7 +68,7 @@ extension Bundle {
         return allBundles + allFrameworks
     }
     #endif
-
+    
     /// Finds the current module bundle using different techniques.
     ///
     /// The techniques used to find the module bundle are the following:
