@@ -63,6 +63,12 @@ extension Bundle {
 }
 
 extension Bundle {
+    #if canImport(Darwin)
+    static var allLoadedBundles: [Bundle] {
+        return allBundles + allFrameworks
+    }
+    #endif
+
     /// Finds the current module bundle using different techniques.
     ///
     /// The techniques used to find the module bundle are the following:
@@ -79,7 +85,7 @@ extension Bundle {
         let moduleName = moduleDirectoryURL.lastPathComponent
         
         #if canImport(Darwin)
-        if let moduleBundle = Bundle.allBundles
+        if let moduleBundle = Bundle.allLoadedBundles
             .filter({ $0.bundleIdentifier?.hasSuffix(".\(moduleName)") ?? false }).first {
             return moduleBundle
         }
