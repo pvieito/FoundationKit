@@ -37,6 +37,7 @@
 		AAD31D2A1F883C8800C056DD /* FoundationKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA2563CF1E57639E0037CBED /* FoundationKit.framework */; };
 		AAEF0C151E757A3500CF4C6A /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAEF0C141E757A3500CF4C6A /* Double.swift */; };
 		AAF3951421CFE15A003B7933 /* URLTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF3951321CFE15A003B7933 /* URLTest.swift */; };
+		AAF8C58122AEE61E00FDA6B0 /* Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF8C58022AEE61E00FDA6B0 /* Dictionary.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,6 +77,7 @@
 		AAD31D291F883C8800C056DD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AAEF0C141E757A3500CF4C6A /* Double.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Double.swift; sourceTree = "<group>"; };
 		AAF3951321CFE15A003B7933 /* URLTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLTest.swift; sourceTree = "<group>"; };
+		AAF8C58022AEE61E00FDA6B0 /* Dictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dictionary.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,6 +132,7 @@
 				AA4E843C2138505400E6DCFC /* Bundle.swift */,
 				AABBD9A71E5761D000AE5B46 /* String.swift */,
 				AAB638781EBBDD28008365EB /* URL.swift */,
+				AAF8C58022AEE61E00FDA6B0 /* Dictionary.swift */,
 				AAEF0C141E757A3500CF4C6A /* Double.swift */,
 				AA0D3D671EA033B700FB7EBD /* Error.swift */,
 				AA0D3D691EA039FD00FB7EBD /* Array.swift */,
@@ -325,6 +328,7 @@
 				AA87BE7121D03DB800EF404A /* NSAppleScript.swift in Sources */,
 				AA2565A51E57AA7C0037CBED /* CommandLine.swift in Sources */,
 				AA4E843D2138505400E6DCFC /* Bundle.swift in Sources */,
+				AAF8C58122AEE61E00FDA6B0 /* Dictionary.swift in Sources */,
 				AAA03AB21EBD23200005BF72 /* MeasurementFormatter.swift in Sources */,
 				AAB638791EBBDD28008365EB /* URL.swift in Sources */,
 			);
