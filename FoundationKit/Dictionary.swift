@@ -9,7 +9,7 @@
 import Foundation
 
 extension Dictionary {
-    var propertyList: String {
+    public var propertyList: String {
         if let propertyListData = try? PropertyListSerialization.data(
                 fromPropertyList: self, format: .xml, options: 0),
             let propertyListString = String(data: propertyListData, encoding: .utf8) {
