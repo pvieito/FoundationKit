@@ -26,6 +26,21 @@ extension FileManager {
     public var currentDirectoryURL: URL {
         return URL(fileURLWithPath: self.currentDirectoryPath)
     }
+    
+    /// Replaces a symbolic link at the specified URL that points to an item at the given URL.
+    public func replaceSymbolicLink(
+        at url: URL, withDestinationURL destinationURL: URL) throws {
+        try? self.removeItem(at: url)
+        try self.createSymbolicLink(
+            at: url, withDestinationURL: destinationURL)
+    }
+    
+    /// Replaces a symbolic link at the specified path that points to an item at the given destination path.
+    public func replaceSymbolicLink(
+        atPath path: String, withDestinationPath destinationPath: String) throws {
+        try? self.removeItem(atPath: path)
+        try self.createSymbolicLink(atPath: path, withDestinationPath: destinationPath)
+    }
 }
 
 extension FileManager {
