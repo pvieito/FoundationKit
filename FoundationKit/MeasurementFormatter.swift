@@ -8,6 +8,7 @@
 
 import Foundation
 
+#if canImport(Darwin)
 @available(watchOS 3.0, *)
 @available(iOS 10.0, *)
 @available(tvOS 10.0, *)
@@ -38,3 +39,4 @@ extension MeasurementFormatter {
         }
     }
 }
+#endif

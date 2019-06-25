@@ -14,7 +14,7 @@ extension Double {
     /// - Parameter decimalPlaces: Decimal places to return.
     /// - Returns: Rounded number as Double.
     public func rounded(decimalPlaces: Int) -> Double {
-        let divisor = pow(10.0, Double(decimalPlaces))
+        let divisor = Foundation.pow(10.0, Double(decimalPlaces))
         return (self * divisor).rounded() / divisor
     }
 
