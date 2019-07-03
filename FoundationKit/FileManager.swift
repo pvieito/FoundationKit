@@ -41,6 +41,18 @@ extension FileManager {
         try? self.removeItem(atPath: path)
         try self.createSymbolicLink(atPath: path, withDestinationPath: destinationPath)
     }
+    
+    /// Generates a random file URL on a temporary location.
+    public func temporaryRandomFileURL(pathExtension: String? = nil) -> URL {
+        let temporaryDirectory = URL(fileURLWithPath: NSTemporaryDirectory())
+        var temporaryFileURL = temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        
+        if let pathExtension = pathExtension {
+            temporaryFileURL.appendPathExtension(pathExtension)
+        }
+        
+        return temporaryFileURL
+    }
 }
 
 extension FileManager {
@@ -57,7 +69,6 @@ extension FileManager {
         private static var isCleaned = false
         
         static var autocleanedTemporaryDirectory: URL {
-            
             let processName = Bundle.main.bundleIdentifier ?? ProcessInfo.processInfo.processName
             
             let temporaryDirectoryURL = URL(fileURLWithPath: NSTemporaryDirectory())
