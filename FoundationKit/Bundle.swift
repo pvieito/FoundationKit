@@ -85,8 +85,12 @@ extension Bundle {
         let moduleName = moduleDirectoryURL.lastPathComponent
         
         #if canImport(Darwin)
-        if let moduleBundle = Bundle.allLoadedBundles
-            .filter({ $0.bundleIdentifier?.hasSuffix(".\(moduleName)") ?? false }).first {
+        let loadedBundles = Bundle.allLoadedBundles.filter { bundle in
+            guard let bundleIdentifier = bundle.bundleIdentifier else { return false }
+            return !bundleIdentifier.hasPrefix("com.apple.") &&
+                bundleIdentifier.hasSuffix(".\(moduleName)")
+        }
+        if let moduleBundle = loadedBundles.first {
             return moduleBundle
         }
         #endif
