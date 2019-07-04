@@ -47,6 +47,28 @@ extension Process {
 }
 
 extension Process {
+    public func runReplacingCurrentProcess() throws {
+        var executableURL: URL?
+        
+        if #available(macOS 10.13, *) {
+            executableURL = self.executableURL
+        } else {
+            executableURL = self.launchPath?.pathURL
+        }
+        
+        guard let targetExecutableURL = executableURL else {
+            throw NSError(description: "Error launching unspecified executable.")
+        }
+        
+        var arguments = self.arguments ?? []
+        arguments = [targetExecutableURL.path] + arguments
+        let cArguments = arguments.map { strdup($0) } + [nil]
+        
+        execv(targetExecutableURL.path, cArguments)
+        
+        throw NSError(description: "Error launching “\(targetExecutableURL.lastPathComponent)” executable.")
+    }
+    
     public func runAndWaitUntilExit() throws {
         if #available(macOS 10.13, *) {
             try self.run()
