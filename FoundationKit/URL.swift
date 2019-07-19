@@ -59,7 +59,7 @@ extension URL {
     @available(iOSApplicationExtension, unavailable)
     @available(tvOSApplicationExtension, unavailable)
     @available(watchOSApplicationExtension, unavailable)
-    @available(UIKitForMacApplicationExtension, unavailable)
+    @available(macCatalystApplicationExtension, unavailable)
     public func open() throws {
         var success = false
         
@@ -80,7 +80,7 @@ extension URL {
     @available(iOSApplicationExtension, unavailable)
     @available(tvOSApplicationExtension, unavailable)
     @available(watchOS, unavailable)
-    @available(UIKitForMacApplicationExtension, unavailable)
+    @available(macCatalystApplicationExtension, unavailable)
     public var isSupported: Bool {
         #if canImport(UIKit) && !os(watchOS)
         return UIApplication.shared.canOpenURL(self)
@@ -100,9 +100,9 @@ extension URL {
     @available(iOS, unavailable)
     @available(tvOS, unavailable)
     @available(watchOS, unavailable)
-    @available(UIKitForMac, unavailable)
+    @available(macCatalyst, unavailable)
     public func reveal() throws {
-        #if canImport(Cocoa) && !targetEnvironment(UIKitForMac)
+        #if canImport(Cocoa) && !targetEnvironment(macCatalyst)
         NSWorkspace.shared.activateFileViewerSelecting([self.absoluteURL])
         #else
         throw Error.openingFailure(self)
