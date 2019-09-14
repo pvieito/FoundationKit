@@ -1,0 +1,19 @@
+name: Continuous Integration
+
+on:
+  - push
+  - pull_request
+
+jobs:
+  continuous-integration:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Installing Swift
+        env:
+          SWIFT_VERSION: DEVELOPMENT-SNAPSHOT-2019-07-01-a
+        run: |
+          eval "$(curl -sL https://swiftenv.fuller.li/install.sh)"
+          ~/.swiftenv/bin/swiftenv global $SWIFT_VERSION
+      - name: Test
+        run: ~/.swiftenv/shims/swift test --enable-test-discovery
