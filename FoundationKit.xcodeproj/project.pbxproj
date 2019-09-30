@@ -17,6 +17,7 @@
 		AA4F54CD1ED8BCD7000C1333 /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4F54CC1ED8BCD7000C1333 /* FileManager.swift */; };
 		AA640565207195EE00F17D45 /* Process.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA640564207195EE00F17D45 /* Process.swift */; };
 		AA64057320719BB000F17D45 /* ProcessTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA64057220719BB000F17D45 /* ProcessTest.swift */; };
+		AA6D9AF82342AB3C007A676D /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6D9AF72342AB3C007A676D /* Date.swift */; };
 		AA72432221812A6600084F58 /* UUID.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA72432121812A6600084F58 /* UUID.swift */; };
 		AA87BE7121D03DB800EF404A /* NSAppleScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA87BE7021D03D1600EF404A /* NSAppleScript.swift */; };
 		AA912C221EE96D17002DD639 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABBD9A71E5761D000AE5B46 /* String.swift */; };
@@ -61,6 +62,7 @@
 		AA4F54CC1ED8BCD7000C1333 /* FileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
 		AA640564207195EE00F17D45 /* Process.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Process.swift; sourceTree = "<group>"; };
 		AA64057220719BB000F17D45 /* ProcessTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessTest.swift; sourceTree = "<group>"; };
+		AA6D9AF72342AB3C007A676D /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		AA72432121812A6600084F58 /* UUID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUID.swift; sourceTree = "<group>"; };
 		AA87BE7021D03D1600EF404A /* NSAppleScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSAppleScript.swift; sourceTree = "<group>"; };
 		AA912C1A1EE96CF2002DD639 /* FoundationKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FoundationKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -130,6 +132,7 @@
 			isa = PBXGroup;
 			children = (
 				AA4E843C2138505400E6DCFC /* Bundle.swift */,
+				AA6D9AF72342AB3C007A676D /* Date.swift */,
 				AABBD9A71E5761D000AE5B46 /* String.swift */,
 				AAB638781EBBDD28008365EB /* URL.swift */,
 				AAF8C58022AEE61E00FDA6B0 /* Dictionary.swift */,
@@ -321,6 +324,7 @@
 				AA0D3D6A1EA039FD00FB7EBD /* Array.swift in Sources */,
 				AA2563C61E57639E0037CBED /* String.swift in Sources */,
 				AAEF0C151E757A3500CF4C6A /* Double.swift in Sources */,
+				AA6D9AF82342AB3C007A676D /* Date.swift in Sources */,
 				AA111F74225AB2AA00F3A9BB /* ProcessInfo.swift in Sources */,
 				AABFE0BD1F9A494200F1C1B2 /* Data.swift in Sources */,
 				AA912D6421CECBC300ABFCC7 /* PropertyListCoder.swift in Sources */,
