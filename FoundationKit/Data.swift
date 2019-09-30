@@ -91,7 +91,7 @@ extension Data {
             return ""
         }
         
-        return "0x" + String(data: self.hexData, encoding: .ascii)!.uppercased()
+        return String(data: self.hexData, encoding: .ascii)!.uppercased()
     }
     
     /// Hexadecimal representation of the Data as Data encoded in ASCII.
