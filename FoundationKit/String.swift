@@ -60,7 +60,7 @@ extension String {
         return nil
     }
     
-    /// True is all string character are ASCII.
+    /// True if all string characters are ASCII.
     public var isASCII: Bool {
         return self.allSatisfy { $0.isASCII }
     }
