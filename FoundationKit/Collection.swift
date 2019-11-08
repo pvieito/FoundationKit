@@ -1,5 +1,5 @@
 //
-//  Array.swift
+//  Collection.swift
 //  FoundationKit
 //
 //  Created by Pedro José Pereira Vieito on 14/4/17.
@@ -13,21 +13,28 @@ extension Array {
     ///
     /// - Parameter newElements: Elements appended to the returned array.
     /// - Returns: Array with the elements appended.
-    public func appending<S>(contentsOf newElements: S) -> Array<Element>
+    public func appending<S>(contentsOf newElements: S) -> Self
         where S : Sequence, S.Iterator.Element == Element {
-        return self + newElements
+            return self + newElements
     }
-
+    
     /// Returns the array with the specified element appended.
     ///
     /// - Parameter newElement: Element appended to the returned array.
     /// - Returns: Array with the element appended.
-    public func appending(_ newElement: Element) -> Array<Element> {
+    public func appending(_ newElement: Element) -> Self {
         return self + [newElement]
     }
 }
 
-extension Array where Element: Hashable {
+extension Collection {
+    /// Get element at index, if any.
+    public func get(elementAt index: Index) -> Element? {
+        return self.indices.contains(index) ? self[index] : nil
+    }
+}
+
+extension Collection where Element: Hashable {
     /// The frequency distribution of elements in the array.
     public var frequencies: [Element: Int] {
         return self.reduce([:], { (partialFrequencies, element) -> [Element: Int] in
@@ -43,7 +50,7 @@ extension Array where Element: Hashable {
     }
 }
 
-extension Array where Element == URL {
+extension Collection where Element == URL {
     /// Returns the first common parent directory of all URLs in the array.
     @available(macOS 10.11, *)
     public var commonAntecessor: URL? {
@@ -80,7 +87,7 @@ extension Array where Element == URL {
     }
 }
 
-extension Array where Element == String {
+extension Collection where Element == String {
     /// Returns array of URLs with the Strings as the paths.
     public var pathURLs: [URL] {
         return self.map({ $0.pathURL })
