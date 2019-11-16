@@ -43,9 +43,13 @@ extension FileManager {
     }
     
     /// Generates a random file URL on a temporary location.
-    public func temporaryRandomFileURL(pathExtension: String? = nil) -> URL {
+    public func temporaryRandomFileURL(filename: String? = nil, pathExtension: String? = nil) -> URL {
         let temporaryDirectory = URL(fileURLWithPath: NSTemporaryDirectory())
-        var temporaryFileURL = temporaryDirectory.appendingPathComponent(UUID().uuidString)
+            .appendingPathComponent(UUID().uuidString)
+        try? FileManager.default.createDirectory(at: temporaryDirectory, withIntermediateDirectories: true)
+        
+        let filename = filename ?? UUID().uuidString
+        var temporaryFileURL = temporaryDirectory.appendingPathComponent(filename)
         
         if let pathExtension = pathExtension {
             temporaryFileURL.appendPathExtension(pathExtension)

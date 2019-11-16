@@ -9,6 +9,17 @@
 import Foundation
 
 extension Data {
+    public func writeTemporaryFile(
+        filename: String? = nil, pathExtension: String? = nil,
+        options: Data.WritingOptions = []) throws -> URL {
+        let temporaryFileURL = FileManager.default.temporaryRandomFileURL(
+            filename: filename, pathExtension: pathExtension)
+        try self.write(to: temporaryFileURL, options: options)
+        return temporaryFileURL
+    }
+}
+
+extension Data {
     public func readingPipe() -> Pipe {
         let pipe = Pipe()
         pipe.fileHandleForWriting.write(self)
