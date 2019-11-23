@@ -57,6 +57,17 @@ extension FileManager {
         
         return temporaryFileURL
     }
+    
+    /// Real URL to the user home directory, even in a Sanboxed environment.
+    public var realHomeDirectoryForCurrentUser: URL {
+        var homeDirectoryForCurrentUser = self.homeDirectoryForCurrentUser
+        #if os(macOS)
+        if let userPath = getpwuid(getuid())?.pointee.pw_dir else {
+            let homeDirectoryForCurrentUser = URL(fileURLWithPath: String(cString: userPath))
+        }
+        #endif
+        return homeDirectoryForCurrentUser
+    }
 }
 
 extension FileManager {
@@ -157,21 +168,6 @@ extension FileManager {
         }
 
         return containerURL
-    }
-
-    /// Real URL to the user home directory, even in a Sanboxed environment.
-    public var realHomeDirectoryForCurrentUser: URL? {
-        guard let userPath = getpwuid(getuid())?.pointee.pw_dir else {
-            return nil
-        }
-
-        let homeDirectory = URL(fileURLWithPath: String(cString: userPath))
-
-        guard self.fileExists(atPath: homeDirectory.path) else {
-            return nil
-        }
-
-        return homeDirectory
     }
     
     /// Returns the Library directory for the current user.
