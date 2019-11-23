@@ -60,10 +60,10 @@ extension FileManager {
     
     /// Real URL to the user home directory, even in a Sanboxed environment.
     public var realHomeDirectoryForCurrentUser: URL {
-        var homeDirectoryForCurrentUser = self.homeDirectoryForCurrentUser
+        var homeDirectoryForCurrentUser = URL(fileURLWithPath: NSHomeDirectory())
         #if os(macOS)
-        if let userPath = getpwuid(getuid())?.pointee.pw_dir else {
-            let homeDirectoryForCurrentUser = URL(fileURLWithPath: String(cString: userPath))
+        if let userPath = getpwuid(getuid())?.pointee.pw_dir {
+            homeDirectoryForCurrentUser = URL(fileURLWithPath: String(cString: userPath))
         }
         #endif
         return homeDirectoryForCurrentUser
