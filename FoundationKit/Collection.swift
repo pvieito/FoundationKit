@@ -27,6 +27,22 @@ extension Array {
     }
 }
 
+extension Array where Element: Hashable {
+    /// Returns the array with duplicates removed.
+    public func removingDuplicates() -> [Element] {
+        var addedDict = [Element: Bool]()
+
+        return filter {
+            addedDict.updateValue(true, forKey: $0) == nil
+        }
+    }
+    
+    /// Removes duplicates from the array.
+    public mutating func removeDuplicates() {
+        self = self.removingDuplicates()
+    }
+}
+
 extension Collection {
     /// Get element at index, if any.
     public func get(elementAt index: Index) -> Element? {
