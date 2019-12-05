@@ -65,6 +65,7 @@ extension URL {
         
         #if os(watchOS)
         WKExtension.shared().openSystemURL(self)
+        success = true
         #elseif canImport(UIKit)
         success = UIApplication.shared.openURL(self)
         #elseif canImport(Cocoa)
