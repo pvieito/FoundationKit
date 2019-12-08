@@ -64,6 +64,12 @@ extension Process {
         arguments = [targetExecutableURL.path] + arguments
         let cArguments = arguments.map { strdup($0) } + [nil]
         
+        if let environment = self.environment {
+            for (key, value) in environment {
+                setenv(key, value, 1)
+            }
+        }
+        
         execv(targetExecutableURL.path, cArguments)
         
         throw NSError(description: "Error launching “\(targetExecutableURL.lastPathComponent)” executable.")
