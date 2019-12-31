@@ -61,12 +61,12 @@ extension URL {
     @available(watchOSApplicationExtension, unavailable)
     @available(macCatalystApplicationExtension, unavailable)
     public func open() throws {
-        var success = false
-        
         #if os(watchOS)
         WKExtension.shared().openSystemURL(self)
-        success = true
-        #elseif canImport(UIKit)
+        #else
+        var success = false
+
+        #if canImport(UIKit)
         success = UIApplication.shared.openURL(self)
         #elseif canImport(Cocoa)
         success = NSWorkspace.shared.open(self)
@@ -75,6 +75,7 @@ extension URL {
         if !success {
             throw Error.openingFailure(self)
         }
+        #endif
     }
     
     /// Returns a Boolean value indicating whether an app is available to handle a URL scheme.

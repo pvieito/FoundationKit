@@ -36,6 +36,15 @@
 		AABFE0BB1F9A44DC00F1C1B2 /* DataTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABFE0BA1F9A44DC00F1C1B2 /* DataTests.swift */; };
 		AABFE0BD1F9A494200F1C1B2 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABFE0BC1F9A494200F1C1B2 /* Data.swift */; };
 		AAD31D2A1F883C8800C056DD /* FoundationKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA2563CF1E57639E0037CBED /* FoundationKit.framework */; };
+		AAEE886623BBBC3500DEF859 /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4E843C2138505400E6DCFC /* Bundle.swift */; };
+		AAEE886723BBBC3500DEF859 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6D9AF72342AB3C007A676D /* Date.swift */; };
+		AAEE886823BBBC3500DEF859 /* Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF8C58022AEE61E00FDA6B0 /* Dictionary.swift */; };
+		AAEE886923BBBC3500DEF859 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABFE0BC1F9A494200F1C1B2 /* Data.swift */; };
+		AAEE886A23BBBC3500DEF859 /* Process.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA640564207195EE00F17D45 /* Process.swift */; };
+		AAEE886B23BBBC3500DEF859 /* ProcessInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA111F73225AB2AA00F3A9BB /* ProcessInfo.swift */; };
+		AAEE886C23BBBC3500DEF859 /* UUID.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA72432121812A6600084F58 /* UUID.swift */; };
+		AAEE886D23BBBC3500DEF859 /* PropertyListCoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA912D6321CECBC300ABFCC7 /* PropertyListCoder.swift */; };
+		AAEE886E23BBBC3500DEF859 /* NSAppleScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA87BE7021D03D1600EF404A /* NSAppleScript.swift */; };
 		AAEF0C151E757A3500CF4C6A /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAEF0C141E757A3500CF4C6A /* Double.swift */; };
 		AAF3951421CFE15A003B7933 /* URLTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF3951321CFE15A003B7933 /* URLTest.swift */; };
 		AAF8C58122AEE61E00FDA6B0 /* Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF8C58022AEE61E00FDA6B0 /* Dictionary.swift */; };
@@ -343,14 +352,23 @@
 			buildActionMask = 2147483647;
 			files = (
 				AA912C221EE96D17002DD639 /* String.swift in Sources */,
+				AAEE886B23BBBC3500DEF859 /* ProcessInfo.swift in Sources */,
 				AA912C2D1EE96D17002DD639 /* CommandLine.swift in Sources */,
 				AA912C251EE96D17002DD639 /* Double.swift in Sources */,
+				AAEE886623BBBC3500DEF859 /* Bundle.swift in Sources */,
 				AA912C291EE96D17002DD639 /* UserDefaults.swift in Sources */,
+				AAEE886823BBBC3500DEF859 /* Dictionary.swift in Sources */,
 				AA912C271EE96D17002DD639 /* Collection.swift in Sources */,
 				AA912C2A1EE96D17002DD639 /* FileManager.swift in Sources */,
+				AAEE886923BBBC3500DEF859 /* Data.swift in Sources */,
 				AA912C261EE96D17002DD639 /* Error.swift in Sources */,
+				AAEE886723BBBC3500DEF859 /* Date.swift in Sources */,
+				AAEE886C23BBBC3500DEF859 /* UUID.swift in Sources */,
 				AA912C241EE96D17002DD639 /* URL.swift in Sources */,
+				AAEE886E23BBBC3500DEF859 /* NSAppleScript.swift in Sources */,
 				AA912C2E1EE96D17002DD639 /* MeasurementFormatter.swift in Sources */,
+				AAEE886D23BBBC3500DEF859 /* PropertyListCoder.swift in Sources */,
+				AAEE886A23BBBC3500DEF859 /* Process.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
