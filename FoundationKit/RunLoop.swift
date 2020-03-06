@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreFoundation
 
 extension RunLoop {
     public func stop() {
