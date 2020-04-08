@@ -11,6 +11,7 @@ import CoreFoundation
 
 #if canImport(UIKit)
 import UIKit
+import MobileCoreServices
 #elseif canImport(Cocoa)
 import Cocoa
 #endif
