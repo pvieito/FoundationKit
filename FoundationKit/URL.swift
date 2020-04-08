@@ -55,6 +55,35 @@ extension URL {
 }
 
 extension URL {
+    public var typeIdentifier: String? {
+        let resourceValues = try? self.resourceValues(forKeys: [.typeIdentifierKey])
+        return resourceValues?.typeIdentifier
+    }
+    
+    public func typeIdentifierConforms(to otherTypeIdentifier: String) -> Bool {
+        #if canImport(UIKit) || canImport(Cocoa)
+        guard let typeIdentifier = self.typeIdentifier else {
+            return false
+        }
+        
+        return UTTypeConformsTo(typeIdentifier as CFString, otherTypeIdentifier as CFString)
+        #else
+        return false
+        #endif
+    }
+    
+    public func typeIdentifierConforms(to otherTypeIdentifiers: [String]) -> Bool {
+        for otherTypeIdentifier in otherTypeIdentifiers {
+            if self.typeIdentifierConforms(to: otherTypeIdentifier) {
+                return true
+            }
+        }
+        
+        return false
+    }
+}
+
+extension URL {
     /// Attempts to open the resource at the specified URL asynchronously.
     @available(iOSApplicationExtension, unavailable)
     @available(tvOSApplicationExtension, unavailable)
