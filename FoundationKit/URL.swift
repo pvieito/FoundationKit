@@ -103,7 +103,10 @@ extension URL {
         #elseif os(Linux)
         let openProcess = try Process(
             executableName: "xdg-open", arguments: [self.absoluteString])
-        openProcess.runAndWaitUntilExit()
+        openProcess.standardOutput = nil
+        openProcess.standardError = nil
+        try openProcess.runAndWaitUntilExit()
+        success = true
         #endif
         
         if !success {
