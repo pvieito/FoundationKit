@@ -100,6 +100,10 @@ extension URL {
         success = UIApplication.shared.openURL(self)
         #elseif canImport(Cocoa)
         success = NSWorkspace.shared.open(self)
+        #elseif os(Linux)
+        let openProcess = try Process(
+            executableName: "xdg-open", arguments: [self.absoluteString])
+        openProcess.open()
         #endif
         
         if !success {
