@@ -57,8 +57,12 @@ extension URL {
 
 extension URL {
     public var typeIdentifier: String? {
-        let resourceValues = try? self.resourceValues(forKeys: [.typeIdentifierKey])
-        return resourceValues?.typeIdentifier
+        #if canImport(UIKit) || canImport(Cocoa)
+        return UTTypeCreatePreferredIdentifierForTag(
+            kUTTagClassFilenameExtension, self.pathExtension as CFString, nil)?.takeRetainedValue() as String?
+        #else
+        return nil
+        #endif
     }
     
     public func typeIdentifierConforms(to otherTypeIdentifier: String) -> Bool {
