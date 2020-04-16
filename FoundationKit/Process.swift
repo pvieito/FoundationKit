@@ -109,13 +109,9 @@ extension Process {
 
 extension Process {
     public static func killProcess(name: String) throws {
-        #if os(macOS)
-        let killallProcess = try Process(executableName: "killall")
-        killallProcess.arguments = [name]
-        try killallProcess.runAndWaitUntilExit()
-        #else
-        throw NSError(description: "Error killing process “\(name)” on unsupported platform.")
-        #endif
+        let killProcess = try Process(
+            executableName: "killall", arguments: [name])
+        try killProcess.runAndWaitUntilExit()
     }
 }
 #endif

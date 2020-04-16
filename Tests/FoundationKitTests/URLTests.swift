@@ -8,7 +8,7 @@
 
 import XCTest
 
-class URLTest: XCTestCase {
+class URLTests: XCTestCase {
     static let supportedURL = URL(string: "https://pvieito.com")!
     static let unsupportedURL = URL(string: "___random_scheme_FAKE___://pvieito.com:51234")!
 
@@ -31,8 +31,8 @@ class URLTest: XCTestCase {
     
     func testURL_isSupported() {
         #if canImport(Cocoa) || canImport(UIKit)
-        XCTAssertTrue(URLTest.supportedURL.isSupported)
-        XCTAssertFalse(URLTest.unsupportedURL.isSupported)
+        XCTAssertTrue(URLTests.supportedURL.isSupported)
+        XCTAssertFalse(URLTests.unsupportedURL.isSupported)
         #endif
     }
 }
