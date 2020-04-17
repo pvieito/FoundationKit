@@ -8,6 +8,12 @@
 
 import Foundation
 
+extension Collection {
+    public func compact<T>() -> [T] where Element == Optional<T> {
+        return self.compactMap { $0 }
+    }
+}
+
 extension Array {
     /// Returns the array with the specified elements appended.
     ///
@@ -70,7 +76,6 @@ extension Collection where Element == URL {
     /// Returns the first common parent directory of all URLs in the array.
     @available(macOS 10.11, *)
     public var commonAntecessor: URL? {
-        
         let stringPaths = self.map({ $0.path })
         
         if self.count == 1, let url = self.first {
