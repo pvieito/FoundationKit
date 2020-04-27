@@ -60,6 +60,17 @@ extension Bundle {
         
         return principalClassString
     }
+    
+    public var bundleDisplayNameWithVersion: String {
+        var bundleDisplayNameWithVersion = Bundle.main.bundleName
+        if let bundleShortVersion = Bundle.main.bundleShortVersion {
+            bundleDisplayNameWithVersion += " \(bundleShortVersion)"
+        }
+        if let bundleVersion = Bundle.main.bundleVersion {
+            bundleDisplayNameWithVersion += " (\(bundleVersion))"
+        }
+        return bundleDisplayNameWithVersion
+    }
 }
 
 extension Bundle {
