@@ -9,6 +9,16 @@
 import Foundation
 
 extension Date {
+    @available(macOS 10.12, *)
+    @available(iOS 10.0, *)
+    @available(tvOS 10.0, *)
+    @available(watchOS 3.0, *)
+    public var iso8601String: String {
+        return ISO8601DateFormatter().string(from: self)
+    }
+}
+
+extension Date {
     public func rounded(minuteInterval: Int) -> Date {
         let dateComponents = Calendar.current.dateComponents([.minute], from: self)
         let minutes = dateComponents.minute!
