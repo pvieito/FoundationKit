@@ -121,3 +121,17 @@ extension Collection where Element == String {
         }
     }
 }
+
+@available(macOS 15.0, *)
+@available(iOS 13.0, *)
+@available(tvOS 13.0, *)
+@available(watchOS 6.0, *)
+extension Collection where Element: CustomStringConvertible {
+    public var listDescription: String {
+        return ListFormatter.localizedString(byJoining: self.map({ $0.description }))
+    }
+    
+    public var quotedListDescription: String {
+        return ListFormatter.localizedString(byJoining: self.map({ "“\($0.description)”" }))
+    }
+}

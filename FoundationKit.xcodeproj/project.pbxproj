@@ -12,6 +12,7 @@
 		AA111F74225AB2AA00F3A9BB /* ProcessInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA111F73225AB2AA00F3A9BB /* ProcessInfo.swift */; };
 		AA2563C61E57639E0037CBED /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABBD9A71E5761D000AE5B46 /* String.swift */; };
 		AA2565A51E57AA7C0037CBED /* CommandLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2565A41E57AA7C0037CBED /* CommandLine.swift */; };
+		AA451705245B5446008B79BC /* CaseIterable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA451704245B5446008B79BC /* CaseIterable.swift */; };
 		AA4E843D2138505400E6DCFC /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4E843C2138505400E6DCFC /* Bundle.swift */; };
 		AA4F547A1ED8A06D000C1333 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4F54791ED8A06D000C1333 /* UserDefaults.swift */; };
 		AA4F54CD1ED8BCD7000C1333 /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4F54CC1ED8BCD7000C1333 /* FileManager.swift */; };
@@ -59,6 +60,7 @@
 		AA111F73225AB2AA00F3A9BB /* ProcessInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessInfo.swift; sourceTree = "<group>"; };
 		AA2563CF1E57639E0037CBED /* FoundationKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FoundationKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA2565A41E57AA7C0037CBED /* CommandLine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandLine.swift; sourceTree = "<group>"; };
+		AA451704245B5446008B79BC /* CaseIterable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaseIterable.swift; sourceTree = "<group>"; };
 		AA4E843C2138505400E6DCFC /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
 		AA4F54791ED8A06D000C1333 /* UserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		AA4F54CC1ED8BCD7000C1333 /* FileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
@@ -141,6 +143,7 @@
 				AA87BE7021D03D1600EF404A /* NSAppleScript.swift */,
 				AAC333402449067200A0164D /* FloatingPoint.swift */,
 				AAC333422449073200A0164D /* BinaryInteger.swift */,
+				AA451704245B5446008B79BC /* CaseIterable.swift */,
 				AABBD9A61E5761D000AE5B46 /* Info.plist */,
 			);
 			path = FoundationKit;
@@ -268,6 +271,7 @@
 				AAC333412449067200A0164D /* FloatingPoint.swift in Sources */,
 				AA72432221812A6600084F58 /* UUID.swift in Sources */,
 				AA0D3D681EA033B700FB7EBD /* Error.swift in Sources */,
+				AA451705245B5446008B79BC /* CaseIterable.swift in Sources */,
 				AA640565207195EE00F17D45 /* Process.swift in Sources */,
 				AA4F547A1ED8A06D000C1333 /* UserDefaults.swift in Sources */,
 				AA0D3D6A1EA039FD00FB7EBD /* Collection.swift in Sources */,
