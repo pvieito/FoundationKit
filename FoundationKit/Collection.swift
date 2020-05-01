@@ -122,6 +122,7 @@ extension Collection where Element == String {
     }
 }
 
+#if canImport(Darwin)
 @available(macOS 15.0, *)
 @available(iOS 13.0, *)
 @available(tvOS 13.0, *)
@@ -135,3 +136,4 @@ extension Collection where Element: CustomStringConvertible {
         return ListFormatter.localizedString(byJoining: self.map({ "“\($0.description)”" }))
     }
 }
+#endif

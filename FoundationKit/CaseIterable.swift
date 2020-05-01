@@ -6,6 +6,7 @@
 //  Copyright © 2020 Pedro José Pereira Vieito. All rights reserved.
 //
 
+#if canImport(Darwin)
 import Foundation
 
 @available(macOS 15.0, *)
@@ -21,3 +22,4 @@ extension CaseIterable where Self: CustomStringConvertible {
         self = value
     }
 }
+#endif
