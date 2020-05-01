@@ -123,7 +123,7 @@ extension Collection where Element == String {
 }
 
 #if canImport(Darwin)
-@available(macOS 15.0, *)
+@available(macOS 10.15, *)
 @available(iOS 13.0, *)
 @available(tvOS 13.0, *)
 @available(watchOS 6.0, *)
