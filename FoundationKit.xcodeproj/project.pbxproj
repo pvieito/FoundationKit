@@ -21,7 +21,6 @@
 		AA72432221812A6600084F58 /* UUID.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA72432121812A6600084F58 /* UUID.swift */; };
 		AA72A228241319170076E287 /* RunLoop.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA72A227241319170076E287 /* RunLoop.swift */; };
 		AA87BE7121D03DB800EF404A /* NSAppleScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA87BE7021D03D1600EF404A /* NSAppleScript.swift */; };
-		AA912D6421CECBC300ABFCC7 /* PropertyListCoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA912D6321CECBC300ABFCC7 /* PropertyListCoder.swift */; };
 		AAA03AB21EBD23200005BF72 /* MeasurementFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA03AB11EBD23200005BF72 /* MeasurementFormatter.swift */; };
 		AAB638791EBBDD28008365EB /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB638781EBBDD28008365EB /* URL.swift */; };
 		AABFE0BD1F9A494200F1C1B2 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABFE0BC1F9A494200F1C1B2 /* Data.swift */; };
@@ -46,7 +45,6 @@
 		AAF42AFA244D1532008F2603 /* CommandLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2565A41E57AA7C0037CBED /* CommandLine.swift */; };
 		AAF42AFB244D1532008F2603 /* MeasurementFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA03AB11EBD23200005BF72 /* MeasurementFormatter.swift */; };
 		AAF42AFC244D1532008F2603 /* UUID.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA72432121812A6600084F58 /* UUID.swift */; };
-		AAF42AFD244D1532008F2603 /* PropertyListCoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA912D6321CECBC300ABFCC7 /* PropertyListCoder.swift */; };
 		AAF42AFE244D1532008F2603 /* RunLoop.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA72A227241319170076E287 /* RunLoop.swift */; };
 		AAF42AFF244D1532008F2603 /* NSAppleScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA87BE7021D03D1600EF404A /* NSAppleScript.swift */; };
 		AAF42B00244D1532008F2603 /* FloatingPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC333402449067200A0164D /* FloatingPoint.swift */; };
@@ -70,7 +68,6 @@
 		AA72A227241319170076E287 /* RunLoop.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RunLoop.swift; sourceTree = "<group>"; };
 		AA87BE7021D03D1600EF404A /* NSAppleScript.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSAppleScript.swift; sourceTree = "<group>"; };
 		AA912C1A1EE96CF2002DD639 /* FoundationKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FoundationKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		AA912D6321CECBC300ABFCC7 /* PropertyListCoder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropertyListCoder.swift; sourceTree = "<group>"; };
 		AAA03AB11EBD23200005BF72 /* MeasurementFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MeasurementFormatter.swift; sourceTree = "<group>"; };
 		AAB638781EBBDD28008365EB /* URL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
 		AABBD9A61E5761D000AE5B46 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -138,7 +135,6 @@
 				AA2565A41E57AA7C0037CBED /* CommandLine.swift */,
 				AAA03AB11EBD23200005BF72 /* MeasurementFormatter.swift */,
 				AA72432121812A6600084F58 /* UUID.swift */,
-				AA912D6321CECBC300ABFCC7 /* PropertyListCoder.swift */,
 				AA72A227241319170076E287 /* RunLoop.swift */,
 				AA87BE7021D03D1600EF404A /* NSAppleScript.swift */,
 				AAC333402449067200A0164D /* FloatingPoint.swift */,
@@ -281,7 +277,6 @@
 				AA111F74225AB2AA00F3A9BB /* ProcessInfo.swift in Sources */,
 				AA72A228241319170076E287 /* RunLoop.swift in Sources */,
 				AABFE0BD1F9A494200F1C1B2 /* Data.swift in Sources */,
-				AA912D6421CECBC300ABFCC7 /* PropertyListCoder.swift in Sources */,
 				AA4F54CD1ED8BCD7000C1333 /* FileManager.swift in Sources */,
 				AA87BE7121D03DB800EF404A /* NSAppleScript.swift in Sources */,
 				AA2565A51E57AA7C0037CBED /* CommandLine.swift in Sources */,
@@ -297,7 +292,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AAF42AFD244D1532008F2603 /* PropertyListCoder.swift in Sources */,
 				AAF42AFA244D1532008F2603 /* CommandLine.swift in Sources */,
 				AAF42AEE244D1532008F2603 /* String.swift in Sources */,
 				AAF42AF5244D1532008F2603 /* Data+Hex.swift in Sources */,
