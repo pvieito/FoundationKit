@@ -49,3 +49,17 @@ extension Data {
         return Data(bytes)
     }
 }
+
+@available(watchOS 6.0, *)
+@available(iOS 13.0, *)
+@available(tvOS 13.0, *)
+@available(macOS 10.15, *)
+extension Data {
+    public var informationStorageMeasurement: Measurement<UnitInformationStorage> {
+        return Measurement(value: Double(self.count), unit: UnitInformationStorage.bytes)
+    }
+    
+    public var informationStorageMeasurementString: String {
+        return ByteCountFormatter.string(from: self.informationStorageMeasurement, countStyle: .file)
+    }
+}

@@ -74,6 +74,22 @@ extension Bundle {
 }
 
 extension Bundle {
+    private static let applicationExtensionPathExtension = "appex"
+    
+    public var isApplicationExtension: Bool {
+        return self.bundleURL.pathExtension == Self.applicationExtensionPathExtension
+    }
+
+    private var applicationExtensionInfo: [String: Any?]? {
+        return self.object(forInfoDictionaryKey: "NSExtension") as? [String: Any?]
+    }
+    
+    public var applicationExtensionPointIdentifier: String? {
+        return applicationExtensionInfo?["NSExtensionPointIdentifier"] as? String
+    }
+}
+
+extension Bundle {
     #if canImport(Darwin)
     static var allLoadedBundles: [Bundle] {
         return allBundles + allFrameworks
