@@ -50,16 +50,18 @@ extension Data {
     }
 }
 
-@available(watchOS 6.0, *)
-@available(iOS 13.0, *)
-@available(tvOS 13.0, *)
-@available(macOS 10.15, *)
 extension Data {
+    #if canImport(Darwin)
+    @available(watchOS 6.0, *)
+    @available(iOS 13.0, *)
+    @available(tvOS 13.0, *)
+    @available(macOS 10.15, *)
     public var informationStorageMeasurement: Measurement<UnitInformationStorage> {
         return Measurement(value: Double(self.count), unit: UnitInformationStorage.bytes)
     }
+    #endif
     
     public var informationStorageMeasurementString: String {
-        return ByteCountFormatter.string(from: self.informationStorageMeasurement, countStyle: .file)
+        return ByteCountFormatter.string(fromByteCount: Int64(self.count), countStyle: .file)
     }
 }
