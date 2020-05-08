@@ -6,6 +6,8 @@
 //  Copyright © 2017 Pedro José Pereira Vieito. All rights reserved.
 //
 
+import Foundation
+import FoundationKit
 import XCTest
 
 class DataTests: XCTestCase {

@@ -6,8 +6,8 @@
 //  Copyright © 2017 Pedro José Pereira Vieito. All rights reserved.
 //
 
-import XCTest
 import Foundation
+import XCTest
 @testable import FoundationKit
 
 class StringTests: XCTestCase {
