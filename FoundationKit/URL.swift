@@ -9,6 +9,10 @@
 import Foundation
 import CoreFoundation
 
+#if canImport(LinkPresentation)
+import LinkPresentation
+#endif
+
 #if canImport(UIKit)
 import UIKit
 import MobileCoreServices
@@ -19,6 +23,7 @@ import Cocoa
 #if os(watchOS)
 import WatchKit
 #endif
+
 
 extension URL {
     enum Error: LocalizedError {
@@ -210,3 +215,38 @@ extension URL {
         #endif
     }
 }
+
+#if canImport(LinkPresentation)
+@available(macOS 10.15, *)
+@available(iOS 13, *)
+extension URL {
+    public func fetchLinkMetadata(timeout: TimeInterval? = nil) throws -> LPLinkMetadata {
+        let linkMetadataProvider = LPMetadataProvider()
+        
+        if let timeout = timeout {
+            linkMetadataProvider.timeout = timeout
+        }
+        
+        let defaultError = NSError(description: "Error fetching URL metadata.")
+        var result: Result<LPLinkMetadata, Swift.Error> = .failure(defaultError)
+        let semaphore = DispatchSemaphore(value: 0)
+        DispatchQueue.main.async {
+            linkMetadataProvider.startFetchingMetadata(for: self) { (linkMetadata, error) in
+                defer {
+                    semaphore.signal()
+                }
+                
+                if let error = error {
+                    result = .failure(error)
+                }
+                else if let linkMetadata = linkMetadata {
+                    result = .success(linkMetadata)
+                }
+            }
+        }
+        semaphore.wait()
+        
+        return try result.get()
+    }
+}
+#endif

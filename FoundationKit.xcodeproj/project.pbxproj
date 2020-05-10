@@ -51,6 +51,7 @@
 		AAF42B00244D1532008F2603 /* FloatingPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC333402449067200A0164D /* FloatingPoint.swift */; };
 		AAF42B01244D1532008F2603 /* BinaryInteger.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC333422449073200A0164D /* BinaryInteger.swift */; };
 		AAF8C58122AEE61E00FDA6B0 /* Dictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAF8C58022AEE61E00FDA6B0 /* Dictionary.swift */; };
+		AAFA3E6424681E6B00F90BF7 /* NSItemProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAFA3E6324681E6B00F90BF7 /* NSItemProvider.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -80,6 +81,7 @@
 		AAED33872449F28800C82F4B /* Data+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Hex.swift"; sourceTree = "<group>"; };
 		AAEF0C141E757A3500CF4C6A /* Double.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Double.swift; sourceTree = "<group>"; };
 		AAF8C58022AEE61E00FDA6B0 /* Dictionary.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dictionary.swift; sourceTree = "<group>"; };
+		AAFA3E6324681E6B00F90BF7 /* NSItemProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSItemProvider.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -143,6 +145,7 @@
 				AAC333422449073200A0164D /* BinaryInteger.swift */,
 				AA451704245B5446008B79BC /* CaseIterable.swift */,
 				AA75EF53245C9BE0003B1B79 /* TimeZone.swift */,
+				AAFA3E6324681E6B00F90BF7 /* NSItemProvider.swift */,
 				AABBD9A61E5761D000AE5B46 /* Info.plist */,
 			);
 			path = FoundationKit;
@@ -281,6 +284,7 @@
 				AA72A228241319170076E287 /* RunLoop.swift in Sources */,
 				AABFE0BD1F9A494200F1C1B2 /* Data.swift in Sources */,
 				AA4F54CD1ED8BCD7000C1333 /* FileManager.swift in Sources */,
+				AAFA3E6424681E6B00F90BF7 /* NSItemProvider.swift in Sources */,
 				AA87BE7121D03DB800EF404A /* NSAppleScript.swift in Sources */,
 				AA2565A51E57AA7C0037CBED /* CommandLine.swift in Sources */,
 				AA75EF54245C9BE0003B1B79 /* TimeZone.swift in Sources */,
