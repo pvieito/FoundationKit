@@ -109,16 +109,24 @@ extension Collection where Element == URL {
 }
 
 extension Collection where Element == String {
-    /// Returns array of URLs with the Strings as the paths.
+    /// Returns array of file URLs intialized from the strings.
     public var pathURLs: [URL] {
-        return self.map({ $0.pathURL })
+        return self.map { $0.pathURL }
     }
     
-    /// Returns array of URLs intialized with the valid Strings.
+    /// Returns array of generic URLs intialized from the strings, removing invalid entries.
+    public var genericURLs: [URL] {
+        return self.compactMap { $0.genericURL }
+    }
+    
+    /// Returns array of resource URLs intialized from the strings, removing invalid entries.
+    public var resourceURLs: [URL] {
+        return self.compactMap { $0.resourceURL }
+    }
+
+    @available(*, deprecated, renamed: "resourceURLs")
     public var validURLs: [URL] {
-        return self.compactMap {
-            return FileManager.default.fileExists(atPath: $0) ? URL(fileURLWithPath: $0) : URL(string: $0)
-        }
+        return self.resourceURLs
     }
 }
 

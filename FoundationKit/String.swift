@@ -98,11 +98,6 @@ extension String {
 
         return outputString
     }
-
-    /// Returns URL with String as the path.
-    public var pathURL: URL {
-        return URL(fileURLWithPath: self)
-    }
     
     /// Returns same string if not empty, else nil.
     public var nonEmptyString: String? {
@@ -110,6 +105,23 @@ extension String {
             return nil
         }
         return self
+    }
+}
+
+extension String {
+    /// Returns a file URL with the string as the path.
+    public var pathURL: URL {
+        return URL(fileURLWithPath: self)
+    }
+    
+    /// Returns a generic URL composed from the string.
+    public var genericURL: URL? {
+        return URL(string: self)
+    }
+    
+    /// Returns a file URL if a file exists at the path or a generic URL otherwise.
+    public var resourceURL: URL? {
+        return FileManager.default.fileExists(atPath: self) ? self.pathURL : self.genericURL
     }
 }
 
