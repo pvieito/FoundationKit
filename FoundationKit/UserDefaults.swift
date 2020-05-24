@@ -29,3 +29,28 @@ extension UserDefaults {
         self.init(suiteName: suitePreferences.path)
     }
 }
+
+extension UserDefaults {
+    @propertyWrapper
+    public struct Wrapper<Value> {
+        let key: String
+        let storage: UserDefaults
+        let defaultValue: Value
+        
+        public init(key: String, storage: UserDefaults = .standard, defaultValue: Value) {
+            self.key = key
+            self.storage = storage
+            self.defaultValue = defaultValue
+        }
+        
+        public var wrappedValue: Value {
+            get {
+                return storage.value(forKey: key) as? Value ?? self.defaultValue
+            }
+            set {
+                storage.setValue(newValue, forKey: key)
+                storage.synchronize()
+            }
+        }
+    }
+}
