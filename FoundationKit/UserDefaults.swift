@@ -45,10 +45,10 @@ extension UserDefaults {
         
         public var wrappedValue: Value {
             get {
-                return storage.value(forKey: key) as? Value ?? self.defaultValue
+                return storage.object(forKey: key) as? Value ?? self.defaultValue
             }
             set {
-                storage.setValue(newValue, forKey: key)
+                storage.set(newValue, forKey: key)
                 storage.synchronize()
             }
         }
