@@ -60,4 +60,18 @@ class StringTests: XCTestCase {
             }
         }
     }
+    
+    func testStringOffsets() {
+        let testString = "têst_€ËStRiNgÑù_1?ç3"
+        
+        XCTAssertEqual(testString[offset: 1], "ê")
+        XCTAssertEqual(testString[offset: -2], "ç")
+        XCTAssertEqual(testString[offset: 13], "Ñ")
+        XCTAssertEqual(testString[offset: 13..<15], "Ñù")
+        XCTAssertEqual(testString[offset: 13...15], "Ñù_")
+        XCTAssertEqual(testString[offset: ..<3], "tês")
+        XCTAssertEqual(testString[offset: ...3], "têst")
+        XCTAssertEqual(testString[offset: (-1)...], "3")
+        XCTAssertEqual(testString[offset: (-3)...], "?ç3")
+    }
 }

@@ -162,3 +162,54 @@ extension String {
         return regex?.matches(in: self, options: [], range: self.fullRange) ?? []
     }
 }
+
+extension String {
+    // [offset]
+    public subscript(offset offset: Int) -> Character {
+        let index = self.index(offset: offset)
+        return self[index]
+    }
+
+    // [offset.lowerBound..<offset.upperBound]
+    public subscript(offset offset: Range<Int>) -> String {
+        let i = self.index(offset: offset.lowerBound)
+        let j = self.index(offset: offset.upperBound)
+        return String(self[i..<j])
+    }
+
+    // [offset.lowerBound...offset.upperBound]
+    public subscript(offset offset: ClosedRange<Int>) -> String {
+        let i = self.index(offset: offset.lowerBound)
+        let j = self.index(offset: offset.upperBound)
+        return String(self[i...j])
+    }
+
+    // [..<offset.upperBound]
+    public subscript(offset offset: PartialRangeUpTo<Int>) -> String {
+        let i = self.index(offset: offset.upperBound)
+        return String(self[..<i])
+    }
+
+    // [...offset.upperBound]
+    public subscript(offset offset: PartialRangeThrough<Int>) -> String {
+        let i = self.index(offset: offset.upperBound)
+        return String(self[...i])
+    }
+
+    // [offset.lowerBound...]
+    public subscript(offset offset: PartialRangeFrom<Int>) -> String {
+        let i = self.index(offset: offset.lowerBound)
+        return String(self[i...])
+    }
+}
+
+extension String {
+    private func index(offset: Int) -> String.Index {
+        if offset >= 0 {
+            return self.index(self.startIndex, offsetBy: offset)
+        }
+        else {
+            return self.index(self.endIndex, offsetBy: offset)
+        }
+    }
+}
