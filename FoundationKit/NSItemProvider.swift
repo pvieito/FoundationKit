@@ -56,6 +56,34 @@ extension NSItemProvider {
     @available(macOS 10.13, *)
     @available(iOS 11.0, *)
     @available(tvOS 11.0, *)
+    public func loadItem<T>(ofClass itemClass: NSItemProviderReading.Type, completionHandler: [AnyHashable : Any]? = nil) throws -> T {
+        var result: Result<NSItemProviderReading, Swift.Error> = .failure(Error.invalidItemProvider)
+        
+        let semaphore = DispatchSemaphore(value: 0)
+        self.loadObject(ofClass: itemClass) { (item, error) in
+            defer {
+                semaphore.signal()
+            }
+            
+            if let error = error {
+                result = .failure(error)
+            }
+            else if let item = item {
+                result = .success(item)
+            }
+        }
+        semaphore.wait()
+        
+        guard let item = try result.get() as? T else {
+            throw Error.conversionError
+        }
+        
+        return item
+    }
+
+    @available(macOS 10.13, *)
+    @available(iOS 11.0, *)
+    @available(tvOS 11.0, *)
     public func loadInPlaceFileRepresentation(forTypeIdentifier typeIdentifier: String) throws -> URL {
         var result: Result<URL, Swift.Error> = .failure(Error.invalidItemProvider)
 
