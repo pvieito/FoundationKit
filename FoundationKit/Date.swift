@@ -9,6 +9,12 @@
 import Foundation
 
 extension Date {
+    public static func now() -> Date {
+        return Date()
+    }
+}
+
+extension Date {
     @available(macOS 10.12, *)
     @available(iOS 10.0, *)
     @available(tvOS 10.0, *)
