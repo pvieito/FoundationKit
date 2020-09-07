@@ -56,7 +56,7 @@ extension NSItemProvider {
     @available(macOS 10.13, *)
     @available(iOS 11.0, *)
     @available(tvOS 11.0, *)
-    public func loadItem<T>(ofClass itemClass: NSItemProviderReading.Type) throws -> T {
+    public func loadObject<T>(ofClass itemClass: NSItemProviderReading.Type) throws -> T {
         var result: Result<NSItemProviderReading, Swift.Error> = .failure(Error.invalidItemProvider)
         
         let semaphore = DispatchSemaphore(value: 0)
