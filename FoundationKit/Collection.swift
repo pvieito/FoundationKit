@@ -12,6 +12,10 @@ extension Collection {
     public func compact<T>() -> [T] where Element == Optional<T> {
         return self.compactMap { $0 }
     }
+    
+    public var nonEmptyCollection: Self? {
+        return self.isEmpty ? nil : self
+    }
 }
 
 extension Array {

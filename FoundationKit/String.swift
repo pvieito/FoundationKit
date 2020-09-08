@@ -101,10 +101,7 @@ extension String {
     
     /// Returns same string if not empty, else nil.
     public var nonEmptyString: String? {
-        guard !self.isEmpty else {
-            return nil
-        }
-        return self
+        self.nonEmptyCollection
     }
 }
 
@@ -127,7 +124,7 @@ extension String {
 
 extension String {
     /// NSRange of the full string.
-    private var fullRange: NSRange {
+    public var fullRange: NSRange {
         return NSRange(self.startIndex..<self.endIndex, in: self)
     }
     
