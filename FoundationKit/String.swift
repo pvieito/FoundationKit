@@ -9,6 +9,12 @@
 import Foundation
 
 extension String {
+    public static let empty = ""
+    public static let spaceCharacter = " "
+    public static let ellipsisCharacter = "…"
+    public static let newLineCharacter = "\n"
+    public static let slashCharacter = "/"
+
     /// Returns an array of components of the string with a maximum length each.
     ///
     /// - Parameter length: Maximum length of each component.
@@ -19,7 +25,7 @@ extension String {
         }
         
         if self.isEmpty {
-            return [""]
+            return [Self.empty]
         }
         else {
             return stride(from: 0, to: self.count, by: length).map { i -> String in
@@ -40,11 +46,11 @@ extension String {
         }
         
         guard length > 0 else {
-            return ""
+            return Self.empty
         }
         
         let components = self.components(of: length - 1)
-        let ellipsis = "…"
+        let ellipsis = Self.ellipsisCharacter
         
         guard let abbreviatedString = components.first else {
             return ellipsis
@@ -70,7 +76,7 @@ extension String {
     /// For example it will be "Camel Case" for "camelCase".
     public var decamelized: String {
         var inputString: String = self
-        var outputString: String = ""
+        var outputString: String = Self.empty
 
         if let firstUnicodeScalar = self.unicodeScalars.first,
             CharacterSet.uppercaseLetters.contains(firstUnicodeScalar),
@@ -82,7 +88,7 @@ extension String {
         let upperCase = CharacterSet.uppercaseLetters
         for scalar in inputString.unicodeScalars {
             if upperCase.contains(scalar) {
-                outputString.append(" ")
+                outputString.append(Self.spaceCharacter)
             }
 
             let character = Character(scalar)
@@ -102,6 +108,12 @@ extension String {
     /// Returns same string if not empty, else nil.
     public var nonEmptyString: String? {
         self.nonEmptyCollection
+    }
+}
+
+extension String {
+    public init(spacesCount: Int) {
+        self = Array(repeating: Self.spaceCharacter, count: spacesCount).joined()
     }
 }
 

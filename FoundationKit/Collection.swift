@@ -86,8 +86,11 @@ extension Collection where Element == URL {
             return url.hasDirectoryPath ? url : url.deletingLastPathComponent()
         }
         if var commonPath = stringPaths.reduce(stringPaths.max(), { $0?.commonPrefix(with: $1) }) {
-            if commonPath.last != "/" {
-                commonPath = commonPath.components(separatedBy: "/").dropLast().joined(separator: "/")
+            if commonPath.last != Character(String.slashCharacter) {
+                commonPath = commonPath
+                    .components(separatedBy: String.slashCharacter)
+                    .dropLast()
+                    .joined(separator: String.slashCharacter)
             }
             return URL(fileURLWithPath: commonPath)
         }
@@ -136,7 +139,7 @@ extension Collection where Element == String {
 
 extension Collection where Element: StringProtocol {
     public func joiningLines() -> String {
-        return self.joined(separator: "\n")
+        return self.joined(separator: .newLineCharacter)
     }
 }
 
