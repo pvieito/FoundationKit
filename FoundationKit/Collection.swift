@@ -134,6 +134,12 @@ extension Collection where Element == String {
     }
 }
 
+extension Collection where Element: StringProtocol {
+    public func joiningLines() -> String {
+        return self.joined(separator: "\n")
+    }
+}
+
 #if canImport(Darwin)
 @available(macOS 10.15, *)
 @available(iOS 13.0, *)
