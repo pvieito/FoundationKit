@@ -112,8 +112,8 @@ extension String {
 }
 
 extension String {
-    public init(spacesCount: Int) {
-        self = Array(repeating: Self.spaceCharacter, count: spacesCount).joined()
+    public static func spaces(count: Int) -> String {
+        return Array(repeating: Self.spaceCharacter, count: count).joined()
     }
 }
 
