@@ -216,7 +216,7 @@ extension URL {
     }
 }
 
-#if canImport(LinkPresentation)
+#if canImport(LinkPresentation) && !os(tvOS)
 @available(macOS 10.15, *)
 @available(iOS 13, *)
 extension URL {
