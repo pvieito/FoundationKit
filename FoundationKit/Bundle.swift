@@ -106,6 +106,7 @@ extension Bundle {
     /// The module name is inferred from the directory name of the calling source file.
     ///
     /// - Returns: The inferred module bundle.
+    @available(*, deprecated, message: "Migrate to Swift PM resources: add `resources: [.process(\"Resources\")]` to the package manifest and use the `Bundle.module` accessor.")
     public static func currentModuleBundle(file: String = #file) -> Bundle {
         let sourceFileURL = URL(fileURLWithPath: file)
         let moduleDirectoryURL = sourceFileURL.deletingLastPathComponent()
