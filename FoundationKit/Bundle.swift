@@ -73,6 +73,16 @@ extension Bundle {
     }
 }
 
+extension Bundle: Comparable {
+    private var bundleStableIdentifier: String {
+        return self.bundleIdentifier ?? self.executableName ?? self.bundleName
+    }
+    
+    public static func < (lhs: Bundle, rhs: Bundle) -> Bool {
+        return lhs.bundleStableIdentifier < lhs.bundleStableIdentifier
+    }
+}
+
 extension Bundle {
     private static let applicationExtensionPathExtension = "appex"
     
@@ -80,13 +90,26 @@ extension Bundle {
         return self.bundleURL.pathExtension == Self.applicationExtensionPathExtension
     }
 
-    private var applicationExtensionInfo: [String: Any?]? {
+    public var applicationExtensionInfoDictionary: [String: Any?]? {
         return self.object(forInfoDictionaryKey: "NSExtension") as? [String: Any?]
     }
     
     public var applicationExtensionPointIdentifier: String? {
-        return applicationExtensionInfo?["NSExtensionPointIdentifier"] as? String
+        return self.applicationExtensionInfoDictionary?["NSExtensionPointIdentifier"] as? String
     }
+    
+    public var builtInApplicationExtensionBundles: [Bundle] {
+        guard let builtInPlugInsURL = self.builtInPlugInsURL,
+              let extensionBundleURLs = try? FileManager.default.contentsOfDirectory(
+                at: builtInPlugInsURL, includingPropertiesForKeys: nil, options: .skipsSubdirectoryDescendants) else {
+            return []
+        }
+        return extensionBundleURLs
+            .filter { $0.pathExtension == "appex" }
+            .compactMap { Bundle(url: $0) }
+            .sorted()
+    }
+    
 }
 
 extension Bundle {

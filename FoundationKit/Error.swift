@@ -17,17 +17,19 @@ extension Error {
         ]
         return NSError(domain: NSCocoaErrorDomain, code: -1, userInfo: userInfo)
     }
+    
+    public var localizedRecoverySuggestion: String? {
+        return (self as NSError).userInfo[NSLocalizedRecoverySuggestionErrorKey] as? String
+    }
 }
 
 extension NSError {
-    public convenience init(description: String, code: Int = -1) {
-        self.init(
-            domain: NSCocoaErrorDomain,
-            code: code,
-            userInfo: [
-                NSLocalizedDescriptionKey: description
-            ]
-        )
+    public convenience init(description: String, recoverySuggestion: String? = nil, code: Int = -1) {
+        var userInfo = [NSLocalizedDescriptionKey: description]
+        if let recoverySuggestion = recoverySuggestion {
+            userInfo[NSLocalizedRecoverySuggestionErrorKey] = recoverySuggestion
+        }
+        self.init(domain: NSCocoaErrorDomain, code: code, userInfo: userInfo)
     }
 }
 

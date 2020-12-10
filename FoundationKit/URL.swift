@@ -99,7 +99,13 @@ extension URL {
     @available(tvOSApplicationExtension, unavailable)
     @available(watchOSApplicationExtension, unavailable)
     @available(macCatalystApplicationExtension, unavailable)
-    public func open() throws {
+    public func open(with applicationIdentifier: String? = nil) throws {
+        #if !os(macOS)
+        if let applicationIdentifier = applicationIdentifier {
+            throw NSError(description: "Opening URL “\(self.absoluteString)” with application “\(applicationIdentifier)” is not supported on this platform.")
+        }
+        #endif
+        
         #if os(watchOS)
         WKExtension.shared().openSystemURL(self)
         #else
@@ -107,8 +113,15 @@ extension URL {
 
         #if canImport(UIKit)
         success = UIApplication.shared.openURL(self)
-        #elseif canImport(Cocoa)
-        success = NSWorkspace.shared.open(self)
+        #elseif os(macOS)
+        if let applicationIdentifier = applicationIdentifier {
+            success = NSWorkspace.shared.open(
+                [self], withAppBundleIdentifier: applicationIdentifier, options: [],
+                additionalEventParamDescriptor: nil, launchIdentifiers: nil)
+        }
+        else {
+            success = NSWorkspace.shared.open(self)
+        }
         #elseif os(Linux)
         let openProcess = try Process(
             executableName: "xdg-open", arguments: [self.absoluteString])
