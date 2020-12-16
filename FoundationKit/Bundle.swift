@@ -13,6 +13,9 @@ private let kCFBundleDisplayNameKey = "CFBundleDisplayName"
 private let kCFBundleVersionKey = "CFBundleVersion"
 private let kCFBundleShortVersionStringKey = "CFBundleShortVersionString"
 private let kNSPrincipalClassKey = "NSPrincipalClass"
+private let kNSHumanReadableDescriptionKey = "NSHumanReadableDescription"
+private let kNSHumanReadableCopyrightKey = "NSHumanReadableCopyright"
+
 
 extension Bundle {
     private var bundleDisplayName: String? {
@@ -62,14 +65,22 @@ extension Bundle {
     }
     
     public var bundleDisplayNameWithVersion: String {
-        var bundleDisplayNameWithVersion = Bundle.main.bundleName
-        if let bundleShortVersion = Bundle.main.bundleShortVersion {
+        var bundleDisplayNameWithVersion = self.bundleName
+        if let bundleShortVersion = self.bundleShortVersion {
             bundleDisplayNameWithVersion += " \(bundleShortVersion)"
         }
-        if let bundleVersion = Bundle.main.bundleVersion {
+        if let bundleVersion = self.bundleVersion {
             bundleDisplayNameWithVersion += " (\(bundleVersion))"
         }
         return bundleDisplayNameWithVersion
+    }
+    
+    public var humanReadableDescription: String? {
+        return self.object(forInfoDictionaryKey: kNSHumanReadableDescriptionKey) as? String
+    }
+    
+    public var humanReadableCopyright: String? {
+        return self.object(forInfoDictionaryKey: kNSHumanReadableCopyrightKey) as? String
     }
 }
 
