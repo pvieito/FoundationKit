@@ -95,6 +95,14 @@ extension Bundle: Comparable {
 }
 
 extension Bundle {
+    private static let applicationPathExtension = "app"
+    
+    public var isApplication: Bool {
+        return self.bundleURL.pathExtension == Self.applicationPathExtension
+    }
+}
+
+extension Bundle {
     private static let applicationExtensionPathExtension = "appex"
     
     public var isApplicationExtension: Bool {
@@ -120,7 +128,6 @@ extension Bundle {
             .compactMap { Bundle(url: $0) }
             .sorted()
     }
-    
 }
 
 extension Bundle {
