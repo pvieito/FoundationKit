@@ -45,7 +45,32 @@ extension UserDefaults {
         
         public var wrappedValue: Value {
             get {
-                return storage.object(forKey: key) as? Value ?? self.defaultValue
+                var value: Any?
+                if Value.self == Bool.self {
+                    value = storage.bool(forKey: key)
+                }
+                else if Value.self == Int.self {
+                    value = storage.integer(forKey: key)
+                }
+                else if Value.self == Double.self {
+                    value = storage.double(forKey: key)
+                }
+                else if Value.self == Float.self {
+                    value = storage.float(forKey: key)
+                }
+                else if Value.self == Data.self {
+                    value = storage.data(forKey: key)
+                }
+                else if Value.self == Array<Any?>.self {
+                    value = storage.array(forKey: key)
+                }
+                else if Value.self == Dictionary<AnyHashable, Any?>.self {
+                    value = storage.dictionary(forKey: key)
+                }
+                else {
+                    value = storage.object(forKey: key)
+                }
+                return value as? Value ?? self.defaultValue
             }
             set {
                 storage.set(newValue, forKey: key)
