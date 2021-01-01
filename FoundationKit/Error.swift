@@ -11,15 +11,45 @@ import Foundation
 extension Error {
     /// NSError with localized description from a Swift native LocalizedError.
     public var cocoaError: NSError {
-        let userInfo = [
-            NSLocalizedFailureReasonErrorKey: self.localizedDescription,
-            NSLocalizedDescriptionKey: self.localizedDescription
-        ]
-        return NSError(domain: NSCocoaErrorDomain, code: -1, userInfo: userInfo)
+        let error = (self as NSError)
+        var userInfo = error.userInfo
+        userInfo[NSLocalizedFailureReasonErrorKey] = self.localizedDescription
+        userInfo[NSLocalizedDescriptionKey] = self.localizedDescription
+        return NSError(domain: error.domain, code: error.code, userInfo: userInfo)
     }
     
     public var localizedRecoverySuggestion: String? {
         return (self as NSError).userInfo[NSLocalizedRecoverySuggestionErrorKey] as? String
+    }
+}
+
+extension Error {
+    public func encode() throws -> Data {
+        return try self.cocoaError.encode()
+    }
+}
+
+extension NSError {
+    private struct CodableError: Codable {
+        let domain: String
+        let code: Int
+        let userInfo: [String: String]?
+    }
+    
+    public func encode() throws -> Data {
+        var encodableUserInfo: [String: String] = [:]
+        for (key, value) in self.userInfo {
+            if let value = value as? String {
+                encodableUserInfo[key] = value
+            }
+        }
+        let codableError = NSError.CodableError(domain: self.domain, code: self.code, userInfo: encodableUserInfo)
+        return try JSONEncoder().encode(codableError)
+    }
+    
+    public convenience init(encodedData: Data) throws {
+        let codableError = try JSONDecoder().decode(CodableError.self, from: encodedData)
+        self.init(domain: codableError.domain, code: codableError.code, userInfo: codableError.userInfo)
     }
 }
 

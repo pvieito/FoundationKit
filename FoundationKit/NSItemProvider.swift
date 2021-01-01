@@ -12,7 +12,7 @@ import Foundation
 import MobileCoreServices
 #endif
 
-#if canImport(Darwin)
+#if canImport(Darwin) && !os(watchOS)
 extension NSItemProvider {
     private enum Error: LocalizedError {
         case invalidItemProvider

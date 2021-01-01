@@ -103,6 +103,14 @@ extension Bundle {
 }
 
 extension Bundle {
+    private static let plugInBundlePathExtension = "bundle"
+    
+    public var isPlugInBundle: Bool {
+        return self.bundleURL.pathExtension == Self.plugInBundlePathExtension
+    }
+}
+
+extension Bundle {
     private static let applicationExtensionPathExtension = "appex"
     
     public var isApplicationExtension: Bool {
@@ -173,3 +181,40 @@ extension Bundle {
         return Bundle.main
     }
 }
+
+#if targetEnvironment(macCatalyst)
+extension Bundle {
+    private static let cocoaBundleSuffix = "+Cocoa"
+    
+    private var cocoaBundleName: String {
+        return self.bundleName + Self.cocoaBundleSuffix
+    }
+    
+    private var cocoaBundle: Bundle? {
+        guard let cocoaBundleURL = self.builtInPlugInsURL?
+                .appendingPathComponent(self.cocoaBundleName)
+                .appendingPathExtension(Self.plugInBundlePathExtension) else {
+            return nil
+        }
+        return Bundle(url: cocoaBundleURL)
+    }
+    
+    public func loadCocoaBundleClass<T>(name: String) throws -> T {
+        guard let cocoaBundle = cocoaBundle else {
+            throw NSError(description: "Cocoa plug-in bundle not found in bundle “\(self.bundleName)”.")
+        }
+        
+        if !cocoaBundle.isLoaded {
+            try cocoaBundle.loadAndReturnError()
+        }
+        
+        let cocoaModuleName = self.cocoaBundleName.applyingRegularExpression(
+            pattern: #"\W"#, sustitution: "_")
+        let className = cocoaModuleName + "." + name
+        guard let cocoaClass: AnyClass = cocoaBundle.classNamed(className) else {
+            throw NSError(description: "Cocoa class “\(className)” not found in bundle “\(cocoaBundle.bundleName)”.")
+        }
+        return unsafeBitCast(cocoaClass, to: T.self)
+    }
+}
+#endif
