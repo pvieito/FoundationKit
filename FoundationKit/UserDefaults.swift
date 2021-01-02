@@ -46,7 +46,10 @@ extension UserDefaults {
         public var wrappedValue: Value {
             get {
                 var value: Any?
-                if Value.self == Bool.self {
+                if storage.object(forKey: key) == nil {
+                    value = nil
+                }
+                else if Value.self == Bool.self {
                     value = storage.bool(forKey: key)
                 }
                 else if Value.self == Int.self {

@@ -90,7 +90,7 @@
 		AA111F73225AB2AA00F3A9BB /* ProcessInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessInfo.swift; sourceTree = "<group>"; };
 		AA2563CF1E57639E0037CBED /* FoundationKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FoundationKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA2565A41E57AA7C0037CBED /* CommandLine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandLine.swift; sourceTree = "<group>"; };
-		AA408901259DD45B00C3C4E1 /* FoundationKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FoundationKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA408901259DD45B00C3C4E1 /* FoundationKitMac.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FoundationKitMac.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA451704245B5446008B79BC /* CaseIterable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaseIterable.swift; sourceTree = "<group>"; };
 		AA452386250787BE00A5B986 /* Thread.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Thread.swift; sourceTree = "<group>"; };
 		AA4E843C2138505400E6DCFC /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
@@ -154,7 +154,7 @@
 			children = (
 				AA2563CF1E57639E0037CBED /* FoundationKit.framework */,
 				AA912C1A1EE96CF2002DD639 /* FoundationKit.framework */,
-				AA408901259DD45B00C3C4E1 /* FoundationKit.framework */,
+				AA408901259DD45B00C3C4E1 /* FoundationKitMac.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -252,7 +252,7 @@
 			);
 			name = FoundationKitMac;
 			productName = FoundationKitMac;
-			productReference = AA408901259DD45B00C3C4E1 /* FoundationKit.framework */;
+			productReference = AA408901259DD45B00C3C4E1 /* FoundationKitMac.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		AA912C191EE96CF2002DD639 /* FoundationKitWatch */ = {
@@ -522,7 +522,7 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pvieito.FoundationKit;
-				PRODUCT_NAME = FoundationKit;
+				PRODUCT_NAME = FoundationKitMac;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -551,7 +551,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/Frameworks";
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.pvieito.FoundationKit;
-				PRODUCT_NAME = FoundationKit;
+				PRODUCT_NAME = FoundationKitMac;
 				SDKROOT = macosx;
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
