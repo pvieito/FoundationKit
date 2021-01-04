@@ -14,17 +14,38 @@ extension DispatchSemaphore {
         return DispatchSemaphore(value: 0)
     }
     
-    public static func wait(block: (@escaping (Error?) -> ()) -> ()) throws {
+    public static func wait(block: (@escaping () -> ()) -> ()) {
+        try! self.throwingWait { handler in
+            handler(nil)
+        }
+    }
+    
+    public static func throwingWait(block: (@escaping (Error?) -> ()) -> ()) throws {
+        try self.returningWait { (handler: (Void?, Error?) -> ()) in
+            handler(nil, nil)
+        }
+    }
+    
+    @discardableResult
+    public static func returningWait<T>(block: (@escaping (T?, Error?) -> ()) -> ()) throws -> T {
         let semaphore = DispatchSemaphore.zero()
         var error: Error?
-        let completionHandler = { (handlerError: Error?) in
+        var result: T?
+        let completionHandler = { (handlerResult: T?, handlerError: Error?) in
             error = handlerError
+            result = handlerResult
             semaphore.signal()
         }
         block(completionHandler)
         semaphore.wait()
         if let error = error {
             throw error
+        }
+        else if let result = result {
+            return result
+        }
+        else {
+            throw NSError(description: "No result found in block.")
         }
     }
 }

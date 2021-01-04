@@ -14,42 +14,15 @@ import MobileCoreServices
 
 #if canImport(Darwin) && !os(watchOS)
 extension NSItemProvider {
-    private enum Error: LocalizedError {
-        case invalidItemProvider
-        case conversionError
-        
-        var errorDescription: String? {
-            switch self {
-            case .invalidItemProvider:
-                 return "Invalid item provider."
-            case .conversionError:
-                return "Provided item could not be converted to the expected type."
-            }
-        }
-    }
+    static let conversionError = NSError(description: "Provided item could not be converted to the expected type.")
     
     public func loadItem<T>(forTypeIdentifier typeIdentifier: String, options: [AnyHashable : Any]? = nil) throws -> T {
-        var result: Result<NSSecureCoding, Swift.Error> = .failure(Error.invalidItemProvider)
-        
-        let semaphore = DispatchSemaphore(value: 0)
-        self.loadItem(forTypeIdentifier: typeIdentifier, options: options) { (item, error) in
-            defer {
-                semaphore.signal()
-            }
-            
-            if let error = error {
-                result = .failure(error)
-            }
-            else if let item = item {
-                result = .success(item)
-            }
+        let result = try DispatchSemaphore.returningWait { handler in
+            self.loadItem(forTypeIdentifier: typeIdentifier, options: options, completionHandler: handler)
         }
-        semaphore.wait()
-        
-        guard let item = try result.get() as? T else {
-            throw Error.conversionError
+        guard let item = result as? T else {
+            throw NSItemProvider.conversionError
         }
-        
         return item
     }
     
@@ -57,27 +30,12 @@ extension NSItemProvider {
     @available(iOS 11.0, *)
     @available(tvOS 11.0, *)
     public func loadObject<T>(ofClass itemClass: NSItemProviderReading.Type) throws -> T {
-        var result: Result<NSItemProviderReading, Swift.Error> = .failure(Error.invalidItemProvider)
-        
-        let semaphore = DispatchSemaphore(value: 0)
-        self.loadObject(ofClass: itemClass) { (item, error) in
-            defer {
-                semaphore.signal()
-            }
-            
-            if let error = error {
-                result = .failure(error)
-            }
-            else if let item = item {
-                result = .success(item)
-            }
+        let result = try DispatchSemaphore.returningWait { handler in
+            self.loadObject(ofClass: itemClass, completionHandler: handler)
         }
-        semaphore.wait()
-        
-        guard let item = try result.get() as? T else {
-            throw Error.conversionError
+        guard let item = result as? T else {
+            throw NSItemProvider.conversionError
         }
-        
         return item
     }
 
@@ -85,35 +43,24 @@ extension NSItemProvider {
     @available(iOS 11.0, *)
     @available(tvOS 11.0, *)
     public func loadInPlaceFileRepresentation(forTypeIdentifier typeIdentifier: String) throws -> URL {
-        var result: Result<URL, Swift.Error> = .failure(Error.invalidItemProvider)
-
-        let semaphore = DispatchSemaphore(value: 0)
-        self.loadInPlaceFileRepresentation(forTypeIdentifier: typeIdentifier as String) { (url, isInPlace, error) in
-            defer {
-                semaphore.signal()
-            }
-            
-            do {
-                if let error = error {
-                    throw error
-                }
-                if var url = url {
-                    if !isInPlace {
-                        let temporaryURL = FileManager.default.temporaryRandomFileURL(filename: url.lastPathComponent)
-                        try FileManager.default.copyItem(at: url, to: temporaryURL)
+        return try DispatchSemaphore.returningWait { handler in
+            self.loadInPlaceFileRepresentation(forTypeIdentifier: typeIdentifier as String) { (url, isInPlace, resultError) in
+                var resultError = resultError
+                var url = url
+                do {
+                    if let notInPlaceURL = url, !isInPlace {
+                        let temporaryURL = FileManager.default.temporaryRandomFileURL(filename: notInPlaceURL.lastPathComponent)
+                        try FileManager.default.copyItem(at: notInPlaceURL, to: temporaryURL)
                         url = temporaryURL
                     }
-                    
-                    result = .success(url)
                 }
-            }
-            catch {
-                result = .failure(error)
+                catch {
+                    url = nil
+                    resultError = error
+                }
+                handler(url, resultError)
             }
         }
-        semaphore.wait()
-        
-        return try result.get()
     }
 }
 #endif

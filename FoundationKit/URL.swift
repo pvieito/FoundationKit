@@ -235,31 +235,12 @@ extension URL {
 extension URL {
     public func fetchLinkMetadata(timeout: TimeInterval? = nil) throws -> LPLinkMetadata {
         let linkMetadataProvider = LPMetadataProvider()
-        
         if let timeout = timeout {
             linkMetadataProvider.timeout = timeout
         }
-        
-        let defaultError = NSError(description: "Error fetching URL metadata.")
-        var result: Result<LPLinkMetadata, Swift.Error> = .failure(defaultError)
-        let semaphore = DispatchSemaphore(value: 0)
-        DispatchQueue.main.async {
-            linkMetadataProvider.startFetchingMetadata(for: self) { (linkMetadata, error) in
-                defer {
-                    semaphore.signal()
-                }
-                
-                if let error = error {
-                    result = .failure(error)
-                }
-                else if let linkMetadata = linkMetadata {
-                    result = .success(linkMetadata)
-                }
-            }
+        return try DispatchSemaphore.returningWait { handler in
+            linkMetadataProvider.startFetchingMetadata(for: self, completionHandler: handler)
         }
-        semaphore.wait()
-        
-        return try result.get()
     }
 }
 #endif
