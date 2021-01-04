@@ -16,13 +16,19 @@ extension DispatchSemaphore {
     
     public static func wait(block: (@escaping () -> ()) -> ()) {
         try! self.throwingWait { handler in
-            handler(nil)
+            let completionHandler = {
+                handler(nil)
+            }
+            block(completionHandler)
         }
     }
     
     public static func throwingWait(block: (@escaping (Error?) -> ()) -> ()) throws {
-        try self.returningWait { (handler: (Void?, Error?) -> ()) in
-            handler(nil, nil)
+        try self.returningWait { (handler: (@escaping (Void?, Error?) -> ())) in
+            let completionHandler = { (handlerError: Error?) in
+                handler((), handlerError)
+            }
+            block(completionHandler)
         }
     }
     
