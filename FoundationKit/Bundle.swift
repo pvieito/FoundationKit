@@ -100,6 +100,20 @@ extension Bundle {
     public var isApplication: Bool {
         return self.bundleURL.pathExtension == Self.applicationPathExtension
     }
+    
+    private static let containingAppBundleMaximumLevels = 4
+    public var containingAppBundleURL: URL? {
+        var containingAppBundleURL = self.bundleURL
+        var levels = 0
+        while levels < Self.containingAppBundleMaximumLevels {
+            containingAppBundleURL.deleteLastPathComponent()
+            if containingAppBundleURL.pathExtension == Self.applicationPathExtension {
+                return containingAppBundleURL
+            }
+            levels += 1
+        }
+        return nil
+    }
 }
 
 extension Bundle {

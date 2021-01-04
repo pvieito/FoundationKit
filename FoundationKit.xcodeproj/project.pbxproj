@@ -46,6 +46,9 @@
 		AA4E843D2138505400E6DCFC /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4E843C2138505400E6DCFC /* Bundle.swift */; };
 		AA4F547A1ED8A06D000C1333 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4F54791ED8A06D000C1333 /* UserDefaults.swift */; };
 		AA4F54CD1ED8BCD7000C1333 /* FileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4F54CC1ED8BCD7000C1333 /* FileManager.swift */; };
+		AA50783F25A3346300B5A2EB /* DispatchSemaphore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA50783E25A3346300B5A2EB /* DispatchSemaphore.swift */; };
+		AA50784A25A3346B00B5A2EB /* DispatchSemaphore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA50783E25A3346300B5A2EB /* DispatchSemaphore.swift */; };
+		AA50784E25A3346C00B5A2EB /* DispatchSemaphore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA50783E25A3346300B5A2EB /* DispatchSemaphore.swift */; };
 		AA640565207195EE00F17D45 /* Process.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA640564207195EE00F17D45 /* Process.swift */; };
 		AA6D9AF82342AB3C007A676D /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA6D9AF72342AB3C007A676D /* Date.swift */; };
 		AA72432221812A6600084F58 /* UUID.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA72432121812A6600084F58 /* UUID.swift */; };
@@ -96,6 +99,7 @@
 		AA4E843C2138505400E6DCFC /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
 		AA4F54791ED8A06D000C1333 /* UserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		AA4F54CC1ED8BCD7000C1333 /* FileManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileManager.swift; sourceTree = "<group>"; };
+		AA50783E25A3346300B5A2EB /* DispatchSemaphore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DispatchSemaphore.swift; sourceTree = "<group>"; };
 		AA640564207195EE00F17D45 /* Process.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Process.swift; sourceTree = "<group>"; };
 		AA6D9AF72342AB3C007A676D /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		AA72432121812A6600084F58 /* UUID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UUID.swift; sourceTree = "<group>"; };
@@ -167,6 +171,7 @@
 				AA451704245B5446008B79BC /* CaseIterable.swift */,
 				AA0D3D691EA039FD00FB7EBD /* Collection.swift */,
 				AA2565A41E57AA7C0037CBED /* CommandLine.swift */,
+				AA50783E25A3346300B5A2EB /* DispatchSemaphore.swift */,
 				AABFE0BC1F9A494200F1C1B2 /* Data.swift */,
 				AAED33872449F28800C82F4B /* Data+Hex.swift */,
 				AA6D9AF72342AB3C007A676D /* Date.swift */,
@@ -349,6 +354,7 @@
 			files = (
 				AAC333432449073200A0164D /* BinaryInteger.swift in Sources */,
 				AAC333412449067200A0164D /* FloatingPoint.swift in Sources */,
+				AA50783F25A3346300B5A2EB /* DispatchSemaphore.swift in Sources */,
 				AA72432221812A6600084F58 /* UUID.swift in Sources */,
 				AA0D3D681EA033B700FB7EBD /* Error.swift in Sources */,
 				AA451705245B5446008B79BC /* CaseIterable.swift in Sources */,
@@ -381,6 +387,7 @@
 			files = (
 				AA40891B259DD4A300C3C4E1 /* FloatingPoint.swift in Sources */,
 				AA408927259DD4A300C3C4E1 /* BinaryInteger.swift in Sources */,
+				AA50784A25A3346B00B5A2EB /* DispatchSemaphore.swift in Sources */,
 				AA408922259DD4A300C3C4E1 /* String.swift in Sources */,
 				AA40891F259DD4A300C3C4E1 /* Bundle.swift in Sources */,
 				AA40891D259DD4A300C3C4E1 /* Date.swift in Sources */,
@@ -413,6 +420,7 @@
 			files = (
 				AAF42AFA244D1532008F2603 /* CommandLine.swift in Sources */,
 				AAF42AEE244D1532008F2603 /* String.swift in Sources */,
+				AA50784E25A3346C00B5A2EB /* DispatchSemaphore.swift in Sources */,
 				AAF42AF5244D1532008F2603 /* Data+Hex.swift in Sources */,
 				AAF42AF0244D1532008F2603 /* Dictionary.swift in Sources */,
 				AAF42AF9244D1532008F2603 /* ProcessInfo.swift in Sources */,
