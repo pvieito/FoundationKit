@@ -14,6 +14,7 @@ extension String {
     public static let ellipsisCharacter = "…"
     public static let newLineCharacter = "\n"
     public static let slashCharacter = "/"
+    public static let dashCharacter = "-"
 
     /// Returns an array of components of the string with a maximum length each.
     ///
@@ -220,5 +221,12 @@ extension String {
         else {
             return self.index(self.endIndex, offsetBy: offset)
         }
+    }
+}
+
+extension Optional where Wrapped == String {
+    /// Returns a valid string with the content of Optional or a dash .
+    public var optional: String {
+        return self ?? String.dashCharacter
     }
 }
