@@ -57,6 +57,9 @@
 		AA87BE7121D03DB800EF404A /* NSAppleScript.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA87BE7021D03D1600EF404A /* NSAppleScript.swift */; };
 		AAA03AB21EBD23200005BF72 /* MeasurementFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAA03AB11EBD23200005BF72 /* MeasurementFormatter.swift */; };
 		AAB638791EBBDD28008365EB /* URL.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB638781EBBDD28008365EB /* URL.swift */; };
+		AABE807725AA056300388E6B /* KeyPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABE807625AA056300388E6B /* KeyPath.swift */; };
+		AABE807B25AA058000388E6B /* KeyPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABE807625AA056300388E6B /* KeyPath.swift */; };
+		AABE807F25AA058100388E6B /* KeyPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABE807625AA056300388E6B /* KeyPath.swift */; };
 		AABFE0BD1F9A494200F1C1B2 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABFE0BC1F9A494200F1C1B2 /* Data.swift */; };
 		AAC333412449067200A0164D /* FloatingPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC333402449067200A0164D /* FloatingPoint.swift */; };
 		AAC333432449073200A0164D /* BinaryInteger.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAC333422449073200A0164D /* BinaryInteger.swift */; };
@@ -111,6 +114,7 @@
 		AAB638781EBBDD28008365EB /* URL.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URL.swift; sourceTree = "<group>"; };
 		AABBD9A61E5761D000AE5B46 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AABBD9A71E5761D000AE5B46 /* String.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		AABE807625AA056300388E6B /* KeyPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyPath.swift; sourceTree = "<group>"; };
 		AABFE0BC1F9A494200F1C1B2 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		AAC333402449067200A0164D /* FloatingPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingPoint.swift; sourceTree = "<group>"; };
 		AAC333422449073200A0164D /* BinaryInteger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BinaryInteger.swift; sourceTree = "<group>"; };
@@ -171,15 +175,16 @@
 				AA451704245B5446008B79BC /* CaseIterable.swift */,
 				AA0D3D691EA039FD00FB7EBD /* Collection.swift */,
 				AA2565A41E57AA7C0037CBED /* CommandLine.swift */,
-				AA50783E25A3346300B5A2EB /* DispatchSemaphore.swift */,
 				AABFE0BC1F9A494200F1C1B2 /* Data.swift */,
 				AAED33872449F28800C82F4B /* Data+Hex.swift */,
 				AA6D9AF72342AB3C007A676D /* Date.swift */,
 				AAF8C58022AEE61E00FDA6B0 /* Dictionary.swift */,
+				AA50783E25A3346300B5A2EB /* DispatchSemaphore.swift */,
 				AAEF0C141E757A3500CF4C6A /* Double.swift */,
 				AA0D3D671EA033B700FB7EBD /* Error.swift */,
 				AA4F54CC1ED8BCD7000C1333 /* FileManager.swift */,
 				AAC333402449067200A0164D /* FloatingPoint.swift */,
+				AABE807625AA056300388E6B /* KeyPath.swift */,
 				AAA03AB11EBD23200005BF72 /* MeasurementFormatter.swift */,
 				AA87BE7021D03D1600EF404A /* NSAppleScript.swift */,
 				AAFA3E6324681E6B00F90BF7 /* NSItemProvider.swift */,
@@ -364,6 +369,7 @@
 				AA2563C61E57639E0037CBED /* String.swift in Sources */,
 				AAEF0C151E757A3500CF4C6A /* Double.swift in Sources */,
 				AA6D9AF82342AB3C007A676D /* Date.swift in Sources */,
+				AABE807725AA056300388E6B /* KeyPath.swift in Sources */,
 				AA452387250787BE00A5B986 /* Thread.swift in Sources */,
 				AA111F74225AB2AA00F3A9BB /* ProcessInfo.swift in Sources */,
 				AA72A228241319170076E287 /* RunLoop.swift in Sources */,
@@ -397,6 +403,7 @@
 				AA40892D259DD4A300C3C4E1 /* FileManager.swift in Sources */,
 				AA40891A259DD4A300C3C4E1 /* Collection.swift in Sources */,
 				AA408929259DD4A300C3C4E1 /* MeasurementFormatter.swift in Sources */,
+				AABE807B25AA058000388E6B /* KeyPath.swift in Sources */,
 				AA408923259DD4A300C3C4E1 /* NSItemProvider.swift in Sources */,
 				AA408918259DD4A300C3C4E1 /* NSAppleScript.swift in Sources */,
 				AA40892B259DD4A300C3C4E1 /* Data.swift in Sources */,
@@ -430,6 +437,7 @@
 				AAF42AF6244D1532008F2603 /* UserDefaults.swift in Sources */,
 				AAF42AEC244D1532008F2603 /* Bundle.swift in Sources */,
 				AA4088DE259DD3E700C3C4E1 /* CaseIterable.swift in Sources */,
+				AABE807F25AA058100388E6B /* KeyPath.swift in Sources */,
 				AAF42AFE244D1532008F2603 /* RunLoop.swift in Sources */,
 				AAF42AED244D1532008F2603 /* Date.swift in Sources */,
 				AAF42AF1244D1532008F2603 /* Double.swift in Sources */,
