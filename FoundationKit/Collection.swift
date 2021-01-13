@@ -53,6 +53,21 @@ extension Array where Element: Hashable {
     }
 }
 
+extension Array where Element: Hashable {
+    /// Returns the only element in the array only it there is only one element.
+    public var onlyElement: Element? {
+        guard self.count == 1 else {
+            return nil
+        }
+        return self[0]
+    }
+    
+    /// Returns the unique element in the array only it there is only one unique element.
+    public var uniqueElement: Element? {
+        return self.removingDuplicates().onlyElement
+    }
+}
+
 extension Collection {
     /// Get element at index, if any.
     public func get(elementAt index: Index) -> Element? {
