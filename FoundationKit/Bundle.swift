@@ -8,6 +8,10 @@
 
 import Foundation
 
+#if os(macOS)
+import Cocoa
+#endif
+
 private let kCFBundleNameKey = "CFBundleName"
 private let kCFBundleDisplayNameKey = "CFBundleDisplayName"
 private let kCFBundleVersionKey = "CFBundleVersion"
@@ -15,7 +19,6 @@ private let kCFBundleShortVersionStringKey = "CFBundleShortVersionString"
 private let kNSPrincipalClassKey = "NSPrincipalClass"
 private let kNSHumanReadableDescriptionKey = "NSHumanReadableDescription"
 private let kNSHumanReadableCopyrightKey = "NSHumanReadableCopyright"
-
 
 extension Bundle {
     private var bundleDisplayName: String? {
@@ -39,8 +42,8 @@ extension Bundle {
     
     public var bundleVersion: String? {
         guard let bundleVersion = self.object(forInfoDictionaryKey: kCFBundleVersionKey) as? String,
-            bundleVersion != "" else {
-                return nil
+              bundleVersion != "" else {
+            return nil
         }
         
         return bundleVersion
@@ -48,8 +51,8 @@ extension Bundle {
     
     public var bundleShortVersion: String? {
         guard let bundleShortVersion = self.object(forInfoDictionaryKey: kCFBundleShortVersionStringKey) as? String,
-            bundleShortVersion != "" else {
-                return nil
+              bundleShortVersion != "" else {
+            return nil
         }
         
         return bundleShortVersion
@@ -57,8 +60,8 @@ extension Bundle {
     
     public var principalClassString: String? {
         guard let principalClassString = self.object(forInfoDictionaryKey: kNSPrincipalClassKey) as? String,
-            principalClassString != "" else {
-                return nil
+              principalClassString != "" else {
+            return nil
         }
         
         return principalClassString
@@ -101,6 +104,12 @@ extension Bundle {
         return self.bundleURL.pathExtension == Self.applicationPathExtension
     }
     
+    #if os(macOS)
+    public var isApplicationRunning: Bool {
+        return NSWorkspace.shared.runningApplications.first(where: \.bundleIdentifier == self.bundleIdentifier) != nil
+    }
+    #endif
+    
     private static let containingAppBundleMaximumLevels = 4
     public var containingAppBundleURL: URL? {
         var containingAppBundleURL = self.bundleURL
@@ -113,6 +122,11 @@ extension Bundle {
             levels += 1
         }
         return nil
+    }
+    
+    public var containingAppBundle: Bundle? {
+        guard let containingAppBundleURL = self.containingAppBundleURL else { return nil }
+        return Bundle(url: containingAppBundleURL)
     }
 }
 
@@ -130,7 +144,7 @@ extension Bundle {
     public var isApplicationExtension: Bool {
         return self.bundleURL.pathExtension == Self.applicationExtensionPathExtension
     }
-
+    
     public var applicationExtensionInfoDictionary: [String: Any?]? {
         return self.object(forInfoDictionaryKey: "NSExtension") as? [String: Any?]
     }
@@ -145,10 +159,7 @@ extension Bundle {
                 at: builtInPlugInsURL, includingPropertiesForKeys: nil, options: .skipsSubdirectoryDescendants) else {
             return []
         }
-        return extensionBundleURLs
-            .filter { $0.pathExtension == "appex" }
-            .compactMap { Bundle(url: $0) }
-            .sorted()
+        return extensionBundleURLs.compactMap(Bundle.init(url:)).filter(\.isApplicationExtension).sorted()
     }
 }
 
@@ -172,7 +183,7 @@ extension Bundle {
     public static func currentModuleBundle(file: String = #file) -> Bundle {
         // TODO: Add deprecation notice once Swift PM resources support macOS test bundles: https://bugs.swift.org/browse/SR-13714
         // @available(*, deprecated, message: "Migrate to Swift PM resources: add `resources: [.process(\"Resources\")]` to the package manifest and use the `Bundle.module` accessor.")
-
+        
         let sourceFileURL = URL(fileURLWithPath: file)
         let moduleDirectoryURL = sourceFileURL.deletingLastPathComponent()
         let moduleName = moduleDirectoryURL.lastPathComponent
@@ -193,6 +204,29 @@ extension Bundle {
         }
         
         return Bundle.main
+    }
+}
+
+extension Bundle {
+    private static let libraryDirectoryBundlePathComponent = "Library"
+    private var builtInLibraryURL: URL? {
+        guard let builtInPlugInsURL = self.builtInPlugInsURL else { return nil }
+        return builtInPlugInsURL.deletingLastPathComponent().appendingPathComponent(Self.libraryDirectoryBundlePathComponent)
+    }
+    
+    private static let loginItemsBundlePathComponent = "LoginItems"
+    private var builtInLoginItemsDirectoryURL: URL? {
+        guard let builtInLibraryURL = self.builtInLibraryURL else { return nil }
+        return builtInLibraryURL.appendingPathComponent(Self.loginItemsBundlePathComponent)
+    }
+    
+    var builtInLoginItemsBundles: [Bundle] {
+        guard let builtInLoginItemsDirectoryURL = self.builtInLoginItemsDirectoryURL,
+              let loginItemBundleURLs = try? FileManager.default.contentsOfDirectory(
+                at: builtInLoginItemsDirectoryURL, includingPropertiesForKeys: nil, options: .skipsSubdirectoryDescendants) else {
+            return []
+        }
+        return loginItemBundleURLs.compactMap(Bundle.init(url:)).filter(\.isApplication).sorted()
     }
 }
 

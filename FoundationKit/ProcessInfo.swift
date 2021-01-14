@@ -8,6 +8,11 @@
 
 import Foundation
 
+#if os(macOS)
+import Cocoa
+import ServiceManagement
+#endif
+
 extension ProcessInfo {
     #if os(Windows)
     fileprivate static let dotCharacters = CharacterSet(charactersIn: ".")
@@ -50,6 +55,52 @@ extension ProcessInfo {
         #endif
     }
 }
+
+#if os(macOS)
+extension ProcessInfo {
+    @available(*, deprecated)
+    private var launchdJobs: [[String: Any]]? {
+        return SMCopyAllJobDictionaries(kSMDomainUserLaunchd).takeRetainedValue() as? [[String: Any]]
+    }
+    
+    @available(*, deprecated)
+    private func loginItemJob(bundleIdentifier: String) -> [String: Any]? {
+        return self.launchdJobs?.first(where: { $0["Label"] as? String == bundleIdentifier })
+    }
+    
+    @available(*, deprecated)
+    public func isLoginItemEnabled(bundleIdentifier: String) -> Bool {
+        guard let loginItemJob = self.loginItemJob(bundleIdentifier: bundleIdentifier),
+              let isLoginItemJobOnDemand = loginItemJob["OnDemand"] as? Bool else { return false }
+        return isLoginItemJobOnDemand
+    }
+}
+
+extension ProcessInfo {
+    private var loginItemBundle: Bundle? {
+        return Bundle.main.builtInLoginItemsBundles.first
+    }
+    
+    public func configureLoginItem(bundleIdentifier: String? = nil, enabled: Bool) throws {
+        guard let bundleIdentifier = loginItemBundle?.bundleIdentifier else {
+            throw NSError(description: "Error configuring login item as a valid bundle is not available.")
+        }
+        guard SMLoginItemSetEnabled(bundleIdentifier as CFString, enabled) else {
+            throw NSError(description: "Error configuring login item.")
+        }
+    }
+}
+
+extension ProcessInfo {
+    public func launchApplicationFromLoginItem() throws {
+        guard let containingAppBundle = Bundle.main.containingAppBundle else {
+            throw NSError(description: "Error launching main app, as its bundle is not available.")
+        }
+        guard !containingAppBundle.isApplicationRunning else { return }
+        try containingAppBundle.bundleURL.open()
+    }
+}
+#endif
 
 fileprivate extension String {
     var paths: [String] {
