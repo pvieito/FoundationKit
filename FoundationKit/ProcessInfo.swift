@@ -92,7 +92,7 @@ extension ProcessInfo {
 }
 
 extension ProcessInfo {
-    public func launchParentApplication(deep: Bool = true) throws {
+    public func launchParentApplication(deep: Bool = false) throws {
         var parentApplicationBundle: Bundle?
         if deep {
             parentApplicationBundle = Bundle.main.parentApplicationBundles.last
