@@ -92,12 +92,26 @@ extension ProcessInfo {
 }
 
 extension ProcessInfo {
-    public func launchApplicationFromLoginItem() throws {
-        guard let containingAppBundle = Bundle.main.containingAppBundle else {
-            throw NSError(description: "Error launching main app, as its bundle is not available.")
+    public func launchParentApplication(deep: Bool = true) throws {
+        var parentApplicationBundle: Bundle?
+        if deep {
+            parentApplicationBundle = Bundle.main.parentApplicationBundles.last
         }
-        guard !containingAppBundle.isApplicationRunning else { return }
-        try containingAppBundle.bundleURL.open()
+        else {
+            parentApplicationBundle = Bundle.main.parentApplicationBundle
+        }
+        guard let mainBundle = parentApplicationBundle else {
+            throw NSError(description: "Error launching parent application, as its bundle is not available.")
+        }
+        guard !mainBundle.isApplicationRunning else { return }
+        try mainBundle.bundleURL.open()
+    }
+}
+
+extension ProcessInfo {
+    public func relaunchApplicationTerminatingCurrentInstance() throws {
+        try NSWorkspace.shared.launchApplication(at: Bundle.main.bundleURL, options: [.async, .newInstance], configuration: [:])
+        NSApp.terminate(self)
     }
 }
 #endif

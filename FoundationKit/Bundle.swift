@@ -110,11 +110,11 @@ extension Bundle {
     }
     #endif
     
-    private static let containingAppBundleMaximumLevels = 4
-    public var containingAppBundleURL: URL? {
+    private static let parentApplicationBundleMaximumLevels = 4
+    private var parentApplicationBundleURL: URL? {
         var containingAppBundleURL = self.bundleURL
         var levels = 0
-        while levels < Self.containingAppBundleMaximumLevels {
+        while levels < Self.parentApplicationBundleMaximumLevels {
             containingAppBundleURL.deleteLastPathComponent()
             if containingAppBundleURL.pathExtension == Self.applicationPathExtension {
                 return containingAppBundleURL
@@ -124,9 +124,19 @@ extension Bundle {
         return nil
     }
     
-    public var containingAppBundle: Bundle? {
-        guard let containingAppBundleURL = self.containingAppBundleURL else { return nil }
+    public var parentApplicationBundle: Bundle? {
+        guard let containingAppBundleURL = self.parentApplicationBundleURL else { return nil }
         return Bundle(url: containingAppBundleURL)
+    }
+    
+    public var parentApplicationBundles: [Bundle] {
+        var containingAppBundles: [Bundle] = []
+        var lastBundle = self
+        while let containingAppBundle = lastBundle.parentApplicationBundle {
+            containingAppBundles.append(containingAppBundle)
+            lastBundle = containingAppBundle
+        }
+        return containingAppBundles
     }
 }
 
