@@ -224,9 +224,29 @@ extension String {
     }
 }
 
+extension String {
+    private static var quotationDelimiters: (String, String) {
+        guard
+            let quotationBeginDelimiter = Locale.current.quotationBeginDelimiter,
+            let quotationEndDelimiter = Locale.current.quotationEndDelimiter
+            else { return ("\"", "\"") }
+        return (quotationBeginDelimiter, quotationEndDelimiter)
+    }
+
+    /// Returns a quoted string.
+    public var quoted: String {
+        return Self.quotationDelimiters.0 + self + Self.quotationDelimiters.1
+    }
+}
+
 extension Optional where Wrapped == String {
-    /// Returns a valid string with the content of Optional or a dash .
+    /// Returns a valid string with the content of Optional or a dash.
     public var optional: String {
         return self ?? String.dashCharacter
+    }
+    
+    /// Returns a valid quoted string with the content of Optional or a dash.
+    public var quotedOptional: String {
+        return self?.quoted ?? String.dashCharacter
     }
 }
