@@ -163,13 +163,27 @@ extension Collection where Element: StringProtocol {
 @available(iOS 13.0, *)
 @available(tvOS 13.0, *)
 @available(watchOS 6.0, *)
-extension Collection where Element: CustomStringConvertible {
+extension Collection where Element == String {
     public var listDescription: String {
-        return ListFormatter.localizedString(byJoining: self.map({ $0.description }))
+        return ListFormatter.localizedString(byJoining: self.map({ $0 }))
     }
     
     public var quotedListDescription: String {
-        return ListFormatter.localizedString(byJoining: self.map({ "“\($0.description)”" }))
+        return ListFormatter.localizedString(byJoining: self.map({ "“\($0)”" }))
+    }
+}
+
+@available(macOS 10.15, *)
+@available(iOS 13.0, *)
+@available(tvOS 13.0, *)
+@available(watchOS 6.0, *)
+extension Collection where Element: CustomStringConvertible {
+    public var listDescription: String {
+        return self.map(\.description).listDescription
+    }
+    
+    public var quotedListDescription: String {
+        return self.map(\.description).quotedListDescription
     }
 }
 #endif
