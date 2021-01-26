@@ -24,6 +24,16 @@ extension Error {
 }
 
 extension Error {
+    public var fullDescription: String {
+        var errorDescription = self.localizedDescription
+        if let localizedRecoverySuggestion = self.localizedRecoverySuggestion {
+            errorDescription += "\n\n" + localizedRecoverySuggestion
+        }
+        return errorDescription
+    }
+}
+
+extension Error {
     public func encode() throws -> Data {
         return try self.cocoaError.encode()
     }
