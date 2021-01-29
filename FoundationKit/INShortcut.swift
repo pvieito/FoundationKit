@@ -123,7 +123,7 @@ extension URL {
     @available(iOSApplicationExtension, unavailable)
     @available(tvOSApplicationExtension, unavailable)
     @available(macCatalystApplicationExtension, unavailable)
-    public func openEnforcingShortcutsApplicationAvailability() throws {
+    fileprivate func openEnforcingShortcutsApplicationAvailability() throws {
         try INShortcut.enforceShortcutsApplicationAvailability()
         try self.open()
     }
