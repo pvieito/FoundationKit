@@ -10,6 +10,10 @@
 import Foundation
 import Intents
 
+#if os(iOS)
+import UIKit
+#endif
+
 @available(iOS 13.0, *)
 @available(macOS 11.0, *)
 @available(watchOS 6.0, *)
@@ -41,4 +45,13 @@ extension Collection where Element: INFile {
         try self.map { try $0.enforcingIntentsServiceExtensionMemoryLimitRestrictions() }
     }
 }
+
+#if os(iOS)
+@available(iOS 13.0, *)
+extension INFile {
+    public var uiImage: UIImage? {
+        return UIImage(data: self.data)
+    }
+}
+#endif
 #endif
