@@ -75,6 +75,9 @@
 		AAE5B32525C4DC6B00CBE3DA /* INShortcut.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE5B31A25C4DC6B00CBE3DA /* INShortcut.swift */; };
 		AAE5B32625C4DC6B00CBE3DA /* INShortcut.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE5B31A25C4DC6B00CBE3DA /* INShortcut.swift */; };
 		AAE5B32725C4DC6B00CBE3DA /* INShortcut.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE5B31A25C4DC6B00CBE3DA /* INShortcut.swift */; };
+		AAE5B39725C4EBAD00CBE3DA /* INIntentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE5B39625C4EBAD00CBE3DA /* INIntentType.swift */; };
+		AAE5B39825C4EBAD00CBE3DA /* INIntentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE5B39625C4EBAD00CBE3DA /* INIntentType.swift */; };
+		AAE5B39925C4EBAD00CBE3DA /* INIntentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAE5B39625C4EBAD00CBE3DA /* INIntentType.swift */; };
 		AAEBB4AE25C48D680039B5F9 /* INExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAEBB4A625C48D670039B5F9 /* INExtension.swift */; };
 		AAEBB4AF25C48D680039B5F9 /* INExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAEBB4A625C48D670039B5F9 /* INExtension.swift */; };
 		AAEBB4B025C48D680039B5F9 /* INExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAEBB4A625C48D670039B5F9 /* INExtension.swift */; };
@@ -137,6 +140,7 @@
 		AAE5B31825C4DC6B00CBE3DA /* INFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = INFile.swift; sourceTree = "<group>"; };
 		AAE5B31925C4DC6B00CBE3DA /* INIntentResolutionResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = INIntentResolutionResult.swift; sourceTree = "<group>"; };
 		AAE5B31A25C4DC6B00CBE3DA /* INShortcut.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = INShortcut.swift; sourceTree = "<group>"; };
+		AAE5B39625C4EBAD00CBE3DA /* INIntentType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = INIntentType.swift; sourceTree = "<group>"; };
 		AAEBB4A625C48D670039B5F9 /* INExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = INExtension.swift; sourceTree = "<group>"; };
 		AAED33872449F28800C82F4B /* Data+Hex.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+Hex.swift"; sourceTree = "<group>"; };
 		AAEF0C141E757A3500CF4C6A /* Double.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Double.swift; sourceTree = "<group>"; };
@@ -221,6 +225,7 @@
 				AAE5B31A25C4DC6B00CBE3DA /* INShortcut.swift */,
 				AAE5B31825C4DC6B00CBE3DA /* INFile.swift */,
 				AAE5B31925C4DC6B00CBE3DA /* INIntentResolutionResult.swift */,
+				AAE5B39625C4EBAD00CBE3DA /* INIntentType.swift */,
 				AAE5B31725C4DC6A00CBE3DA /* NSUserActivity+INIntent.swift */,
 				AABBD9A61E5761D000AE5B46 /* Info.plist */,
 			);
@@ -401,6 +406,7 @@
 				AA72A228241319170076E287 /* RunLoop.swift in Sources */,
 				AABFE0BD1F9A494200F1C1B2 /* Data.swift in Sources */,
 				AA4F54CD1ED8BCD7000C1333 /* FileManager.swift in Sources */,
+				AAE5B39725C4EBAD00CBE3DA /* INIntentType.swift in Sources */,
 				AAEBB4AE25C48D680039B5F9 /* INExtension.swift in Sources */,
 				AAFA3E6424681E6B00F90BF7 /* NSItemProvider.swift in Sources */,
 				AA87BE7121D03DB800EF404A /* NSAppleScript.swift in Sources */,
@@ -440,6 +446,7 @@
 				AA40892B259DD4A300C3C4E1 /* Data.swift in Sources */,
 				AA408921259DD4A300C3C4E1 /* UUID.swift in Sources */,
 				AA40892E259DD4A300C3C4E1 /* UserDefaults.swift in Sources */,
+				AAE5B39825C4EBAD00CBE3DA /* INIntentType.swift in Sources */,
 				AAEBB4AF25C48D680039B5F9 /* INExtension.swift in Sources */,
 				AA408920259DD4A300C3C4E1 /* CommandLine.swift in Sources */,
 				AA408925259DD4A300C3C4E1 /* TimeZone.swift in Sources */,
@@ -479,6 +486,7 @@
 				AAF42AF1244D1532008F2603 /* Double.swift in Sources */,
 				AAF42AF2244D1532008F2603 /* Error.swift in Sources */,
 				AA4088DC259DD3E700C3C4E1 /* Thread.swift in Sources */,
+				AAE5B39925C4EBAD00CBE3DA /* INIntentType.swift in Sources */,
 				AAEBB4B025C48D680039B5F9 /* INExtension.swift in Sources */,
 				AAF42AEF244D1532008F2603 /* URL.swift in Sources */,
 				AA4088DD259DD3E700C3C4E1 /* NSItemProvider.swift in Sources */,
