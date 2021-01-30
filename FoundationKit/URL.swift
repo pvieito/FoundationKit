@@ -97,7 +97,6 @@ extension URL {
     /// Attempts to open the resource at the specified URL asynchronously.
     @available(iOSApplicationExtension, unavailable)
     @available(tvOSApplicationExtension, unavailable)
-    @available(watchOSApplicationExtension, unavailable)
     @available(macCatalystApplicationExtension, unavailable)
     public func open(with applicationIdentifier: String? = nil) throws {
         #if !os(macOS)
