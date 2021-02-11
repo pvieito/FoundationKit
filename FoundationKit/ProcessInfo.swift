@@ -56,6 +56,27 @@ extension ProcessInfo {
     }
 }
 
+extension ProcessInfo {
+    private static let appStoreURLScheme = "itms-apps"
+    private static let appStoreURLBaseComponents: URLComponents = {
+        var appStoreURLBaseComponents = URLComponents()
+        appStoreURLBaseComponents.scheme = appStoreURLScheme
+        return appStoreURLBaseComponents
+    }()
+    
+    @available(iOSApplicationExtension, unavailable)
+    @available(tvOSApplicationExtension, unavailable)
+    @available(macCatalystApplicationExtension, unavailable)
+    public static func launchAppStore(applicationStoreIdentifier: Int? = nil) throws {
+        var launchAppStoreURLComponents = self.appStoreURLBaseComponents
+        if let applicationStoreIdentifier = applicationStoreIdentifier {
+            launchAppStoreURLComponents.host = "apps.apple.com"
+            launchAppStoreURLComponents.path = "/app/id\(applicationStoreIdentifier)"
+        }
+        try launchAppStoreURLComponents.url!.open()
+    }
+}
+
 #if os(macOS)
 extension ProcessInfo {
     @available(*, deprecated)
