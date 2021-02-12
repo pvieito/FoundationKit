@@ -67,11 +67,18 @@ extension ProcessInfo {
     @available(iOSApplicationExtension, unavailable)
     @available(tvOSApplicationExtension, unavailable)
     @available(macCatalystApplicationExtension, unavailable)
-    public static func launchAppStore(applicationStoreIdentifier: Int? = nil) throws {
+    public static func launchAppStore(applicationStoreIdentifier: Int? = nil, campaignProviderIdentifier: Int? = nil, campaignName: String? = nil) throws {
         var launchAppStoreURLComponents = self.appStoreURLBaseComponents
         if let applicationStoreIdentifier = applicationStoreIdentifier {
             launchAppStoreURLComponents.host = "apps.apple.com"
             launchAppStoreURLComponents.path = "/app/id\(applicationStoreIdentifier)"
+        }
+        if let campaignProviderIdentifier = campaignProviderIdentifier {
+            let campaignName = campaignName ?? Bundle.main.bundleIdentifier ?? Bundle.main.bundleName
+            launchAppStoreURLComponents.queryItems = [
+                URLQueryItem(name: "pt", value: String(campaignProviderIdentifier)),
+                URLQueryItem(name: "ct", value: campaignName),
+            ]
         }
         try launchAppStoreURLComponents.url!.open()
     }
