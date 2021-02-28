@@ -17,17 +17,6 @@ class UUIDTests: XCTestCase {
         }
     }
     
-    func testUUIDHashing() {
-        let input = [
-            (Data("2019/01/05/part-00002-95aa10ed-5312-4de1-a562-0517ab73a2a1-c000.csv.gz".utf8), "2341F671-D6E9-FC31-93F8-C68B33BF1A97"),
-            (Data("::SOURCE_DATA".utf8) + Data([0xFF, 0xFA, 0x88]) + Data("::".utf8), "AC42FFCD-29F7-6FCF-BA20-3E9C43F5254C"),
-        ]
-        
-        for (input, result) in input {
-            XCTAssertEqual(UUID(hashing: input), UUID(uuidString: result)!)
-        }
-    }
-    
     func testUUIDFromData() {
         XCTAssertNil(UUID(data: Data([])))
         XCTAssertNil(UUID(data: Data([1, 2, 3])))
@@ -38,3 +27,18 @@ class UUIDTests: XCTestCase {
         XCTAssertEqual(UUID(data: Data(repeating: 0, count: 16)), .zero)
     }
 }
+
+#if canImport(CryptoKit)
+extension UUIDTests {
+    func testUUIDHashing() {
+        let input = [
+            (Data("2019/01/05/part-00002-95aa10ed-5312-4de1-a562-0517ab73a2a1-c000.csv.gz".utf8), "2341F671-D6E9-FC31-93F8-C68B33BF1A97"),
+            (Data("::SOURCE_DATA".utf8) + Data([0xFF, 0xFA, 0x88]) + Data("::".utf8), "AC42FFCD-29F7-6FCF-BA20-3E9C43F5254C"),
+        ]
+        
+        for (input, result) in input {
+            XCTAssertEqual(UUID(hashing: input), UUID(uuidString: result)!)
+        }
+    }
+}
+#endif
