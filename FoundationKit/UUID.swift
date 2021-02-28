@@ -8,7 +8,17 @@
 
 import Foundation
 
+#if canImport(CryptoKit)
+import CryptoKit
+#elseif canImport(Crypto)
+import Crypto
+#endif
+
 extension UUID {
+    public static func random() -> UUID {
+        return UUID()
+    }
+    
     public static var zero: UUID {
         let uuid: uuid_t = (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
         return UUID(uuid: uuid)
@@ -60,3 +70,20 @@ extension UUID {
         ])
     }
 }
+
+#if canImport(CryptoKit) || canImport(Crypto)
+@available(macOS 10.15, *)
+@available(iOS 13, *)
+@available(tvOS 13, *)
+@available(watchOS 6, *)
+extension UUID {
+    public init(hashing string: String) {
+        self.init(data: Data(string.utf8))!
+    }
+    
+    public init(hashing data: Data) {
+        let hashedData = Data(Insecure.MD5.hash(data: data))
+        self.init(data: hashedData)!
+    }
+}
+#endif

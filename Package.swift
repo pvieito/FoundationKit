@@ -16,6 +16,9 @@ let package = Package(
             targets: ["FoundationKit"]
         )
     ],
+    dependencies: [
+        .package(url: "https://github.com/apple/swift-crypto.git", from: "1.1.4")
+    ],
     targets: [
         .target(
             name: "FoundationKit",
