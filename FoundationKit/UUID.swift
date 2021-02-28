@@ -76,7 +76,7 @@ extension UUID {
 @available(watchOS 6, *)
 extension UUID {
     public init(hashing string: String) {
-        self.init(data: Data(string.utf8))!
+        self.init(hashing: Data(string.utf8))
     }
     
     public init(hashing data: Data) {

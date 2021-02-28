@@ -37,6 +37,9 @@ extension UUIDTests {
         ]
         
         for (input, result) in input {
+            if let inputString = String(data: input, encoding: .utf8) {
+                XCTAssertEqual(UUID(hashing: inputString), UUID(uuidString: result)!)
+            }
             XCTAssertEqual(UUID(hashing: input), UUID(uuidString: result)!)
         }
     }
