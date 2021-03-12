@@ -250,3 +250,13 @@ extension Optional where Wrapped == String {
         return self?.quoted ?? String.dashCharacter
     }
 }
+
+extension String {
+    public static func starsRating(value: Int, padding: Bool = true, maximum: Int = 5) -> String {
+        var starsRating = String(repeating: "★", count: value)
+        if padding {
+            starsRating += String(repeating: "☆", count: (maximum - value))
+        }
+        return starsRating
+    }
+}
