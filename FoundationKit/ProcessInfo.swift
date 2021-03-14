@@ -74,7 +74,7 @@ extension ProcessInfo {
             launchAppStoreURLComponents.path = "/app/id\(applicationStoreIdentifier)"
         }
         if let campaignProviderIdentifier = campaignProviderIdentifier {
-            let campaignName = campaignName ?? Bundle.main.bundleIdentifier ?? Bundle.main.bundleName
+            let campaignName = campaignName ?? Bundle.main.bundleName
             launchAppStoreURLComponents.queryItems = [
                 URLQueryItem(name: "pt", value: String(campaignProviderIdentifier)),
                 URLQueryItem(name: "ct", value: campaignName),
