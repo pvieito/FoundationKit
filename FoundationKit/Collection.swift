@@ -47,6 +47,10 @@ extension Array where Element: Hashable {
         }
     }
     
+    public func dropDuplicates() -> [Element] {
+        return self.removingDuplicates()
+    }
+    
     /// Removes duplicates from the array.
     public mutating func removeDuplicates() {
         self = self.removingDuplicates()
@@ -88,6 +92,39 @@ extension Collection where Element: Hashable {
     /// The most frequent element in the array.
     public var mode: Element? {
         return self.frequencies.max { $0.value < $1.value }?.key
+    }
+}
+
+extension Sequence where Element: AdditiveArithmetic {
+    /// Returns the total sum of all elements in the sequence
+    public func sum() -> Element { reduce(.zero, +) }
+}
+
+extension Collection where Element: BinaryInteger {
+    /// Returns the average of all elements in the array
+    public func average() -> Element? {
+        return self.isEmpty ? nil : self.sum() / Element(self.count)
+    }
+    /// Returns the average of all elements in the array as Floating Point type
+    public func average<T: FloatingPoint>() -> T? {
+        return isEmpty ? nil : T(self.sum()) / T(self.count)
+    }
+}
+
+extension Collection where Element: BinaryFloatingPoint {
+    /// Returns the average of all elements in the array
+    public func average() -> Element? {
+        return self.isEmpty ? nil : Element(self.sum()) / Element(self.count)
+    }
+}
+
+@available(macOS 10.12, *)
+extension Collection {
+    public func average<UnitType: Dimension>(in unit: UnitType = .baseUnit()) -> Measurement<UnitType>? where Element == Measurement<UnitType> {
+        guard !self.isEmpty else { return nil }
+        let zeroMeasurement = Measurement(value: .zero, unit: unit)
+        let sum = reduce(zeroMeasurement, { $0 + $1.converted(to: unit) })
+        return sum / Double(self.count)
     }
 }
 

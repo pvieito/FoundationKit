@@ -41,6 +41,12 @@
 		AA40892E259DD4A300C3C4E1 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4F54791ED8A06D000C1333 /* UserDefaults.swift */; };
 		AA40892F259DD4A300C3C4E1 /* RunLoop.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA72A227241319170076E287 /* RunLoop.swift */; };
 		AA408930259DD4A300C3C4E1 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0D3D671EA033B700FB7EBD /* Error.swift */; };
+		AA441EB2260A027C008D3328 /* UnitTemperature.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA441EB1260A027C008D3328 /* UnitTemperature.swift */; };
+		AA441EB3260A027C008D3328 /* UnitTemperature.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA441EB1260A027C008D3328 /* UnitTemperature.swift */; };
+		AA441EB4260A027C008D3328 /* UnitTemperature.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA441EB1260A027C008D3328 /* UnitTemperature.swift */; };
+		AA441EC1260A028E008D3328 /* UnitConverterReciprocal.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA441EC0260A028E008D3328 /* UnitConverterReciprocal.swift */; };
+		AA441EC2260A028E008D3328 /* UnitConverterReciprocal.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA441EC0260A028E008D3328 /* UnitConverterReciprocal.swift */; };
+		AA441EC3260A028E008D3328 /* UnitConverterReciprocal.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA441EC0260A028E008D3328 /* UnitConverterReciprocal.swift */; };
 		AA451705245B5446008B79BC /* CaseIterable.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA451704245B5446008B79BC /* CaseIterable.swift */; };
 		AA452387250787BE00A5B986 /* Thread.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA452386250787BE00A5B986 /* Thread.swift */; };
 		AA4E843D2138505400E6DCFC /* Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA4E843C2138505400E6DCFC /* Bundle.swift */; };
@@ -97,6 +103,8 @@
 		AA2563CF1E57639E0037CBED /* FoundationKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FoundationKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA2565A41E57AA7C0037CBED /* CommandLine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandLine.swift; sourceTree = "<group>"; };
 		AA408901259DD45B00C3C4E1 /* FoundationKitMac.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FoundationKitMac.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		AA441EB1260A027C008D3328 /* UnitTemperature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnitTemperature.swift; sourceTree = "<group>"; };
+		AA441EC0260A028E008D3328 /* UnitConverterReciprocal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnitConverterReciprocal.swift; sourceTree = "<group>"; };
 		AA451704245B5446008B79BC /* CaseIterable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaseIterable.swift; sourceTree = "<group>"; };
 		AA452386250787BE00A5B986 /* Thread.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Thread.swift; sourceTree = "<group>"; };
 		AA4E843C2138505400E6DCFC /* Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bundle.swift; sourceTree = "<group>"; };
@@ -197,6 +205,8 @@
 				AAB638781EBBDD28008365EB /* URL.swift */,
 				AA4F54791ED8A06D000C1333 /* UserDefaults.swift */,
 				AA72432121812A6600084F58 /* UUID.swift */,
+				AA441EC0260A028E008D3328 /* UnitConverterReciprocal.swift */,
+				AA441EB1260A027C008D3328 /* UnitTemperature.swift */,
 				AABBD9A61E5761D000AE5B46 /* Info.plist */,
 			);
 			path = FoundationKit;
@@ -375,6 +385,8 @@
 				AA72A228241319170076E287 /* RunLoop.swift in Sources */,
 				AABFE0BD1F9A494200F1C1B2 /* Data.swift in Sources */,
 				AA4F54CD1ED8BCD7000C1333 /* FileManager.swift in Sources */,
+				AA441EB2260A027C008D3328 /* UnitTemperature.swift in Sources */,
+				AA441EC1260A028E008D3328 /* UnitConverterReciprocal.swift in Sources */,
 				AAFA3E6424681E6B00F90BF7 /* NSItemProvider.swift in Sources */,
 				AA87BE7121D03DB800EF404A /* NSAppleScript.swift in Sources */,
 				AA2565A51E57AA7C0037CBED /* CommandLine.swift in Sources */,
@@ -409,6 +421,8 @@
 				AA40892B259DD4A300C3C4E1 /* Data.swift in Sources */,
 				AA408921259DD4A300C3C4E1 /* UUID.swift in Sources */,
 				AA40892E259DD4A300C3C4E1 /* UserDefaults.swift in Sources */,
+				AA441EB3260A027C008D3328 /* UnitTemperature.swift in Sources */,
+				AA441EC2260A028E008D3328 /* UnitConverterReciprocal.swift in Sources */,
 				AA408920259DD4A300C3C4E1 /* CommandLine.swift in Sources */,
 				AA408925259DD4A300C3C4E1 /* TimeZone.swift in Sources */,
 				AA40891E259DD4A300C3C4E1 /* Data+Hex.swift in Sources */,
@@ -443,6 +457,8 @@
 				AAF42AF1244D1532008F2603 /* Double.swift in Sources */,
 				AAF42AF2244D1532008F2603 /* Error.swift in Sources */,
 				AA4088DC259DD3E700C3C4E1 /* Thread.swift in Sources */,
+				AA441EB4260A027C008D3328 /* UnitTemperature.swift in Sources */,
+				AA441EC3260A028E008D3328 /* UnitConverterReciprocal.swift in Sources */,
 				AAF42AEF244D1532008F2603 /* URL.swift in Sources */,
 				AA4088DD259DD3E700C3C4E1 /* NSItemProvider.swift in Sources */,
 				AAF42AFF244D1532008F2603 /* NSAppleScript.swift in Sources */,
