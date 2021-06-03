@@ -9,6 +9,7 @@
 import Foundation
 
 @available(macOS 10.12, *)
+@available(watchOS 3.0, *)
 extension UnitTemperature {
     public static let microReciprocalDegrees: UnitTemperature = {
         let converter = UnitConverterReciprocal(numerator: 1_000_000)

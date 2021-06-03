@@ -119,6 +119,7 @@ extension Collection where Element: BinaryFloatingPoint {
 }
 
 @available(macOS 10.12, *)
+@available(watchOS 3.0, *)
 extension Collection {
     public func average<UnitType: Dimension>(in unit: UnitType = .baseUnit()) -> Measurement<UnitType>? where Element == Measurement<UnitType> {
         guard !self.isEmpty else { return nil }

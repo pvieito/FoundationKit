@@ -9,6 +9,7 @@
 import Foundation
 
 @available(macOS 10.12, *)
+@available(watchOS 3.0, *)
 class UnitConverterReciprocal: UnitConverter {
     private let numerator: Double
     
