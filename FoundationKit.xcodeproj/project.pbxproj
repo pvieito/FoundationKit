@@ -10,6 +10,7 @@
 		AA0D3D681EA033B700FB7EBD /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0D3D671EA033B700FB7EBD /* Error.swift */; };
 		AA0D3D6A1EA039FD00FB7EBD /* Collection.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0D3D691EA039FD00FB7EBD /* Collection.swift */; };
 		AA111F74225AB2AA00F3A9BB /* ProcessInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA111F73225AB2AA00F3A9BB /* ProcessInfo.swift */; };
+		AA1F4CB0268B364A00E196E1 /* URLResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA1F4CAF268B364A00E196E1 /* URLResponse.swift */; };
 		AA2563C61E57639E0037CBED /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = AABBD9A71E5761D000AE5B46 /* String.swift */; };
 		AA2565A51E57AA7C0037CBED /* CommandLine.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA2565A41E57AA7C0037CBED /* CommandLine.swift */; };
 		AA4088DC259DD3E700C3C4E1 /* Thread.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA452386250787BE00A5B986 /* Thread.swift */; };
@@ -100,6 +101,7 @@
 		AA0D3D671EA033B700FB7EBD /* Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
 		AA0D3D691EA039FD00FB7EBD /* Collection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Collection.swift; sourceTree = "<group>"; };
 		AA111F73225AB2AA00F3A9BB /* ProcessInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProcessInfo.swift; sourceTree = "<group>"; };
+		AA1F4CAF268B364A00E196E1 /* URLResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLResponse.swift; sourceTree = "<group>"; };
 		AA2563CF1E57639E0037CBED /* FoundationKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FoundationKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AA2565A41E57AA7C0037CBED /* CommandLine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommandLine.swift; sourceTree = "<group>"; };
 		AA408901259DD45B00C3C4E1 /* FoundationKitMac.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = FoundationKitMac.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -202,11 +204,12 @@
 				AABBD9A71E5761D000AE5B46 /* String.swift */,
 				AA452386250787BE00A5B986 /* Thread.swift */,
 				AA75EF53245C9BE0003B1B79 /* TimeZone.swift */,
-				AAB638781EBBDD28008365EB /* URL.swift */,
-				AA4F54791ED8A06D000C1333 /* UserDefaults.swift */,
-				AA72432121812A6600084F58 /* UUID.swift */,
 				AA441EC0260A028E008D3328 /* UnitConverterReciprocal.swift */,
 				AA441EB1260A027C008D3328 /* UnitTemperature.swift */,
+				AAB638781EBBDD28008365EB /* URL.swift */,
+				AA1F4CAF268B364A00E196E1 /* URLResponse.swift */,
+				AA4F54791ED8A06D000C1333 /* UserDefaults.swift */,
+				AA72432121812A6600084F58 /* UUID.swift */,
 				AABBD9A61E5761D000AE5B46 /* Info.plist */,
 			);
 			path = FoundationKit;
@@ -369,6 +372,7 @@
 			files = (
 				AAC333432449073200A0164D /* BinaryInteger.swift in Sources */,
 				AAC333412449067200A0164D /* FloatingPoint.swift in Sources */,
+				AA1F4CB0268B364A00E196E1 /* URLResponse.swift in Sources */,
 				AA50783F25A3346300B5A2EB /* DispatchSemaphore.swift in Sources */,
 				AA72432221812A6600084F58 /* UUID.swift in Sources */,
 				AA0D3D681EA033B700FB7EBD /* Error.swift in Sources */,
