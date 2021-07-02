@@ -14,11 +14,19 @@ let package = Package(
         .library(
             name: "FoundationKit",
             targets: ["FoundationKit"]
+        ),
+        .library(
+            name: "FoundationKitMac",
+            targets: ["FoundationKitMac"]
         )
     ],
     targets: [
         .target(
             name: "FoundationKit",
+            path: "FoundationKit"
+        ),
+        .target(
+            name: "FoundationKitMac",
             path: "FoundationKit"
         ),
         .testTarget(
