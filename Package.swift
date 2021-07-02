@@ -27,7 +27,7 @@ let package = Package(
         ),
         .target(
             name: "FoundationKitMac",
-            path: "FoundationKit"
+            path: "FoundationKitMac"
         ),
         .testTarget(
             name: "FoundationKitTests",
