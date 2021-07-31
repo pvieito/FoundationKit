@@ -9,6 +9,10 @@
 import Foundation
 import CoreFoundation
 
+#if canImport(UniformTypeIdentifiers)
+import UniformTypeIdentifiers
+#endif
+
 #if canImport(LinkPresentation)
 import LinkPresentation
 #endif
@@ -92,6 +96,27 @@ extension URL {
         return false
     }
 }
+
+#if canImport(UniformTypeIdentifiers)
+@available(iOS 14, *)
+@available(macOS 11, *)
+@available(watchOS 7, *)
+@available(tvOS 14, *)
+extension URL {
+    public var uniformTypeIdentifier: UTType? {
+        guard let typeIdentifier = self.typeIdentifier else { return nil }
+        return UTType(typeIdentifier)
+    }
+    
+    public func typeIdentifierConforms(to otherTypeIdentifier: UTType) -> Bool {
+        return self.typeIdentifierConforms(to: otherTypeIdentifier.identifier)
+    }
+    
+    public func typeIdentifierConforms(to otherTypeIdentifiers: [UTType]) -> Bool {
+        return self.typeIdentifierConforms(to: otherTypeIdentifiers.map(\.identifier))
+    }
+}
+#endif
 
 extension URL {
     /// Attempts to open the resource at the specified URL asynchronously.
