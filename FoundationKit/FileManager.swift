@@ -61,7 +61,7 @@ extension FileManager {
     /// Real URL to the user home directory, even in a Sanboxed environment.
     public var realHomeDirectoryForCurrentUser: URL {
         var homeDirectoryForCurrentUser = URL(fileURLWithPath: NSHomeDirectory())
-        #if os(macOS)
+        #if os(macOS) || targetEnvironment(macCatalyst)
         if let userPath = getpwuid(getuid())?.pointee.pw_dir {
             homeDirectoryForCurrentUser = URL(fileURLWithPath: String(cString: userPath))
         }
@@ -102,35 +102,25 @@ extension FileManager {
     }
 }
 
-#if os(macOS)
+#if os(macOS) || targetEnvironment(macCatalyst)
 extension FileManager {
     /// URL to the library of Ubiquity Containers for the user.
     public var ubiquityContainersLibrary: URL? {
-        guard let libraryURL = try? self.url(for: .libraryDirectory, in: .userDomainMask, appropriateFor: nil, create: false) else {
+        guard let ubiquityContainersLibrary = try? self.realHomeDirectoryForCurrentUser.appendingPathComponents("Library", "Mobile Documents"),
+              self.fileExists(atPath: ubiquityContainersLibrary.path) else {
             return nil
         }
-
-        let ubiquityContainersLibrary = libraryURL.appendingPathComponent("Mobile Documents")
-
-        guard self.fileExists(atPath: ubiquityContainersLibrary.path) else {
-            return nil
-        }
-
         return ubiquityContainersLibrary
     }
 
     /// List of available Ubiquity Containers.
     public var availableUbiquityContainers: [URL] {
-        guard let ubiquityContainersLibrary = self.ubiquityContainersLibrary else {
-            return []
-        }
-
-        guard let contents = try? self.contentsOfDirectory(atPath: ubiquityContainersLibrary.path) else {
+        guard let ubiquityContainersLibrary = self.ubiquityContainersLibrary,
+              let contents = try? self.contentsOfDirectory(atPath: ubiquityContainersLibrary.path) else {
             return []
         }
 
         var availableUbiquityContainers: [URL] = []
-
         for item in contents {
             let itemURL = ubiquityContainersLibrary.appendingPathComponent(item)
             var isDirectory: ObjCBool = false
@@ -140,7 +130,6 @@ extension FileManager {
                 availableUbiquityContainers.append(itemURL)
             }
         }
-        
         return availableUbiquityContainers
     }
 
