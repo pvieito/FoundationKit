@@ -106,8 +106,8 @@ extension FileManager {
 extension FileManager {
     /// URL to the library of Ubiquity Containers for the user.
     public var ubiquityContainersLibrary: URL? {
-        guard let ubiquityContainersLibrary = try? self.realHomeDirectoryForCurrentUser.appendingPathComponents("Library", "Mobile Documents"),
-              self.fileExists(atPath: ubiquityContainersLibrary.path) else {
+        let ubiquityContainersLibrary = self.realHomeDirectoryForCurrentUser.appendingPathComponents("Library", "Mobile Documents")
+        guard self.fileExists(atPath: ubiquityContainersLibrary.path) else {
             return nil
         }
         return ubiquityContainersLibrary
