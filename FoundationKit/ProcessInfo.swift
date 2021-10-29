@@ -145,7 +145,7 @@ extension ProcessInfo {
             try URL(fileURLWithPath: "/System/Library/PreferencePanes/Accounts.prefPane").open()
         }
         catch {
-            try? URL(string: "x-apple.systempreferences:")!.open()
+            try URL(string: "x-apple.systempreferences:")!.open()
         }
     }
 }
