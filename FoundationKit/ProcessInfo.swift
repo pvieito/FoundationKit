@@ -140,12 +140,16 @@ extension ProcessInfo {
 }
 
 extension ProcessInfo {
+    public func launchSystemPreferences() throws {
+        try URL(string: "x-apple.systempreferences:")!.open()
+    }
+    
     public func launchUserLoginItemsPaneInSystemPreferences() throws {
         do {
             try URL(fileURLWithPath: "/System/Library/PreferencePanes/Accounts.prefPane").open()
         }
         catch {
-            try URL(string: "x-apple.systempreferences:")!.open()
+            try self.launchSystemPreferences()
         }
     }
 }
