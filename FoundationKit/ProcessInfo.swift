@@ -105,10 +105,12 @@ extension ProcessInfo {
 }
 
 extension ProcessInfo {
+    @available(*, deprecated)
     private var loginItemBundle: Bundle? {
         return Bundle.main.builtInLoginItemsBundles.first
     }
     
+    @available(*, deprecated, message: "Use ProcessInfo.processInfo.launchUserLoginItemsPaneInSystemPreferences() instead.")
     public func configureLoginItem(bundleIdentifier: String? = nil, enabled: Bool) throws {
         guard let bundleIdentifier = loginItemBundle?.bundleIdentifier else {
             throw NSError(description: "Error configuring login item as a valid bundle is not available.")
@@ -120,6 +122,7 @@ extension ProcessInfo {
 }
 
 extension ProcessInfo {
+    @available(*, deprecated)
     public func launchParentApplication(deep: Bool = false) throws {
         var parentApplicationBundle: Bundle?
         if deep {
@@ -133,6 +136,17 @@ extension ProcessInfo {
         }
         guard !mainBundle.isApplicationRunning else { return }
         try mainBundle.bundleURL.open()
+    }
+}
+
+extension ProcessInfo {
+    public func launchUserLoginItemsPaneInSystemPreferences() throws {
+        do {
+            try URL(fileURLWithPath: "/System/Library/PreferencePanes/Accounts.prefPane").open()
+        }
+        catch {
+            try? URL(string: "x-apple.systempreferences:")!.open()
+        }
     }
 }
 
