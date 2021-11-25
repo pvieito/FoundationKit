@@ -141,39 +141,57 @@ extension ProcessInfo {
 
 extension ProcessInfo {
     private static let systemPreferencesURLScheme = "x-apple.systempreferences:"
-    private static let systemPreferencesSecurityPaneURLString = systemPreferencesURLScheme + "com.apple.preference.security"
-    private static let systemPreferencesAutomationPrivacyPaneURLString = systemPreferencesSecurityPaneURLString + "?Privacy_Automation"
-    private static let systemPreferencesAccessibilityPrivacyPaneURLString = systemPreferencesSecurityPaneURLString + "?Privacy_Accessibility"
+    private static let systemPreferencesSecurityPaneURISuffix = "com.apple.preference.security"
+    private static let systemPreferencesAutomationPrivacyPaneURISuffix = systemPreferencesSecurityPaneURISuffix + "?Privacy_Automation"
+    private static let systemPreferencesAccessibilityPrivacyPaneURISuffix = systemPreferencesSecurityPaneURISuffix + "?Privacy_Accessibility"
 
     public func launchSystemPreferences() throws {
         try URL(string: Self.systemPreferencesURLScheme)!.open()
     }
     
-    public func launchUserLoginItemsPaneInSystemPreferences() throws {
+    public func launchPaneInSystemPreferences(uriSuffix: String) throws {
         do {
-            try URL(fileURLWithPath: "/System/Library/PreferencePanes/Accounts.prefPane").open()
-        }
-        catch {
-            try self.launchSystemPreferences()
-        }
-    }
-    
-    public func launchAutomationPrivacyPaneInSystemPreferences() throws {
-        do {
-            try URL(string: Self.systemPreferencesAutomationPrivacyPaneURLString)!.open()
+            try URL(string: Self.systemPreferencesURLScheme + uriSuffix)!.open()
         }
         catch {
             try self.launchSystemPreferences()
         }
     }
 
+    public func launchAutomationPrivacyPaneInSystemPreferences() throws {
+        try self.launchPaneInSystemPreferences(uriSuffix: Self.systemPreferencesAutomationPrivacyPaneURISuffix)
+    }
+
     public func launchAccessibilityPrivacyPaneInSystemPreferences() throws {
+        try self.launchPaneInSystemPreferences(uriSuffix: Self.systemPreferencesAccessibilityPrivacyPaneURISuffix)
+    }
+}
+
+extension ProcessInfo {
+    private static let systemPreferencesPanesDirectoryPath = "/System/Library/PreferencePanes/"
+    private static let systemPreferencesPaneExtension = "prefPane"
+    private static let systemPreferencesPanePathSuffix = "." + systemPreferencesPaneExtension
+    
+    public func launchPaneInSystemPreferences(name: String) throws {
         do {
-            try URL(string: Self.systemPreferencesAccessibilityPrivacyPaneURLString)!.open()
+            try URL(fileURLWithPath: Self.systemPreferencesPanesDirectoryPath + name + Self.systemPreferencesPanePathSuffix).open()
         }
         catch {
             try self.launchSystemPreferences()
         }
+    }
+
+    public func launchUsersPaneInSystemPreferences() throws {
+        try self.launchPaneInSystemPreferences(name: "Accounts")
+    }
+    
+    @available(*, renamed: "launchUsersPaneInSystemPreferences")
+    public func launchUserLoginItemsPaneInSystemPreferences() throws {
+        try self.launchUsersPaneInSystemPreferences()
+    }
+    
+    public func launchExtensionsPaneInSystemPreferences() throws {
+        try self.launchPaneInSystemPreferences(name: "Extensions")
     }
 }
 
