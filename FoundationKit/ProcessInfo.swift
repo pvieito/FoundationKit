@@ -158,7 +158,7 @@ extension ProcessInfo {
         }
     }
     
-    public func launchAutomationPrivacyPaneInSystemPreferences(for section: String? = nil) throws {
+    public func launchAutomationPrivacyPaneInSystemPreferences() throws {
         do {
             try URL(string: Self.systemPreferencesAutomationPrivacyPaneURLString)!.open()
         }
@@ -167,7 +167,7 @@ extension ProcessInfo {
         }
     }
 
-    public func launchAccessibilityPrivacyPaneInSystemPreferences(for section: String? = nil) throws {
+    public func launchAccessibilityPrivacyPaneInSystemPreferences() throws {
         do {
             try URL(string: Self.systemPreferencesAccessibilityPrivacyPaneURLString)!.open()
         }
