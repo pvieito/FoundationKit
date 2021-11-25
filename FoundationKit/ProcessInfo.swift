@@ -140,13 +140,36 @@ extension ProcessInfo {
 }
 
 extension ProcessInfo {
+    private static let systemPreferencesURLScheme = "x-apple.systempreferences:"
+    private static let systemPreferencesSecurityPaneURLString = systemPreferencesURLScheme + "com.apple.preference.security"
+    private static let systemPreferencesAutomationPrivacyPaneURLString = systemPreferencesSecurityPaneURLString + "?Privacy_Automation"
+    private static let systemPreferencesAccessibilityPrivacyPaneURLString = systemPreferencesSecurityPaneURLString + "?Privacy_Accessibility"
+
     public func launchSystemPreferences() throws {
-        try URL(string: "x-apple.systempreferences:")!.open()
+        try URL(string: Self.systemPreferencesURLScheme)!.open()
     }
     
     public func launchUserLoginItemsPaneInSystemPreferences() throws {
         do {
             try URL(fileURLWithPath: "/System/Library/PreferencePanes/Accounts.prefPane").open()
+        }
+        catch {
+            try self.launchSystemPreferences()
+        }
+    }
+    
+    private func launchAutomationPrivacyPaneInSystemPreferences(for section: String? = nil) throws {
+        do {
+            try URL(string: Self.systemPreferencesAutomationPrivacyPaneURLString)!.open()
+        }
+        catch {
+            try self.launchSystemPreferences()
+        }
+    }
+
+    private func launchAccessibilityPrivacyPaneInSystemPreferences(for section: String? = nil) throws {
+        do {
+            try URL(string: Self.systemPreferencesAccessibilityPrivacyPaneURLString)!.open()
         }
         catch {
             try self.launchSystemPreferences()
