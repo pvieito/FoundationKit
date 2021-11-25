@@ -186,18 +186,18 @@ extension ProcessInfo {
 
 @available(macOS 10.14, *)
 extension ProcessInfo {
-    public static func determineAutomationPermission(for bundleIdentifier: String, promptUser: Bool = false) -> Bool {
+    public func determineAutomationPermission(for bundleIdentifier: String, promptUser: Bool = false) -> Bool {
         let applicationTarget = NSAppleEventDescriptor(bundleIdentifier: bundleIdentifier)
         return AEDeterminePermissionToAutomateTarget(applicationTarget.aeDesc, typeWildCard, typeWildCard, promptUser) == noErr
     }
 }
 
 extension ProcessInfo {
-    public static func determineAccessibilityPermission(promptUser: Bool = false) -> Bool {
+    public func determineAccessibilityPermission(promptUser: Bool = false) -> Bool {
         return AXIsProcessTrustedWithOptions([kAXTrustedCheckOptionPrompt.takeUnretainedValue(): promptUser as CFBoolean] as CFDictionary)
     }
 
-    public static var hasAccessibilityPermission: Bool {
+    public var hasAccessibilityPermission: Bool {
         return self.determineAccessibilityPermission(promptUser: false)
     }
 }
