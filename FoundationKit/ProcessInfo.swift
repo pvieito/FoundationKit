@@ -205,7 +205,9 @@ extension ProcessInfo {
 @available(macOS 10.14, *)
 extension ProcessInfo {
     public func determineAutomationPermission(for bundleIdentifier: String, promptUser: Bool = false) -> Bool {
-        NSWorkspace.shared.launchApplication(withBundleIdentifier: bundleIdentifier, options: [], additionalEventParamDescriptor: nil, launchIdentifier: nil)
+        if NSWorkspace.shared.runningApplications.first(where: \.bundleIdentifier == bundleIdentifier) == nil {
+            NSWorkspace.shared.launchApplication(withBundleIdentifier: bundleIdentifier, options: [.andHide, .withoutActivation], additionalEventParamDescriptor: nil, launchIdentifier: nil)
+        }
         let applicationTarget = NSAppleEventDescriptor(bundleIdentifier: bundleIdentifier)
         return AEDeterminePermissionToAutomateTarget(applicationTarget.aeDesc, typeWildCard, typeWildCard, promptUser) == noErr
     }
