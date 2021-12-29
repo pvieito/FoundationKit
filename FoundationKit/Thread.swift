@@ -9,7 +9,12 @@
 import Foundation
 
 extension Thread {
+    @available(*, deprecated, renamed: "runSynchronouslyOnMainThread(block:)")
     public static func runSychronouslyOnMainThread(block: (() -> ())) {
+        return runSynchronouslyOnMainThread(block: block)
+    }
+    
+    public static func runSynchronouslyOnMainThread(block: (() -> ())) {
         if Thread.current.isMainThread {
             block()
         }
