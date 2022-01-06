@@ -169,17 +169,17 @@ extension Collection where Element == URL {
 }
 
 extension Collection where Element == String {
-    /// Returns array of file URLs intialized from the strings.
+    /// Returns array of file URLs initialized from the strings.
     public var pathURLs: [URL] {
         return self.map { $0.pathURL }
     }
     
-    /// Returns array of generic URLs intialized from the strings, removing invalid entries.
+    /// Returns array of generic URLs initialized from the strings, removing invalid entries.
     public var genericURLs: [URL] {
         return self.compactMap { $0.genericURL }
     }
     
-    /// Returns array of resource URLs intialized from the strings, removing invalid entries.
+    /// Returns array of resource URLs initialized from the strings, removing invalid entries.
     public var resourceURLs: [URL] {
         return self.compactMap { $0.resourceURL }
     }
