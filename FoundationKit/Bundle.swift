@@ -265,7 +265,7 @@ extension Bundle {
         }
         
         let cocoaModuleName = self.cocoaBundleName.applyingRegularExpression(
-            pattern: #"\W"#, sustitution: "_")
+            pattern: #"\W"#, substitution: "_")
         let className = cocoaModuleName + "." + name
         guard let cocoaClass: AnyClass = cocoaBundle.classNamed(className) else {
             throw NSError(description: "Cocoa class “\(className)” not found in bundle “\(cocoaBundle.bundleName)”.")

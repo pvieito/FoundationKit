@@ -141,15 +141,15 @@ extension String {
         return NSRange(self.startIndex..<self.endIndex, in: self)
     }
     
-    /// Returns the String with the subsitutions applied.
+    /// Returns the String with the substitutions applied.
     ///
     /// - Parameters:
     ///   - pattern: Regular Expression to match.
-    ///   - sustitution: Substitution to apply.
-    /// - Returns: String with the Regular Expression subsitution applied.
-    public func applyingRegularExpression(pattern: String, sustitution: String) -> String {
+    ///   - substitution: Substitution to apply.
+    /// - Returns: String with the Regular Expression substitution applied.
+    public func applyingRegularExpression(pattern: String, substitution: String) -> String {
         let regex = try? NSRegularExpression(pattern: pattern, options: [])
-        return regex?.stringByReplacingMatches(in: self, options: [], range: self.fullRange, withTemplate: sustitution) ?? self
+        return regex?.stringByReplacingMatches(in: self, options: [], range: self.fullRange, withTemplate: substitution) ?? self
     }
     
     /// True if the string has some Regular Expression match.
