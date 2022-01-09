@@ -58,7 +58,7 @@ extension FileManager {
         return temporaryFileURL
     }
     
-    /// Real URL to the user home directory, even in a Sanboxed environment.
+    /// Real URL to the user home directory, even in a sandboxed environment.
     public var realHomeDirectoryForCurrentUser: URL {
         var homeDirectoryForCurrentUser = URL(fileURLWithPath: NSHomeDirectory())
         #if os(macOS) || targetEnvironment(macCatalyst)
@@ -140,7 +140,7 @@ extension FileManager {
 
     /// Returns the ubiquity container of an external app with the specified identifier.
     ///
-    /// - Note: Not available in a Sanboxed environment.
+    /// - Note: Not available in a sandboxed environment.
     ///
     /// - Parameter identifier: Identifier of the ubiquity container.
     /// - Returns: Container URL.
