@@ -35,13 +35,13 @@ extension UserDefaults {
     public struct Wrapper<Value> {
         let key: String
         let storage: UserDefaults
-        let sync: Bool
+        let synchronizable: Bool
         let defaultValue: Value
         
         public init(key: String, storage: UserDefaults = .standard, synchronizable: Bool = false, defaultValue: Value) {
             self.key = key
             self.storage = storage
-            self.sync = sync
+            self.synchronizable = synchronizable
             self.defaultValue = defaultValue
         }
         
