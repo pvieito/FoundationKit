@@ -36,7 +36,7 @@ extension UserDefaults {
 
 extension UserDefaults {
     static let cloudDomain = "com.pvieito.FoundationKit.CloudUserDefaults"
-    static let cloud = UserDefaults(suiteName: cloudDomain)!
+    public static let cloud = UserDefaults(suiteName: cloudDomain)!
     
     @propertyWrapper
     public struct Wrapper<Value> {
