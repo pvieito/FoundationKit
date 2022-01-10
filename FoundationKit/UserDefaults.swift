@@ -49,6 +49,19 @@ extension UserDefaults {
         }
         
         #if canImport(CloudKit)
+        var cloudContainerIdentifier: String? {
+            return Bundle.main.object(forInfoDictionaryKey: "NSXUserDefaultsCloudContainerIdentifier") as? String
+        }
+        
+        var cloudContainer: CKContainer {
+            if let cloudContainerIdentifier = self.cloudContainerIdentifier {
+                return CKContainer(identifier: cloudContainerIdentifier)
+            }
+            else {
+                return .default()
+            }
+        }
+        
         var cloudRecordIdentifier: CKRecord.ID {
             return CKRecord.ID(recordName: UserDefaults.cloudDomain)
         }
@@ -56,7 +69,7 @@ extension UserDefaults {
         var cloudRecord: CKRecord {
             get throws {
                 return try DispatchSemaphore.returningWait { handler in
-                    CKContainer.default().privateCloudDatabase.fetch(withRecordID: self.cloudRecordIdentifier, completionHandler: handler)
+                    self.cloudContainer.privateCloudDatabase.fetch(withRecordID: self.cloudRecordIdentifier, completionHandler: handler)
                 }
             }
         }
