@@ -35,16 +35,22 @@ extension UserDefaults {
 }
 
 extension UserDefaults {
+    static let cloudDomain = "com.pvieito.FoundationKit.CloudUserDefaults"
+    static let cloud = UserDefaults(suiteName: cloudDomain)!
+    
     @propertyWrapper
     public struct Wrapper<Value> {
         let key: String
         let storage: UserDefaults
-        let synchronize: Bool
         let defaultValue: Value
+        
+        var isCloudStorage: Bool {
+            return self.storage == .cloud
+        }
         
         #if canImport(CloudKit)
         var cloudRecordIdentifier: CKRecord.ID {
-            return CKRecord.ID(recordName: "FoundationKit.UserDefaults")
+            return CKRecord.ID(recordName: UserDefaults.cloudDomain)
         }
         
         var cloudRecord: CKRecord {
@@ -56,10 +62,9 @@ extension UserDefaults {
         }
         #endif
         
-        public init(key: String, storage: UserDefaults = .standard, synchronize: Bool = false, defaultValue: Value) {
+        public init(key: String, storage: UserDefaults = .standard, defaultValue: Value) {
             self.key = key
             self.storage = storage
-            self.synchronize = synchronize
             self.defaultValue = defaultValue
         }
         
@@ -67,50 +72,50 @@ extension UserDefaults {
             get {
                 var value: Any?
                 
-                if synchronize {
+                if self.isCloudStorage {
                     #if canImport(CloudKit)
-                    value = try? self.cloudRecord.object(forKey: key)
+                    value = try? self.cloudRecord.object(forKey: self.key)
                     #endif
                 }
                 else {
-                    if storage.object(forKey: key) == nil {
+                    if storage.object(forKey: self.key) == nil {
                         value = nil
                     }
                     else if Value.self == Bool.self {
-                        value = storage.bool(forKey: key)
+                        value = storage.bool(forKey: self.key)
                     }
                     else if Value.self == Int.self {
-                        value = storage.integer(forKey: key)
+                        value = storage.integer(forKey: self.key)
                     }
                     else if Value.self == Double.self {
-                        value = storage.double(forKey: key)
+                        value = storage.double(forKey: self.key)
                     }
                     else if Value.self == Float.self {
-                        value = storage.float(forKey: key)
+                        value = storage.float(forKey: self.key)
                     }
                     else if Value.self == Data.self {
-                        value = storage.data(forKey: key)
+                        value = storage.data(forKey: self.key)
                     }
                     else if Value.self == Array<Any?>.self {
-                        value = storage.array(forKey: key)
+                        value = storage.array(forKey: self.key)
                     }
                     else if Value.self == Dictionary<AnyHashable, Any?>.self {
-                        value = storage.dictionary(forKey: key)
+                        value = storage.dictionary(forKey: self.key)
                     }
                     else {
-                        value = storage.object(forKey: key)
+                        value = storage.object(forKey: self.key)
                     }
                 }
                 return value as? Value ?? self.defaultValue
             }
             set {
-                if synchronize {
+                if self.isCloudStorage {
                     #if canImport(CloudKit)
-                    try? self.cloudRecord.setValue(newValue, forKey: key)
+                    try? self.cloudRecord.setValue(newValue, forKey: self.key)
                     #endif
                 }
                 else {
-                    storage.set(newValue, forKey: key)
+                    storage.set(newValue, forKey: self.key)
                     storage.synchronize()
                 }
             }
