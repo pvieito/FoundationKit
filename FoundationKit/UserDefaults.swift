@@ -62,10 +62,14 @@ extension UserDefaults {
             }
         }
         
+        var cloudRecordType: CKRecord.RecordType {
+            return UserDefaults.cloudDomain.replacingOccurrences(of: ".", with: "_")
+        }
+
         var cloudRecordIdentifier: CKRecord.ID {
             return CKRecord.ID(recordName: UserDefaults.cloudDomain)
         }
-        
+
         var cloudRecord: CKRecord {
             get throws {
                 do {
@@ -74,7 +78,7 @@ extension UserDefaults {
                     }
                 }
                 catch CKError.unknownItem {
-                    return CKRecord(recordType: self.cloudRecordIdentifier.recordName, recordID: self.cloudRecordIdentifier)
+                    return CKRecord(recordType: self.cloudRecordType, recordID: self.cloudRecordIdentifier)
                 }
             }
         }
