@@ -68,8 +68,13 @@ extension UserDefaults {
         
         var cloudRecord: CKRecord {
             get throws {
-                return try DispatchSemaphore.returningWait { handler in
-                    self.cloudContainer.privateCloudDatabase.fetch(withRecordID: self.cloudRecordIdentifier, completionHandler: handler)
+                do {
+                    return try DispatchSemaphore.returningWait { handler in
+                        self.cloudContainer.privateCloudDatabase.fetch(withRecordID: self.cloudRecordIdentifier, completionHandler: handler)
+                    }
+                }
+                catch CKError.unknownItem {
+                    return CKRecord(recordType: self.cloudRecordIdentifier.recordName, recordID: self.cloudRecordIdentifier)
                 }
             }
         }
@@ -124,7 +129,12 @@ extension UserDefaults {
             set {
                 if self.isCloudStorage {
                     #if canImport(CloudKit)
-                    try? self.cloudRecord.setValue(newValue, forKey: self.key)
+                    if let cloudRecord = try? self.cloudRecord {
+                        cloudRecord.setValue(newValue, forKey: self.key)
+                        let _ = try? DispatchSemaphore.returningWait { handler in
+                            self.cloudContainer.privateCloudDatabase.save(cloudRecord, completionHandler: handler)
+                        }
+                    }
                     #endif
                 }
                 else {
