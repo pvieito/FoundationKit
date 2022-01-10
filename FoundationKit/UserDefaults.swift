@@ -48,7 +48,7 @@ extension UserDefaults {
             return self.storage == .cloud
         }
         
-        #if canImport(CloudKit)
+        #if canImport(CloudKit) && CLOUDKIT_USER_DEFAULTS
         var cloudContainerIdentifier: String? {
             return Bundle.main.object(forInfoDictionaryKey: "NSXUserDefaultsCloudContainerIdentifier") as? String
         }
@@ -95,8 +95,34 @@ extension UserDefaults {
                 var value: Any?
                 
                 if self.isCloudStorage {
-                    #if canImport(CloudKit)
+                    #if canImport(CloudKit) && CLOUDKIT_USER_DEFAULTS
                     value = try? self.cloudRecord.object(forKey: self.key)
+                    #elseif canImport(Darwin) && !os(watchOS)
+                    let storage = NSUbiquitousKeyValueStore.default
+                    if storage.object(forKey: self.key) == nil {
+                        value = nil
+                    }
+                    else if Value.self == Bool.self {
+                        value = storage.bool(forKey: self.key)
+                    }
+                    else if Value.self == Int.self {
+                        value = storage.longLong(forKey: self.key)
+                    }
+                    else if Value.self == Double.self || Value.self == Float.self {
+                        value = storage.double(forKey: self.key)
+                    }
+                    else if Value.self == Data.self {
+                        value = storage.data(forKey: self.key)
+                    }
+                    else if Value.self == Array<Any?>.self {
+                        value = storage.array(forKey: self.key)
+                    }
+                    else if Value.self == Dictionary<AnyHashable, Any?>.self {
+                        value = storage.dictionary(forKey: self.key)
+                    }
+                    else {
+                        value = storage.object(forKey: self.key)
+                    }
                     #endif
                 }
                 else {
@@ -132,13 +158,17 @@ extension UserDefaults {
             }
             set {
                 if self.isCloudStorage {
-                    #if canImport(CloudKit)
+                    #if canImport(CloudKit) && CLOUDKIT_USER_DEFAULTS
                     if let cloudRecord = try? self.cloudRecord {
                         cloudRecord.setValue(newValue, forKey: self.key)
                         let _ = try? DispatchSemaphore.returningWait { handler in
                             self.cloudContainer.privateCloudDatabase.save(cloudRecord, completionHandler: handler)
                         }
                     }
+                    #elseif canImport(Darwin) && !os(watchOS)
+                    let storage = NSUbiquitousKeyValueStore.default
+                    storage.set(newValue, forKey: self.key)
+                    storage.synchronize()
                     #endif
                 }
                 else {
