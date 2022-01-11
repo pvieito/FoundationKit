@@ -35,20 +35,26 @@ extension UserDefaults {
 }
 
 extension UserDefaults {
-    static let cloudDomain = "com.pvieito.FoundationKit.CloudUserDefaults"
-    public static let cloud = UserDefaults(suiteName: cloudDomain)!
+    #if canImport(CloudKit)
+    static let cloudKitDomain = "com.pvieito.FoundationKit.UserDefaults.CloudKitDomain"
+    public static let cloudKit = UserDefaults(suiteName: cloudKitDomain)!
+    #endif
     
+    #if canImport(Darwin) && !os(watchOS)
+    static let ubiquitousKeyValueStorageDomain = "com.pvieito.FoundationKit.UserDefaults.UbiquitousKeyValueStorageDomain"
+    public static let ubiquitousKeyValueStorage = UserDefaults(suiteName: ubiquitousKeyValueStorageDomain)!
+
+    @available(*, renamed: "ubiquitousKeyValueStorage")
+    public static let cloud = ubiquitousKeyValueStorage
+    #endif
+
     @propertyWrapper
     public struct Wrapper<Value> {
         let key: String
         let storage: UserDefaults
         let defaultValue: Value
-        
-        var isCloudStorage: Bool {
-            return self.storage == .cloud
-        }
-        
-        #if canImport(CloudKit) && CLOUDKIT_USER_DEFAULTS
+                
+        #if canImport(CloudKit)
         var cloudContainerIdentifier: String? {
             return Bundle.main.object(forInfoDictionaryKey: "NSXUserDefaultsCloudContainerIdentifier") as? String
         }
@@ -63,11 +69,11 @@ extension UserDefaults {
         }
         
         var cloudRecordType: CKRecord.RecordType {
-            return UserDefaults.cloudDomain.replacingOccurrences(of: ".", with: "_")
+            return UserDefaults.cloudKitDomain.replacingOccurrences(of: ".", with: "_")
         }
 
         var cloudRecordIdentifier: CKRecord.ID {
-            return CKRecord.ID(recordName: UserDefaults.cloudDomain)
+            return CKRecord.ID(recordName: UserDefaults.cloudKitDomain)
         }
 
         var cloudRecord: CKRecord {
@@ -83,7 +89,7 @@ extension UserDefaults {
             }
         }
         #endif
-        
+                
         public init(key: String, storage: UserDefaults = .standard, defaultValue: Value) {
             self.key = key
             self.storage = storage
@@ -93,11 +99,18 @@ extension UserDefaults {
         public var wrappedValue: Value {
             get {
                 var value: Any?
-                
-                if self.isCloudStorage {
-                    #if canImport(CloudKit) && CLOUDKIT_USER_DEFAULTS
+                var handled = false
+
+                #if canImport(CloudKit)
+                if !handled, self.storage == .cloudKit {
+                    handled = true
                     value = try? self.cloudRecord.object(forKey: self.key)
-                    #elseif canImport(Darwin) && !os(watchOS)
+                }
+                #endif
+                
+                #if canImport(Darwin) && !os(watchOS)
+                if !handled, self.storage == .ubiquitousKeyValueStorage {
+                    handled = true
                     let storage = NSUbiquitousKeyValueStore.default
                     if storage.object(forKey: self.key) == nil {
                         value = nil
@@ -123,9 +136,11 @@ extension UserDefaults {
                     else {
                         value = storage.object(forKey: self.key)
                     }
-                    #endif
                 }
-                else {
+                #endif
+
+                if !handled {
+                    handled = true
                     if storage.object(forKey: self.key) == nil {
                         value = nil
                     }
@@ -154,24 +169,34 @@ extension UserDefaults {
                         value = storage.object(forKey: self.key)
                     }
                 }
+            
                 return value as? Value ?? self.defaultValue
             }
             set {
-                if self.isCloudStorage {
-                    #if canImport(CloudKit) && CLOUDKIT_USER_DEFAULTS
-                    if let cloudRecord = try? self.cloudRecord {
-                        cloudRecord.setValue(newValue, forKey: self.key)
-                        let _ = try? DispatchSemaphore.returningWait { handler in
-                            self.cloudContainer.privateCloudDatabase.save(cloudRecord, completionHandler: handler)
-                        }
+                var handled = false
+
+                #if canImport(CloudKit)
+                if !handled, self.storage == .cloudKit {
+                    handled = true
+                    guard let cloudRecord = try? self.cloudRecord else { return }
+                    cloudRecord.setValue(newValue, forKey: self.key)
+                    let _ = try? DispatchSemaphore.returningWait { handler in
+                        self.cloudContainer.privateCloudDatabase.save(cloudRecord, completionHandler: handler)
                     }
-                    #elseif canImport(Darwin) && !os(watchOS)
+                }
+                #endif
+                
+                #if canImport(Darwin) && !os(watchOS)
+                if !handled, self.storage == .ubiquitousKeyValueStorage {
+                    handled = true
                     let storage = NSUbiquitousKeyValueStore.default
                     storage.set(newValue, forKey: self.key)
                     storage.synchronize()
-                    #endif
                 }
-                else {
+                #endif
+
+                if !handled {
+                    handled = true
                     storage.set(newValue, forKey: self.key)
                     storage.synchronize()
                 }
