@@ -41,11 +41,11 @@ extension UserDefaults {
     #endif
     
     #if canImport(Darwin) && !os(watchOS)
-    static let ubiquitousKeyValueStorageDomain = "com.pvieito.FoundationKit.UserDefaults.UbiquitousKeyValueStorageDomain"
-    public static let ubiquitousKeyValueStorage = UserDefaults(suiteName: ubiquitousKeyValueStorageDomain)!
+    static let ubiquitousKeyValueStoreDomain = "com.pvieito.FoundationKit.UserDefaults.UbiquitousKeyValueStoreDomain"
+    public static let ubiquitousKeyValueStore = UserDefaults(suiteName: ubiquitousKeyValueStoreDomain)!
 
-    @available(*, deprecated, renamed: "ubiquitousKeyValueStorage")
-    public static let cloud = ubiquitousKeyValueStorage
+    @available(*, deprecated, renamed: "ubiquitousKeyValueStore")
+    public static let ubiquitousKeyValueStorage = ubiquitousKeyValueStore
     #endif
 
     @propertyWrapper
@@ -109,7 +109,7 @@ extension UserDefaults {
                 #endif
                 
                 #if canImport(Darwin) && !os(watchOS)
-                if !handled, self.storage == .ubiquitousKeyValueStorage {
+                if !handled, self.storage == .ubiquitousKeyValueStore {
                     handled = true
                     let storage = NSUbiquitousKeyValueStore.default
                     if storage.object(forKey: self.key) == nil {
@@ -187,7 +187,7 @@ extension UserDefaults {
                 #endif
                 
                 #if canImport(Darwin) && !os(watchOS)
-                if !handled, self.storage == .ubiquitousKeyValueStorage {
+                if !handled, self.storage == .ubiquitousKeyValueStore {
                     handled = true
                     let storage = NSUbiquitousKeyValueStore.default
                     storage.set(newValue, forKey: self.key)
