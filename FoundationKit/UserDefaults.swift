@@ -44,7 +44,7 @@ extension UserDefaults {
     static let ubiquitousKeyValueStorageDomain = "com.pvieito.FoundationKit.UserDefaults.UbiquitousKeyValueStorageDomain"
     public static let ubiquitousKeyValueStorage = UserDefaults(suiteName: ubiquitousKeyValueStorageDomain)!
 
-    @available(*, renamed: "ubiquitousKeyValueStorage")
+    @available(*, deprecated, renamed: "ubiquitousKeyValueStorage")
     public static let cloud = ubiquitousKeyValueStorage
     #endif
 
