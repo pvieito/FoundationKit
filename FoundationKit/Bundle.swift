@@ -108,6 +108,12 @@ extension Bundle {
     public var isApplicationRunning: Bool {
         return NSWorkspace.shared.runningApplications.first(where: \.bundleIdentifier == self.bundleIdentifier) != nil
     }
+    
+    @available(macOS 10.14, *)
+    public func determineAutomationPermission(promptUser: Bool = false) -> Bool {
+        guard self.isApplication else { return false }
+        return ProcessInfo.processInfo.determineAutomationPermission(for: self.bundleStableIdentifier, promptUser: promptUser)
+    }
     #endif
     
     private static let parentApplicationBundleMaximumLevels = 4
