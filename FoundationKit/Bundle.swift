@@ -114,6 +114,11 @@ extension Bundle {
         return self.runningApplications.hasContent
     }
     
+    @discardableResult
+    public func launchApplication(options: NSWorkspace.LaunchOptions = []) throws -> NSRunningApplication {
+        return try NSWorkspace.shared.launchApplication(at: self.bundleURL, options: options, configuration: [:])
+    }
+    
     @available(macOS 10.14, *)
     public func determineAutomationPermission(promptUser: Bool = false) -> Bool {
         guard self.isApplication else { return false }
