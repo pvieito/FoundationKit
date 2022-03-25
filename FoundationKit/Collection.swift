@@ -16,6 +16,10 @@ extension Collection {
     public var nonEmptyCollection: Self? {
         return self.isEmpty ? nil : self
     }
+    
+    public var hasContent: Bool {
+        return !self.isEmpty
+    }
 }
 
 extension Array {

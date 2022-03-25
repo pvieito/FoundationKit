@@ -105,8 +105,13 @@ extension Bundle {
     }
     
     #if os(macOS)
+    public var runningApplications: [NSRunningApplication] {
+        guard self.isApplication, let bundleIdentifier = self.bundleIdentifier else { return [] }
+        return NSRunningApplication.runningApplications(withBundleIdentifier: bundleIdentifier)
+    }
+    
     public var isApplicationRunning: Bool {
-        return NSWorkspace.shared.runningApplications.first(where: \.bundleIdentifier == self.bundleIdentifier) != nil
+        return self.runningApplications.hasContent
     }
     
     @available(macOS 10.14, *)
