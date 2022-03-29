@@ -144,6 +144,7 @@ extension ProcessInfo {
     private static let systemPreferencesSecurityPaneURISuffix = "com.apple.preference.security"
     private static let systemPreferencesAutomationPrivacyPaneURISuffix = systemPreferencesSecurityPaneURISuffix + "?Privacy_Automation"
     private static let systemPreferencesAccessibilityPrivacyPaneURISuffix = systemPreferencesSecurityPaneURISuffix + "?Privacy_Accessibility"
+    private static let systemPreferencesScreenCapturePrivacyPaneURISuffix = systemPreferencesSecurityPaneURISuffix + "?Privacy_ScreenCapture"
 
     public func launchSystemPreferences() throws {
         try URL(string: Self.systemPreferencesURLScheme)!.open()
@@ -164,6 +165,10 @@ extension ProcessInfo {
 
     public func launchAccessibilityPrivacyPaneInSystemPreferences() throws {
         try self.launchPaneInSystemPreferences(uriSuffix: Self.systemPreferencesAccessibilityPrivacyPaneURISuffix)
+    }
+    
+    public func launchScreenCapturePrivacyPaneInSystemPreferences() throws {
+        try self.launchPaneInSystemPreferences(uriSuffix: Self.systemPreferencesScreenCapturePrivacyPaneURISuffix)
     }
 }
 
