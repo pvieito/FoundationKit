@@ -1,6 +1,6 @@
 //
-//  Dictionary+PropertyList.swift
-//  BundleKit
+//  Dictionary.swift
+//  FoundationKit
 //
 //  Created by Pedro José Pereira Vieito on 10/06/2019.
 //  Copyright © 2019 Pedro José Pereira Vieito. All rights reserved.

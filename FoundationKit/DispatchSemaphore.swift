@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 extension DispatchSemaphore {
     private static func zero() -> DispatchSemaphore {
         return DispatchSemaphore(value: 0)
