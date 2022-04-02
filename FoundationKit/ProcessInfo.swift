@@ -210,7 +210,7 @@ extension ProcessInfo {
 @available(macOS 10.14, *)
 extension ProcessInfo {
     public func determineAutomationPermission(for bundleIdentifier: String, promptUser: Bool = false) -> Bool {
-        if NSWorkspace.shared.runningApplications.first(where: \.bundleIdentifier == bundleIdentifier) == nil {
+        if NSRunningApplication.runningApplications(withBundleIdentifier: bundleIdentifier).isEmpty {
             NSWorkspace.shared.launchApplication(withBundleIdentifier: bundleIdentifier, options: [.andHide, .withoutActivation], additionalEventParamDescriptor: nil, launchIdentifier: nil)
         }
         let applicationTarget = NSAppleEventDescriptor(bundleIdentifier: bundleIdentifier)
