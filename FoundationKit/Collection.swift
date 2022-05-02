@@ -134,9 +134,9 @@ extension Collection {
 }
 
 extension Collection where Element == URL {
-    /// Returns the first common parent directory of all URLs in the array.
+    /// Returns the first common parent directory of all URLs in the collection.
     @available(macOS 10.11, *)
-    public var commonAntecessor: URL? {
+    public var commonParentDirectory: URL? {
         let stringPaths = self.map({ $0.path })
         
         if self.count == 1, let url = self.first {
@@ -154,6 +154,12 @@ extension Collection where Element == URL {
         else {
             return nil
         }
+    }
+    
+    @available(macOS 10.11, *)
+    @available(*, deprecated, renamed: "commonParentDirectory")
+    public var commonAntecessor: URL? {
+        return self.commonParentDirectory
     }
     
     /// Returns the URL paths ordered by their last path component.
