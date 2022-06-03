@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UniformTypeIdentifiers
 
 extension FileManager {
     /// Returns a Boolean value that indicates whether a file or directory exists at a specified URL.
@@ -58,6 +59,11 @@ extension FileManager {
         return temporaryFileURL
     }
     
+    @available(macOS 11.0, iOS 14.0, watchOS 7.0, tvOS 14.0, *)
+    public func temporaryRandomFileURL(filename: String? = nil, for contentType: UTType) -> URL {
+        return self.temporaryRandomFileURL(filename: filename).appendingPathExtension(for: contentType)
+    }
+
     /// Real URL to the user home directory, even in a sandboxed environment.
     public var realHomeDirectoryForCurrentUser: URL {
         var homeDirectoryForCurrentUser = URL(fileURLWithPath: NSHomeDirectory())

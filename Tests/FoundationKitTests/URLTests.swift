@@ -32,7 +32,7 @@ class URLTests: XCTestCase {
     }
     
     func testURL_isSupported() {
-        #if canImport(Cocoa) || canImport(UIKit)
+        #if (canImport(Cocoa) || canImport(UIKit)) && !os(watchOS) && !os(tvOS)
         XCTAssertTrue(URLTests.supportedURL.isSupported)
         XCTAssertFalse(URLTests.unsupportedURL.isSupported)
         #endif

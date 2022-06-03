@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UniformTypeIdentifiers
 
 extension Data {
     public var bytes: Array<UInt8> {
@@ -20,6 +21,16 @@ extension Data {
         options: Data.WritingOptions = []) throws -> URL {
         let temporaryFileURL = FileManager.default.temporaryRandomFileURL(
             filename: filename, pathExtension: pathExtension)
+        try self.write(to: temporaryFileURL, options: options)
+        return temporaryFileURL
+    }
+    
+    @available(macOS 11.0, iOS 14.0, watchOS 7.0, tvOS 14.0, *)
+    public func writeTemporaryFile(
+        filename: String? = nil, for contentType: UTType,
+        options: Data.WritingOptions = []) throws -> URL {
+        let temporaryFileURL = FileManager.default.temporaryRandomFileURL(
+            filename: filename, for: contentType)
         try self.write(to: temporaryFileURL, options: options)
         return temporaryFileURL
     }

@@ -6,6 +6,7 @@
 //  Copyright © 2018 Pedro José Pereira Vieito. All rights reserved.
 //
 
+#if os(macOS)
 import Foundation
 import FoundationKit
 import XCTest
@@ -19,3 +20,4 @@ class ProcessTests: XCTestCase {
         XCTAssertEqual(executableURL?.lastPathComponent, whichExecutableName)
     }
 }
+#endif
