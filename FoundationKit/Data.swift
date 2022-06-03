@@ -7,7 +7,10 @@
 //
 
 import Foundation
+
+#if canImport(UniformTypeIdentifiers)
 import UniformTypeIdentifiers
+#endif
 
 extension Data {
     public var bytes: Array<UInt8> {
@@ -25,6 +28,7 @@ extension Data {
         return temporaryFileURL
     }
     
+    #if canImport(UniformTypeIdentifiers)
     @available(macOS 11.0, iOS 14.0, watchOS 7.0, tvOS 14.0, *)
     public func writeTemporaryFile(
         filename: String? = nil, for contentType: UTType,
@@ -34,6 +38,7 @@ extension Data {
         try self.write(to: temporaryFileURL, options: options)
         return temporaryFileURL
     }
+    #endif
 }
 
 extension Data {
