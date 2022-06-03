@@ -113,6 +113,12 @@ extension String {
 }
 
 extension String {
+    public var utf8Data: Data {
+        return Data(self.utf8)
+    }
+}
+
+extension String {
     public static func spaces(count: Int) -> String {
         return Array(repeating: Self.spaceCharacter, count: count).joined()
     }
