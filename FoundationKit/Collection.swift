@@ -204,6 +204,10 @@ extension Collection where Element: StringProtocol {
     public func joiningLines() -> String {
         return self.joined(separator: .newLineCharacter)
     }
+    
+    public func joinedWithSpaces() -> String {
+        return self.joined(separator: .spaceCharacter)
+    }
 }
 
 #if canImport(Darwin)
