@@ -189,6 +189,18 @@ extension Bundle {
     }
 }
 
+#if os(macOS)
+extension Bundle {
+	static func applicationBundle(identifier: String) -> Bundle? {
+		guard let applicationURL = NSWorkspace.shared.urlForApplication(withBundleIdentifier: identifier),
+			  let applicationBundle = Bundle(url: applicationURL) else {
+			return nil
+		}
+		return applicationBundle
+	}
+}
+#endif
+
 extension Bundle {
     #if canImport(Darwin)
     static var allLoadedBundles: [Bundle] {

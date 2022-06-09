@@ -200,6 +200,11 @@ extension ProcessInfo {
 }
 
 extension ProcessInfo {
+	private static let systemSettingsApplicationBundleIdentifier = "com.apple.systempreferences"
+	public static let systemSettingsLocalizedName: String = {
+		return Bundle.applicationBundle(identifier: systemSettingsApplicationBundleIdentifier)?.bundleName ?? "System Settings"
+	}()
+	
     private static let systemSettingsPanesDirectoryPath = "/System/Library/PreferencePanes/"
     private static let systemSettingsPaneExtension = "prefPane"
     private static let systemSettingsPanePathSuffix = "." + systemSettingsPaneExtension
