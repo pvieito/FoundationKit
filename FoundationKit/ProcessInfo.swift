@@ -110,7 +110,7 @@ extension ProcessInfo {
         return Bundle.main.builtInLoginItemsBundles.first
     }
     
-    @available(*, deprecated, message: "Use ProcessInfo.processInfo.launchUserLoginItemsPaneInSystemPreferences() instead.")
+    @available(*, deprecated, message: "Use ProcessInfo.processInfo.launchUserLoginItemsPaneInSystemSettings() instead.")
     public func configureLoginItem(bundleIdentifier: String? = nil, enabled: Bool) throws {
         guard let bundleIdentifier = loginItemBundle?.bundleIdentifier else {
             throw NSError(description: "Error configuring login item as a valid bundle is not available.")
@@ -140,63 +140,115 @@ extension ProcessInfo {
 }
 
 extension ProcessInfo {
-    private static let systemPreferencesURLScheme = "x-apple.systempreferences:"
-    private static let systemPreferencesSecurityPaneURISuffix = "com.apple.preference.security"
-    private static let systemPreferencesAutomationPrivacyPaneURISuffix = systemPreferencesSecurityPaneURISuffix + "?Privacy_Automation"
-    private static let systemPreferencesAccessibilityPrivacyPaneURISuffix = systemPreferencesSecurityPaneURISuffix + "?Privacy_Accessibility"
-    private static let systemPreferencesScreenCapturePrivacyPaneURISuffix = systemPreferencesSecurityPaneURISuffix + "?Privacy_ScreenCapture"
+    private static let systemSettingsURLScheme = "x-apple.systempreferences:"
+    private static let systemSettingsSecurityPaneURISuffix = "com.apple.preference.security"
+    private static let systemSettingsAutomationPrivacyPaneURISuffix = systemSettingsSecurityPaneURISuffix + "?Privacy_Automation"
+    private static let systemSettingsAccessibilityPrivacyPaneURISuffix = systemSettingsSecurityPaneURISuffix + "?Privacy_Accessibility"
+    private static let systemSettingsScreenCapturePrivacyPaneURISuffix = systemSettingsSecurityPaneURISuffix + "?Privacy_ScreenCapture"
 
-    public func launchSystemPreferences() throws {
-        try URL(string: Self.systemPreferencesURLScheme)!.open()
+    public func launchSystemSettings() throws {
+        try URL(string: Self.systemSettingsURLScheme)!.open()
     }
     
-    public func launchPaneInSystemPreferences(uriSuffix: String) throws {
+    public func launchPaneInSystemSettings(uriSuffix: String) throws {
         do {
-            try URL(string: Self.systemPreferencesURLScheme + uriSuffix)!.open()
+            try URL(string: Self.systemSettingsURLScheme + uriSuffix)!.open()
         }
         catch {
-            try self.launchSystemPreferences()
+            try self.launchSystemSettings()
         }
     }
 
-    public func launchAutomationPrivacyPaneInSystemPreferences() throws {
-        try self.launchPaneInSystemPreferences(uriSuffix: Self.systemPreferencesAutomationPrivacyPaneURISuffix)
+    public func launchAutomationPrivacyPaneInSystemSettings() throws {
+        try self.launchPaneInSystemSettings(uriSuffix: Self.systemSettingsAutomationPrivacyPaneURISuffix)
     }
 
-    public func launchAccessibilityPrivacyPaneInSystemPreferences() throws {
-        try self.launchPaneInSystemPreferences(uriSuffix: Self.systemPreferencesAccessibilityPrivacyPaneURISuffix)
+    public func launchAccessibilityPrivacyPaneInSystemSettings() throws {
+        try self.launchPaneInSystemSettings(uriSuffix: Self.systemSettingsAccessibilityPrivacyPaneURISuffix)
     }
     
-    public func launchScreenCapturePrivacyPaneInSystemPreferences() throws {
-        try self.launchPaneInSystemPreferences(uriSuffix: Self.systemPreferencesScreenCapturePrivacyPaneURISuffix)
+    public func launchScreenCapturePrivacyPaneInSystemSettings() throws {
+        try self.launchPaneInSystemSettings(uriSuffix: Self.systemSettingsScreenCapturePrivacyPaneURISuffix)
     }
 }
 
 extension ProcessInfo {
-    private static let systemPreferencesPanesDirectoryPath = "/System/Library/PreferencePanes/"
-    private static let systemPreferencesPaneExtension = "prefPane"
-    private static let systemPreferencesPanePathSuffix = "." + systemPreferencesPaneExtension
+    @available(*, deprecated, renamed: "launchSystemSettings()")
+    public func launchSystemPreferences() throws {
+        try self.launchSystemSettings()
+    }
+
+    @available(*, deprecated, renamed: "launchPaneInSystemSettings(uriSuffix:)")
+    public func launchPaneInSystemPreferences(uriSuffix: String) throws {
+        try self.launchPaneInSystemSettings(uriSuffix: uriSuffix)
+    }
     
-    public func launchPaneInSystemPreferences(name: String) throws {
+    @available(*, deprecated, renamed: "launchAccessibilityPrivacyPaneInSystemSettings")
+    public func launchAutomationPrivacyPaneInSystemPreferences() throws {
+        try self.launchAutomationPrivacyPaneInSystemSettings()
+    }
+    
+    @available(*, deprecated, renamed: "launchAccessibilityPrivacyPaneInSystemSettings")
+    public func launchAccessibilityPrivacyPaneInSystemPreferences() throws {
+        try self.launchAccessibilityPrivacyPaneInSystemSettings()
+    }
+
+    @available(*, deprecated, renamed: "launchScreenCapturePrivacyPaneInSystemSettings")
+    public func launchScreenCapturePrivacyPaneInSystemPreferences() throws {
+        try self.launchScreenCapturePrivacyPaneInSystemSettings()
+    }
+}
+
+extension ProcessInfo {
+    private static let systemSettingsPanesDirectoryPath = "/System/Library/PreferencePanes/"
+    private static let systemSettingsPaneExtension = "prefPane"
+    private static let systemSettingsPanePathSuffix = "." + systemSettingsPaneExtension
+    
+    public func launchPaneInSystemSettings(name: String) throws {
         do {
-            try URL(fileURLWithPath: Self.systemPreferencesPanesDirectoryPath + name + Self.systemPreferencesPanePathSuffix).open()
+            try URL(fileURLWithPath: Self.systemSettingsPanesDirectoryPath + name + Self.systemSettingsPanePathSuffix).open()
         }
         catch {
-            try self.launchSystemPreferences()
+            try self.launchSystemSettings()
         }
     }
 
+    public func launchUsersPaneInSystemSettings() throws {
+        try self.launchPaneInSystemSettings(name: "Accounts")
+    }
+    
+    public func launchUserLoginItemsPaneInSystemSettings() throws {
+        if #available(macOS 13.0, *) {
+            SMAppService.openSystemSettingsLoginItems()
+        } else {
+            try self.launchUsersPaneInSystemSettings()
+        }
+    }
+    
+    public func launchExtensionsPaneInSystemSettings() throws {
+        try self.launchPaneInSystemSettings(name: "Extensions")
+    }
+}
+
+extension ProcessInfo {
+    @available(*, deprecated, renamed: "launchPaneInSystemSettings(name:)")
+    public func launchPaneInSystemPreferences(name: String) throws {
+        try self.launchPaneInSystemSettings(name: name)
+    }
+
+    @available(*, deprecated, renamed: "launchUsersPaneInSystemSettings")
     public func launchUsersPaneInSystemPreferences() throws {
-        try self.launchPaneInSystemPreferences(name: "Accounts")
+        try self.launchUsersPaneInSystemSettings()
     }
     
-    @available(*, renamed: "launchUsersPaneInSystemPreferences")
+    @available(*, deprecated, renamed: "launchUsersPaneInSystemPreferences")
     public func launchUserLoginItemsPaneInSystemPreferences() throws {
-        try self.launchUsersPaneInSystemPreferences()
+        try self.launchUserLoginItemsPaneInSystemSettings()
     }
     
+    @available(*, deprecated, renamed: "launchExtensionsPaneInSystemPreferences")
     public func launchExtensionsPaneInSystemPreferences() throws {
-        try self.launchPaneInSystemPreferences(name: "Extensions")
+        try self.launchExtensionsPaneInSystemSettings()
     }
 }
 

@@ -24,13 +24,13 @@ extension UserDefaults {
             return nil
         }
         
-        let suitePreferences = libraryURL.appendingPathComponent("Containers")
+        let containerSuiteURL = libraryURL.appendingPathComponent("Containers")
             .appendingPathComponents(containerIdentifier, "Data", "Library", "Preferences", containerIdentifier)
             .appendingPathExtension("plist")
-        guard FileManager.default.fileExists(atPath: suitePreferences.path) else {
+        guard FileManager.default.fileExists(atPath: containerSuiteURL.path) else {
             return nil
         }
-        self.init(suiteName: suitePreferences.path)
+        self.init(suiteName: containerSuiteURL.path)
     }
 }
 
