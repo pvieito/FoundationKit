@@ -173,7 +173,7 @@ extension ProcessInfo {
 }
 
 extension ProcessInfo {
-    @available(*, deprecated, renamed: "launchSystemSettings()")
+    @available(*, deprecated, renamed: "launchSystemSettings")
     public func launchSystemPreferences() throws {
         try self.launchSystemSettings()
     }
@@ -183,7 +183,7 @@ extension ProcessInfo {
         try self.launchPaneInSystemSettings(uriSuffix: uriSuffix)
     }
     
-    @available(*, deprecated, renamed: "launchAccessibilityPrivacyPaneInSystemSettings")
+    @available(*, deprecated, renamed: "launchAutomationPrivacyPaneInSystemSettings")
     public func launchAutomationPrivacyPaneInSystemPreferences() throws {
         try self.launchAutomationPrivacyPaneInSystemSettings()
     }
@@ -243,12 +243,12 @@ extension ProcessInfo {
         try self.launchUsersPaneInSystemSettings()
     }
     
-    @available(*, deprecated, renamed: "launchUsersPaneInSystemPreferences")
+    @available(*, deprecated, renamed: "launchUserLoginItemsPaneInSystemSettings")
     public func launchUserLoginItemsPaneInSystemPreferences() throws {
         try self.launchUserLoginItemsPaneInSystemSettings()
     }
     
-    @available(*, deprecated, renamed: "launchExtensionsPaneInSystemPreferences")
+    @available(*, deprecated, renamed: "launchExtensionsPaneInSystemSettings")
     public func launchExtensionsPaneInSystemPreferences() throws {
         try self.launchExtensionsPaneInSystemSettings()
     }
