@@ -218,11 +218,13 @@ extension ProcessInfo {
     }
     
     public func launchUserLoginItemsPaneInSystemSettings() throws {
+        #if swift(>=5.7)
         if #available(macOS 13.0, *) {
             SMAppService.openSystemSettingsLoginItems()
-        } else {
-            try self.launchUsersPaneInSystemSettings()
+            return
         }
+        #endif
+        try self.launchUsersPaneInSystemSettings()
     }
     
     public func launchExtensionsPaneInSystemSettings() throws {
