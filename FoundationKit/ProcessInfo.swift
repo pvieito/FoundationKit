@@ -198,13 +198,19 @@ extension ProcessInfo {
         try self.launchScreenCapturePrivacyPaneInSystemSettings()
     }
 }
+#endif
 
+#if canImport(Cocoa)
 extension ProcessInfo {
 	private static let systemSettingsApplicationBundleIdentifier = "com.apple.systempreferences"
 	public static let systemSettingsLocalizedName: String = {
 		return Bundle.applicationBundle(identifier: systemSettingsApplicationBundleIdentifier)?.bundleName ?? "System Settings"
 	}()
-	
+}
+#endif
+
+#if os(macOS)
+extension ProcessInfo {
     private static let systemSettingsPanesDirectoryPath = "/System/Library/PreferencePanes/"
     private static let systemSettingsPaneExtension = "prefPane"
     private static let systemSettingsPanePathSuffix = "." + systemSettingsPaneExtension
