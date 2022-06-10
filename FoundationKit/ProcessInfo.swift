@@ -159,6 +159,10 @@ extension ProcessInfo {
         }
     }
 
+	public func launchPrivacyAndSecurityPaneInSystemSettings() throws {
+		try self.launchPaneInSystemSettings(uriSuffix: Self.systemSettingsSecurityPaneURISuffix)
+	}
+
     public func launchAutomationPrivacyPaneInSystemSettings() throws {
         try self.launchPaneInSystemSettings(uriSuffix: Self.systemSettingsAutomationPrivacyPaneURISuffix)
     }
@@ -239,6 +243,15 @@ extension ProcessInfo {
     }
     
     public func launchExtensionsPaneInSystemSettings() throws {
+		#if swift(>=5.7)
+		if #available(macOS 13.0, *) {
+			do {
+				try self.launchPrivacyAndSecurityPaneInSystemSettings()
+				return
+			}
+			catch {}
+		}
+		#endif
         try self.launchPaneInSystemSettings(name: "Extensions")
     }
 }
