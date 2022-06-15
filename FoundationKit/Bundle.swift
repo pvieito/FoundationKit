@@ -178,14 +178,37 @@ extension Bundle {
     public var applicationExtensionPointIdentifier: String? {
         return self.applicationExtensionInfoDictionary?["NSExtensionPointIdentifier"] as? String
     }
-    
-    public var builtInApplicationExtensionBundles: [Bundle] {
+}
+ 
+extension Bundle {
+    private var builtInApplicationFoundationExtensionBundles: [Bundle] {
         guard let builtInPlugInsURL = self.builtInPlugInsURL,
               let extensionBundleURLs = try? FileManager.default.contentsOfDirectory(
                 at: builtInPlugInsURL, includingPropertiesForKeys: nil, options: .skipsSubdirectoryDescendants) else {
             return []
         }
         return extensionBundleURLs.compactMap(Bundle.init(url:)).filter(\.isApplicationExtension).sorted()
+    }
+}
+
+extension Bundle {
+    private var builtInExtensionKitDirectoryURL: URL? {
+        return self.builtInPlugInsURL?.deletingLastPathComponent().appendingPathComponent("ExtensionKit")
+    }
+    
+    private var builtInApplicationExtensionKitExtensionBundles: [Bundle] {
+        guard let builtInExtensionKitDirectoryURL = self.builtInExtensionKitDirectoryURL,
+              let extensionBundleURLs = try? FileManager.default.contentsOfDirectory(
+                at: builtInExtensionKitDirectoryURL, includingPropertiesForKeys: nil, options: .skipsSubdirectoryDescendants) else {
+            return []
+        }
+        return extensionBundleURLs.compactMap(Bundle.init(url:)).filter(\.isApplicationExtension).sorted()
+    }
+}
+    
+extension Bundle {
+    public var builtInApplicationExtensionBundles: [Bundle] {
+        return (self.builtInApplicationFoundationExtensionBundles + self.builtInApplicationExtensionKitExtensionBundles).sorted()
     }
 }
 
