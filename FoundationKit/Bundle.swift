@@ -165,23 +165,62 @@ extension Bundle {
 }
 
 extension Bundle {
+    private enum ApplicationExtensionType {
+        case foundation
+        case extensionKit
+    }
+    
     private static let applicationExtensionPathExtension = "appex"
     
     public var isApplicationExtension: Bool {
         return self.bundleURL.pathExtension == Self.applicationExtensionPathExtension
     }
     
-    public var applicationExtensionInfoDictionary: [String: Any?]? {
+    public var foundationApplicationExtensionInfoDictionary: [String: Any?]? {
         return self.object(forInfoDictionaryKey: "NSExtension") as? [String: Any?]
     }
     
+    public var extensionKitApplicationExtensionInfoDictionary: [String: Any?]? {
+        return self.object(forInfoDictionaryKey: "EXAppExtensionAttributes") as? [String: Any?]
+    }
+    
+    private var applicationExtensionType: ApplicationExtensionType? {
+        if self.foundationApplicationExtensionInfoDictionary != nil {
+            return .foundation
+        }
+        else if self.extensionKitApplicationExtensionInfoDictionary != nil {
+            return .extensionKit
+        }
+        else {
+            return nil
+        }
+    }
+    
+    public var applicationExtensionInfoDictionary: [String: Any?]? {
+        switch self.applicationExtensionType {
+        case .foundation:
+            return self.foundationApplicationExtensionInfoDictionary
+        case .extensionKit:
+            return self.extensionKitApplicationExtensionInfoDictionary
+        case .none:
+            return nil
+        }
+    }
+    
     public var applicationExtensionPointIdentifier: String? {
-        return self.applicationExtensionInfoDictionary?["NSExtensionPointIdentifier"] as? String
+        switch self.applicationExtensionType {
+        case .foundation:
+            return self.applicationExtensionInfoDictionary?["NSExtensionPointIdentifier"] as? String
+        case .extensionKit:
+            return self.applicationExtensionInfoDictionary?["EXAppExtensionAttributes"] as? String
+        case .none:
+            return nil
+        }
     }
 }
  
 extension Bundle {
-    private var builtInApplicationFoundationExtensionBundles: [Bundle] {
+    private var builtInFoundationApplicationExtensionBundles: [Bundle] {
         guard let builtInPlugInsURL = self.builtInPlugInsURL,
               let extensionBundleURLs = try? FileManager.default.contentsOfDirectory(
                 at: builtInPlugInsURL, includingPropertiesForKeys: nil, options: .skipsSubdirectoryDescendants) else {
@@ -196,7 +235,7 @@ extension Bundle {
         return self.builtInPlugInsURL?.deletingLastPathComponent().appendingPathComponent("Extensions")
     }
     
-    private var builtInApplicationExtensionKitExtensionBundles: [Bundle] {
+    private var builtInExtensionKitApplicationExtensionBundles: [Bundle] {
         guard let builtInExtensionsURL = self.builtInExtensionsURL,
               let extensionBundleURLs = try? FileManager.default.contentsOfDirectory(
                 at: builtInExtensionsURL, includingPropertiesForKeys: nil, options: .skipsSubdirectoryDescendants) else {
@@ -208,7 +247,7 @@ extension Bundle {
     
 extension Bundle {
     public var builtInApplicationExtensionBundles: [Bundle] {
-        return (self.builtInApplicationFoundationExtensionBundles + self.builtInApplicationExtensionKitExtensionBundles).sorted()
+        return (self.builtInFoundationApplicationExtensionBundles + self.builtInExtensionKitApplicationExtensionBundles).sorted()
     }
 }
 
