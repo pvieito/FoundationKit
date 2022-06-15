@@ -212,7 +212,7 @@ extension Bundle {
         case .foundation:
             return self.applicationExtensionInfoDictionary?["NSExtensionPointIdentifier"] as? String
         case .extensionKit:
-            return self.applicationExtensionInfoDictionary?["EXAppExtensionAttributes"] as? String
+            return self.applicationExtensionInfoDictionary?["EXExtensionPointIdentifier"] as? String
         case .none:
             return nil
         }
