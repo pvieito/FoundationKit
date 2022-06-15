@@ -176,11 +176,11 @@ extension Bundle {
         return self.bundleURL.pathExtension == Self.applicationExtensionPathExtension
     }
     
-    public var foundationApplicationExtensionInfoDictionary: [String: Any?]? {
+    private var foundationApplicationExtensionInfoDictionary: [String: Any?]? {
         return self.object(forInfoDictionaryKey: "NSExtension") as? [String: Any?]
     }
     
-    public var extensionKitApplicationExtensionInfoDictionary: [String: Any?]? {
+    private var extensionKitApplicationExtensionInfoDictionary: [String: Any?]? {
         return self.object(forInfoDictionaryKey: "EXAppExtensionAttributes") as? [String: Any?]
     }
     
