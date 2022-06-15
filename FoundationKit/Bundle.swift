@@ -192,14 +192,14 @@ extension Bundle {
 }
 
 extension Bundle {
-    private var builtInExtensionKitDirectoryURL: URL? {
-        return self.builtInPlugInsURL?.deletingLastPathComponent().appendingPathComponent("ExtensionKit")
+    private var builtInExtensionsURL: URL? {
+        return self.builtInPlugInsURL?.deletingLastPathComponent().appendingPathComponent("Extensions")
     }
     
     private var builtInApplicationExtensionKitExtensionBundles: [Bundle] {
-        guard let builtInExtensionKitDirectoryURL = self.builtInExtensionKitDirectoryURL,
+        guard let builtInExtensionsURL = self.builtInExtensionsURL,
               let extensionBundleURLs = try? FileManager.default.contentsOfDirectory(
-                at: builtInExtensionKitDirectoryURL, includingPropertiesForKeys: nil, options: .skipsSubdirectoryDescendants) else {
+                at: builtInExtensionsURL, includingPropertiesForKeys: nil, options: .skipsSubdirectoryDescendants) else {
             return []
         }
         return extensionBundleURLs.compactMap(Bundle.init(url:)).filter(\.isApplicationExtension).sorted()
