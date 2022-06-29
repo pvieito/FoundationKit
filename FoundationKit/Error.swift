@@ -18,6 +18,10 @@ extension Error {
         return NSError(domain: error.domain, code: error.code, userInfo: userInfo)
     }
     
+    public var localizedError: LocalizedError {
+        return self.cocoaError
+    }
+    
     public var localizedRecoverySuggestion: String? {
         return (self as NSError).userInfo[NSLocalizedRecoverySuggestionErrorKey] as? String
     }
@@ -70,6 +74,20 @@ extension NSError {
             userInfo[NSLocalizedRecoverySuggestionErrorKey] = recoverySuggestion
         }
         self.init(domain: NSCocoaErrorDomain, code: code, userInfo: userInfo)
+    }
+}
+
+extension NSError: LocalizedError {
+    public var errorDescription: String? {
+        self.localizedDescription
+    }
+    
+    public var failureReason: String? {
+        self.localizedFailureReason
+    }
+
+    public var recoverySuggestion: String? {
+        self.localizedRecoverySuggestion
     }
 }
 
