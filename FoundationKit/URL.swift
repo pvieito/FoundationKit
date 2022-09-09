@@ -203,11 +203,7 @@ extension URL {
         case windows
         
         fileprivate var cfPathStyle: CFURLPathStyle? {
-            #if canImport(Darwin) || swift(>=5.3)
             return CFURLPathStyle(rawValue: self.rawValue)
-            #else
-            return CFURLPathStyle(self.rawValue)
-            #endif
         }
         
         public var description: String {

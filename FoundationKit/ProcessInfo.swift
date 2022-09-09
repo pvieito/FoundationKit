@@ -233,7 +233,7 @@ extension ProcessInfo {
     }
     
     public func launchUserLoginItemsPaneInSystemSettings() throws {
-        #if swift(>=5.7)
+        #if canImport(AppIntents)
         if #available(macOS 13.0, *) {
             SMAppService.openSystemSettingsLoginItems()
             return
@@ -243,7 +243,7 @@ extension ProcessInfo {
     }
     
     public func launchExtensionsPaneInSystemSettings() throws {
-		#if swift(>=5.7)
+		#if canImport(AppIntents)
 		if #available(macOS 13.0, *) {
 			do {
 				try self.launchPrivacyAndSecurityPaneInSystemSettings()
