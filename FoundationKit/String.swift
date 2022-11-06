@@ -113,6 +113,12 @@ extension String {
 }
 
 extension String {
+    public var characters: Array<Character> {
+        return Array<Character>(self)
+    }
+}
+
+extension String {
     public var utf8Data: Data {
         return Data(self.utf8)
     }
