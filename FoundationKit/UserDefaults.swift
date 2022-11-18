@@ -34,27 +34,32 @@ extension UserDefaults {
     }
 }
 
+#if canImport(CloudKit)
 extension UserDefaults {
-    #if canImport(CloudKit)
     static let cloudKitDomain = "com.pvieito.FoundationKit.UserDefaults.CloudKitDomain"
     public static let cloudKit = UserDefaults(suiteName: cloudKitDomain)!
-    #endif
-    
-    #if canImport(Darwin) && !os(watchOS)
+}
+#endif
+
+#if canImport(Darwin)
+@available(watchOS 9.0, *)
+extension UserDefaults {
     static let ubiquitousKeyValueStoreDomain = "com.pvieito.FoundationKit.UserDefaults.UbiquitousKeyValueStoreDomain"
     public static let ubiquitousKeyValueStore = UserDefaults(suiteName: ubiquitousKeyValueStoreDomain)!
-
+    
     @available(*, deprecated, renamed: "ubiquitousKeyValueStore")
     public static let ubiquitousKeyValueStorage = ubiquitousKeyValueStore
-    #endif
+}
+#endif
 
+extension UserDefaults {
     @propertyWrapper
     public struct Wrapper<Value> {
         let key: String
         let storage: UserDefaults
         let defaultValue: Value
-                
-        #if canImport(CloudKit)
+        
+#if canImport(CloudKit)
         var cloudContainerIdentifier: String? {
             return Bundle.main.object(forInfoDictionaryKey: "NSXUserDefaultsCloudContainerIdentifier") as? String
         }
@@ -71,11 +76,11 @@ extension UserDefaults {
         var cloudRecordType: CKRecord.RecordType {
             return UserDefaults.cloudKitDomain.replacingOccurrences(of: ".", with: "_")
         }
-
+        
         var cloudRecordIdentifier: CKRecord.ID {
             return CKRecord.ID(recordName: UserDefaults.cloudKitDomain)
         }
-
+        
         var cloudRecord: CKRecord {
             get throws {
                 do {
@@ -88,8 +93,8 @@ extension UserDefaults {
                 }
             }
         }
-        #endif
-                
+#endif
+        
         public init(key: String, storage: UserDefaults = .standard, defaultValue: Value) {
             self.key = key
             self.storage = storage
@@ -100,16 +105,16 @@ extension UserDefaults {
             get {
                 var value: Any?
                 var handled = false
-
-                #if canImport(CloudKit)
+                
+#if canImport(CloudKit)
                 if !handled, self.storage == .cloudKit {
                     handled = true
                     value = try? self.cloudRecord.object(forKey: self.key)
                 }
-                #endif
+#endif
                 
-                #if canImport(Darwin) && !os(watchOS)
-                if !handled, self.storage == .ubiquitousKeyValueStore {
+#if canImport(Darwin)
+                if #available(watchOS 9.0, *), !handled, self.storage == .ubiquitousKeyValueStore {
                     handled = true
                     let storage = NSUbiquitousKeyValueStore.default
                     if storage.object(forKey: self.key) == nil {
@@ -137,8 +142,8 @@ extension UserDefaults {
                         value = storage.object(forKey: self.key)
                     }
                 }
-                #endif
-
+#endif
+                
                 if !handled {
                     handled = true
                     if storage.object(forKey: self.key) == nil {
@@ -169,13 +174,13 @@ extension UserDefaults {
                         value = storage.object(forKey: self.key)
                     }
                 }
-            
+                
                 return value as? Value ?? self.defaultValue
             }
             set {
                 var handled = false
-
-                #if canImport(CloudKit)
+                
+#if canImport(CloudKit)
                 if !handled, self.storage == .cloudKit {
                     handled = true
                     guard let cloudRecord = try? self.cloudRecord else { return }
@@ -184,17 +189,18 @@ extension UserDefaults {
                         self.cloudContainer.privateCloudDatabase.save(cloudRecord, completionHandler: handler)
                     }
                 }
-                #endif
+#endif
                 
-                #if canImport(Darwin) && !os(watchOS)
-                if !handled, self.storage == .ubiquitousKeyValueStore {
+#if canImport(Darwin)
+                if #available(watchOS 9.0, *), !handled, self.storage == .ubiquitousKeyValueStore {
                     handled = true
                     let storage = NSUbiquitousKeyValueStore.default
                     storage.set(newValue, forKey: self.key)
                     storage.synchronize()
                 }
-                #endif
+#endif
 
+                
                 if !handled {
                     handled = true
                     storage.set(newValue, forKey: self.key)
