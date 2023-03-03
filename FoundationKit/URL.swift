@@ -66,24 +66,24 @@ extension URL {
 
 extension URL {
     public var typeIdentifier: String? {
-        #if canImport(UIKit) || canImport(Cocoa)
+#if canImport(UIKit) || canImport(Cocoa)
         return UTTypeCreatePreferredIdentifierForTag(
             kUTTagClassFilenameExtension, self.pathExtension as CFString, nil)?.takeRetainedValue() as String?
-        #else
+#else
         return nil
-        #endif
+#endif
     }
     
     public func typeIdentifierConforms(to otherTypeIdentifier: String) -> Bool {
-        #if canImport(UIKit) || canImport(Cocoa)
+#if canImport(UIKit) || canImport(Cocoa)
         guard let typeIdentifier = self.typeIdentifier else {
             return false
         }
         
         return UTTypeConformsTo(typeIdentifier as CFString, otherTypeIdentifier as CFString)
-        #else
+#else
         return false
-        #endif
+#endif
     }
     
     public func typeIdentifierConforms(to otherTypeIdentifiers: [String]) -> Bool {
@@ -124,20 +124,20 @@ extension URL {
     @available(tvOSApplicationExtension, unavailable)
     @available(macCatalystApplicationExtension, unavailable)
     public func open(with applicationIdentifier: String? = nil) throws {
-        #if !os(macOS)
+#if !os(macOS)
         if let applicationIdentifier = applicationIdentifier {
             throw NSError(description: "Opening URL “\(self.absoluteString)” with application “\(applicationIdentifier)” is not supported on this platform.")
         }
-        #endif
+#endif
         
-        #if os(watchOS)
+#if os(watchOS)
         WKExtension.shared().openSystemURL(self)
-        #else
+#else
         var success = false
-
-        #if canImport(UIKit)
+        
+#if canImport(UIKit)
         success = UIApplication.shared.openURL(self)
-        #elseif os(macOS)
+#elseif os(macOS)
         if let applicationIdentifier = applicationIdentifier {
             success = NSWorkspace.shared.open(
                 [self], withAppBundleIdentifier: applicationIdentifier, options: [],
@@ -146,19 +146,19 @@ extension URL {
         else {
             success = NSWorkspace.shared.open(self)
         }
-        #elseif os(Linux)
+#elseif os(Linux)
         let openProcess = try Process(
             executableName: "xdg-open", arguments: [self.absoluteString])
         openProcess.standardOutput = nil
         openProcess.standardError = nil
         try openProcess.runAndWaitUntilExit()
         success = true
-        #endif
+#endif
         
         if !success {
             throw Error.openingFailure(self)
         }
-        #endif
+#endif
     }
     
     /// Returns a Boolean value indicating whether an app is available to handle a URL scheme.
@@ -167,18 +167,18 @@ extension URL {
     @available(watchOS, unavailable)
     @available(macCatalystApplicationExtension, unavailable)
     public var isSupported: Bool {
-        #if canImport(UIKit) && !os(watchOS)
+#if canImport(UIKit) && !os(watchOS)
         return UIApplication.shared.canOpenURL(self)
-        #elseif canImport(Cocoa)
+#elseif canImport(Cocoa)
         guard let scheme = self.scheme else { return false }
         guard let schemeHandlers =
-            LSCopyAllHandlersForURLScheme(scheme as CFString)?.takeRetainedValue() as? [String] else {
+                LSCopyAllHandlersForURLScheme(scheme as CFString)?.takeRetainedValue() as? [String] else {
             return false
         }
         return !schemeHandlers.isEmpty
-        #else
+#else
         return false
-        #endif
+#endif
     }
     
     /// Attempts to reveal the specified URL in a file browser.
@@ -187,11 +187,17 @@ extension URL {
     @available(watchOS, unavailable)
     @available(macCatalyst, unavailable)
     public func reveal() throws {
-        #if canImport(Cocoa) && !targetEnvironment(macCatalyst)
+#if canImport(Cocoa) && !targetEnvironment(macCatalyst)
         NSWorkspace.shared.activateFileViewerSelecting([self.absoluteURL])
-        #else
+#else
         throw Error.openingFailure(self)
-        #endif
+#endif
+    }
+}
+
+extension URL {
+    public func loadData(options: Data.ReadingOptions? = nil) throws -> Data {
+        return try Data(contentsOf: self, options: options ?? .init())
     }
 }
 
@@ -219,7 +225,7 @@ extension URL {
     }
     
     /// Returns the platform path of a given URL.
-    /// 
+    ///
     /// This function returns the URL's path as a file system path for a given platform path style.
     ///
     /// - Parameter style: The operating system path style to be used to create the path.
@@ -234,9 +240,9 @@ extension URL {
             return nil
         }
         
-        #if canImport(Darwin)
+#if canImport(Darwin)
         return CFURLCopyFileSystemPath(self as CFURL, cfPathStyle) as String?
-        #else
+#else
         let cfURL = unsafeBitCast(self, to: CFURL.self)
         let fileSystemPath = CFURLCopyFileSystemPath(cfURL, cfPathStyle)
         
@@ -245,7 +251,7 @@ extension URL {
         }
         
         return unsafeBitCast(cfPath, to: NSString.self)._bridgeToSwift()
-        #endif
+#endif
     }
 }
 
