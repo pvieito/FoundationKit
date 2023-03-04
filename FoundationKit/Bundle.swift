@@ -87,6 +87,24 @@ extension Bundle {
     }
 }
 
+
+extension Bundle {
+    private func url(forResource resourceName: String, subextension: String? = nil, pathExtension: String? = nil) -> URL? {
+        var resourceName = resourceName
+        if let subextension {
+            resourceName += "." + subextension
+        }
+        return self.url(forResource: resourceName, withExtension: pathExtension)
+    }
+    
+    public func loadResourceFile(name: String, subextension: String? = nil, pathExtension: String) throws -> URL {
+        guard let url = self.url(forResource: name, subextension: subextension, pathExtension: pathExtension) else {
+            throw NSError(description: "Error loading resource “\(name)” in bundle “\(self.bundleName)”.")
+        }
+        return url
+    }
+}
+
 extension Bundle: Comparable {
     private var bundleStableIdentifier: String {
         return self.bundleIdentifier ?? self.executableName ?? self.bundleName
