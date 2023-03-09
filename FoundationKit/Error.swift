@@ -35,6 +35,14 @@ extension Error {
         }
         return errorDescription
     }
+    
+    public var fullDescriptionInOneLine: String {
+        return self.fullDescription
+            .components(separatedBy: .newlines)
+            .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+            .filter(\.hasContent)
+            .joinedWithSpaces()
+    }
 }
 
 extension Error {
