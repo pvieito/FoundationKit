@@ -31,7 +31,7 @@ extension FileManager {
     
     /// Returns a Boolean value that indicates whether the operating system appears able to execute a specified file.
     public func isExecutableFile(at url: URL) -> Bool {
-        return self.isExecutableFile(atPath: url.path) && !self.directoryExists(at: url)
+        return self.isExecutableFile(atPath: url.path)
     }
     
     /// Returns the current directory URL.

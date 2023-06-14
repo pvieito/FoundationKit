@@ -16,7 +16,7 @@ extension Process {
                 let executableURL = executableDirectory
                     .appendingPathComponent(name)
                     .appendingPathExtension(executableExtension)
-                if FileManager.default.isExecutableFile(at: executableURL) {
+                if FileManager.default.isExecutableFile(at: executableURL) && !self.directoryExists(at: executableURL) {
                     return executableURL
                 }
             }
