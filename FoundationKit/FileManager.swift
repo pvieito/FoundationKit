@@ -21,9 +21,17 @@ extension FileManager {
     /// Returns a Boolean value that indicates whether a directory exists at a specified URL.
     public func directoryExists(at url: URL) -> Bool {
         var isDirectory: ObjCBool = false
-        self.fileExists(atPath: url.path, isDirectory: &isDirectory)
-        
-        return isDirectory.boolValue
+        return self.fileExists(atPath: url.path, isDirectory: &isDirectory) && isDirectory.boolValue
+    }
+    
+    /// Returns a Boolean value that indicates whether a file exists at a specified URL.
+    public func nonDirectoryFileExists(at url: URL) -> Bool {
+        return self.fileExists(at: url) && !self.directoryExists(at: url)
+    }
+    
+    /// Returns a Boolean value that indicates whether the operating system appears able to execute a specified file.
+    public func isExecutableFile(at url: URL) -> Bool {
+        return self.isExecutableFile(atPath: url.path)
     }
     
     /// Returns the current directory URL.
