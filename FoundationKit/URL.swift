@@ -135,7 +135,10 @@ extension URL {
 #else
         var success = false
         
-#if canImport(UIKit)
+#if os(xrOS)
+        UIApplication.shared.open(self)
+        success = true
+#elseif canImport(UIKit)
         success = UIApplication.shared.openURL(self)
 #elseif os(macOS)
         if let applicationIdentifier = applicationIdentifier {
