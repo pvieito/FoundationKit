@@ -118,6 +118,10 @@ extension URL {
 }
 #endif
 
+@objc protocol _URL_UIApplication {
+    func openURL(_ url: URL) -> Bool
+}
+
 extension URL {
     /// Attempts to open the resource at the specified URL asynchronously.
     @available(iOSApplicationExtension, unavailable)
@@ -135,11 +139,9 @@ extension URL {
 #else
         var success = false
         
-#if os(xrOS)
-        UIApplication.shared.open(self)
-        success = true
-#elseif canImport(UIKit)
-        success = UIApplication.shared.openURL(self)
+#if canImport(UIKit)
+        let shared: AnyObject = UIApplication.shared
+        success = shared.openURL(self)
 #elseif os(macOS)
         if let applicationIdentifier = applicationIdentifier {
             success = NSWorkspace.shared.open(
