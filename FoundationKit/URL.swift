@@ -118,10 +118,6 @@ extension URL {
 }
 #endif
 
-@objc protocol _URL_UIApplication {
-    func openURL(_ url: URL) -> Bool
-}
-
 extension URL {
     /// Attempts to open the resource at the specified URL asynchronously.
     @available(iOSApplicationExtension, unavailable)
@@ -273,5 +269,11 @@ extension URL {
             linkMetadataProvider.startFetchingMetadata(for: self, completionHandler: handler)
         }
     }
+}
+#endif
+
+#if canImport(UIKit)
+@objc protocol _URL_UIApplication {
+    func openURL(_ url: URL) -> Bool
 }
 #endif
