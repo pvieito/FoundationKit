@@ -76,12 +76,16 @@ extension NSError {
 }
 
 extension NSError {
-    public convenience init(description: String, recoverySuggestion: String? = nil, code: Int = -1) {
+    private static let defaultErrorCode = -1
+    
+    public convenience init(description: String, recoverySuggestion: String? = nil, domain: String? = nil, code: Int? = nil) {
         var userInfo = [NSLocalizedDescriptionKey: description]
         if let recoverySuggestion = recoverySuggestion {
             userInfo[NSLocalizedRecoverySuggestionErrorKey] = recoverySuggestion
         }
-        self.init(domain: NSCocoaErrorDomain, code: code, userInfo: userInfo)
+        let domain = domain ?? NSCocoaErrorDomain
+        let code = code ?? Self.defaultErrorCode
+        self.init(domain: domain, code: code, userInfo: userInfo)
     }
 }
 
