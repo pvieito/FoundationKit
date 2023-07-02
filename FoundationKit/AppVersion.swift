@@ -28,16 +28,15 @@ extension AppVersion: Comparable {
 
 extension AppVersion {
     public init?(from string: String) {
-        let components = string.split(separator: ".").compactMap { Int($0) }
-
-        guard components.count >= 2 else {
+        let stringComponents = string.split(separator: ".")
+        let components = stringComponents.compactMap { Int($0) }
+        guard stringComponents.count == components.count, components.count >= 1 && components.count <= 3 else {
             return nil
         }
 
         let major = components[0]
-        let minor = components[1]
-        let patch = components.count > 2 ? components[2] : 0
-
+        let minor = components.get(elementAt: 1) ?? 0
+        let patch = components.get(elementAt: 2) ?? 0
         self.init(majorVersion: major, minorVersion: minor, patchVersion: patch)
     }
 }
