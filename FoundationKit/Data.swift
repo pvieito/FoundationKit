@@ -42,6 +42,12 @@ extension Data {
 }
 
 extension Data {
+    public var utf8String: String? {
+        return String(data: self, encoding: .utf8)
+    }
+}
+
+extension Data {
     public func readingPipe() -> Pipe {
         let pipe = Pipe()
         pipe.fileHandleForWriting.write(self)
