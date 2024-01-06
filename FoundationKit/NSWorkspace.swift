@@ -34,8 +34,10 @@ extension NSWorkspace {
         guard let sharedWorkspace = Self._sharedWorkspace else { return false }
         let openURLSelector = NSSelectorFromString("openURL:")
         if sharedWorkspace.responds(to: openURLSelector),
-           let success = sharedWorkspace.perform(openURLSelector, with: url).takeUnretainedValue() as? Bool {
-            return success
+           let method = sharedWorkspace.method(for: openURLSelector) {
+            typealias NSWorkspace_openURL_function_ = @convention(c) (AnyObject, Selector, NSURL) -> Bool
+            let NSWorkspace_openURL_function = unsafeBitCast(method, to: NSWorkspace_openURL_function_.self)
+            return NSWorkspace_openURL_function(sharedWorkspace, openURLSelector, url as NSURL)
         }
         return false
     }
