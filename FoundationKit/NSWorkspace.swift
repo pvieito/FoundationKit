@@ -9,7 +9,9 @@
 import Foundation
 import Cocoa
 
+#if targetEnvironment(macCatalyst)
 typealias NSWorkspace = NSObject
+#endif
 
 extension NSWorkspace {
     private static var _sharedWorkspace: NSObject? = {
