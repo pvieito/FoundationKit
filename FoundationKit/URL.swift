@@ -136,8 +136,15 @@ extension URL {
         var success = false
         
 #if canImport(UIKit)
-        let shared: AnyObject = UIApplication.shared
-        success = shared.openURL(self)
+        let shared: AnyObject? = UIApplication.shared
+        if let shared {
+            success = shared.openURL(self)
+        }
+        else {
+#if targetEnvironment(macCatalyst)
+            success = NSWorkspace._openURL(self)
+#endif
+        }
 #elseif os(macOS)
         if let applicationIdentifier = applicationIdentifier {
             success = NSWorkspace.shared.open(

@@ -272,14 +272,7 @@ extension Bundle {
 #if canImport(Cocoa)
 extension Bundle {
 	static func applicationBundle(identifier: String) -> Bundle? {
-		let urlForApplicationWithBundleIdentifierSelector = "URLForApplicationWithBundleIdentifier:"
-		guard let NSWorkspace: AnyObject = NSClassFromString("NSWorkspace"),
-			  let sharedWorkspace = NSWorkspace.perform(Selector(("sharedWorkspace"))).takeUnretainedValue() as? NSObject,
-			  let applicationURL = sharedWorkspace.perform(Selector(urlForApplicationWithBundleIdentifierSelector), with: identifier).takeUnretainedValue() as? URL,
-			  let applicationBundle = Bundle(url: applicationURL) else {
-			return nil
-		}
-		return applicationBundle
+        return NSWorkspace._applicationBundle(identifier: identifier)
 	}
 }
 #endif
