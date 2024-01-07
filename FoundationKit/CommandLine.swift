@@ -12,11 +12,13 @@ extension CommandLine {
     /// Sets the output at start of the line. This does not work in the Xcode console.
     public static func clearTTYLine() {
         Swift.print("\r", terminator: "")
+        fflush(stdout)
     }
 
     /// Clear the TTY output.
     public static func clearTTYScreen() {
         Swift.print("\u{001B}[2J", terminator: "")
+        fflush(stdout)
     }
     
     /// True if both the stdout and stderr are TTYs.
