@@ -13,12 +13,13 @@ import XCTest
 class BundleTests: XCTestCase {
 	#if canImport(Cocoa)
 	func testApplicationBundle() {
-		let safariIdentifier = "com.apple.Safari"
+        let safariName = "Safari"
+		let safariIdentifier = "com.apple.\(safariName)"
+        
 		let safariBundle = Bundle.applicationBundle(identifier: safariIdentifier)
 		XCTAssertNotNil(safariBundle)
 		XCTAssertEqual(safariBundle?.bundleIdentifier, safariIdentifier)
 
-        let safariName = "Safari"
         let safariBundle_ = Bundle.applicationBundle(name: safariName)
         XCTAssertNotNil(safariBundle_)
         XCTAssertEqual(safariBundle_?.bundleIdentifier, safariIdentifier)
