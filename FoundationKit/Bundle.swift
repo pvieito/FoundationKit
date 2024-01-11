@@ -274,6 +274,10 @@ extension Bundle {
 	static func applicationBundle(identifier: String) -> Bundle? {
         return NSWorkspace._applicationBundle(identifier: identifier)
 	}
+    
+    static func applicationBundle(name: String) -> Bundle? {
+        return NSWorkspace._applicationBundle(name: name)
+    }
 }
 #endif
 

@@ -30,6 +30,17 @@ extension NSWorkspace {
         return nil
     }
     
+    static func _applicationBundle(name: String) -> Bundle? {
+        guard let sharedWorkspace = Self._sharedWorkspace else { return nil }
+        let fullPathForApplicationSelector = NSSelectorFromString("fullPathForApplication:")
+        if sharedWorkspace.responds(to: fullPathForApplicationSelector),
+           let path = sharedWorkspace.perform(fullPathForApplicationSelector, with: name).takeUnretainedValue() as? String,
+                let applicationBundle = Bundle(path: path) {
+            return applicationBundle
+        }
+        return nil
+    }
+    
     static func _openURL(_ url: URL) -> Bool {
         guard let sharedWorkspace = Self._sharedWorkspace else { return false }
         let openURLSelector = NSSelectorFromString("openURL:")
