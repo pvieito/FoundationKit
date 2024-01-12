@@ -23,6 +23,12 @@ class BundleTests: XCTestCase {
         let safariBundle_ = Bundle.applicationBundle(name: safariName)
         XCTAssertNotNil(safariBundle_)
         XCTAssertEqual(safariBundle_?.bundleIdentifier, safariIdentifier)
+        
+        let fakeBundle = Bundle.applicationBundle(identifier: "_fake._fake.Bundle")
+        XCTAssertNil(fakeBundle)
+
+        let fakeBundle_ = Bundle.applicationBundle(name: "_FAKE_APP")
+        XCTAssertNil(fakeBundle_)
     }
 	#endif
 }
