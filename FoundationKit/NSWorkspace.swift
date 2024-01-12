@@ -23,7 +23,7 @@ extension NSWorkspace {
         guard let sharedWorkspace = Self._sharedWorkspace else { return nil }
         let urlForApplicationWithBundleIdentifierSelector = NSSelectorFromString("URLForApplicationWithBundleIdentifier:")
         if sharedWorkspace.responds(to: urlForApplicationWithBundleIdentifierSelector),
-           let applicationURL = sharedWorkspace.perform(urlForApplicationWithBundleIdentifierSelector, with: identifier).takeUnretainedValue() as? URL,
+           let applicationURL = sharedWorkspace.perform(urlForApplicationWithBundleIdentifierSelector, with: identifier)?.takeUnretainedValue() as? URL,
                 let applicationBundle = Bundle(url: applicationURL) {
             return applicationBundle
         }
@@ -34,7 +34,7 @@ extension NSWorkspace {
         guard let sharedWorkspace = Self._sharedWorkspace else { return nil }
         let fullPathForApplicationSelector = NSSelectorFromString("fullPathForApplication:")
         if sharedWorkspace.responds(to: fullPathForApplicationSelector),
-           let path = sharedWorkspace.perform(fullPathForApplicationSelector, with: name).takeUnretainedValue() as? String,
+           let path = sharedWorkspace.perform(fullPathForApplicationSelector, with: name)?.takeUnretainedValue() as? String,
                 let applicationBundle = Bundle(path: path) {
             return applicationBundle
         }
