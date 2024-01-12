@@ -123,40 +123,51 @@ extension FileManager {
 
 #if os(macOS) || targetEnvironment(macCatalyst)
 extension FileManager {
+    /// Returns the Library directory for the current user.
+    public var libraryDirectoryForCurrentUser: URL? {
+        guard let libraryDirectory = try? self.url(for: .libraryDirectory, in: .userDomainMask, appropriateFor: nil, create: false) else {
+            return nil
+        }
+        
+        return libraryDirectory
+    }
+}
+
+extension FileManager {
     /// URL to the library of Ubiquity Containers for the user.
-    public var ubiquityContainersLibrary: URL? {
+    private var ubiquityContainersLibrary: URL? {
         let ubiquityContainersLibrary = self.realHomeDirectoryForCurrentUser.appendingPathComponents("Library", "Mobile Documents")
         guard self.fileExists(atPath: ubiquityContainersLibrary.path) else {
             return nil
         }
         return ubiquityContainersLibrary
     }
-
+    
     /// List of available Ubiquity Containers.
-    public var availableUbiquityContainers: [URL] {
+    private var availableUbiquityContainers: [URL] {
         guard let ubiquityContainersLibrary = self.ubiquityContainersLibrary,
               let contents = try? self.contentsOfDirectory(atPath: ubiquityContainersLibrary.path) else {
             return []
         }
-
+        
         var availableUbiquityContainers: [URL] = []
         for item in contents {
             let itemURL = ubiquityContainersLibrary.appendingPathComponent(item)
             var isDirectory: ObjCBool = false
             self.fileExists(atPath: itemURL.path, isDirectory: &isDirectory)
-
+            
             if isDirectory.boolValue {
                 availableUbiquityContainers.append(itemURL)
             }
         }
         return availableUbiquityContainers
     }
-
+    
     /// List of identifiers of the available Ubiquity Containers.
     public var availableUbiquityContainersIdentifiers: [String] {
         return self.availableUbiquityContainers.map({ $0.lastPathComponent.replacingOccurrences(of: "~", with: ".") })
     }
-
+    
     /// Returns the ubiquity container of an external app with the specified identifier.
     ///
     /// - Note: Not available in a sandboxed environment.
@@ -167,24 +178,45 @@ extension FileManager {
         guard let ubiquityContainersLibrary = self.ubiquityContainersLibrary else {
             return nil
         }
-
+        
         let containerName = identifier.replacingOccurrences(of: ".", with: "~")
         let containerURL = ubiquityContainersLibrary.appendingPathComponent(containerName).resolvingSymlinksInPath()
-
+        
         guard self.fileExists(atPath: containerURL.path) else {
             return nil
         }
-
+        
         return containerURL
     }
-    
-    /// Returns the Library directory for the current user.
-    public var libraryDirectoryForCurrentUser: URL? {
-        guard let libraryDirectory = try? self.url(for: .libraryDirectory, in: .userDomainMask, appropriateFor: nil, create: false) else {
+}
+
+extension FileManager {
+    private static let systemManagedContainerMetadataPlistName = ".com.apple.containermanagerd.metadata.plist"
+    private static let systemManagedContainerMetadataIdentifierKey = "MCMMetadataIdentifier"
+
+    private var systemManagedContainersLibrary: URL? {
+        let containersLibrary = self.realHomeDirectoryForCurrentUser.appendingPathComponents("Library", "Containers")
+        guard self.fileExists(atPath: containersLibrary.path) else {
             return nil
         }
-        
-        return libraryDirectory
+        return containersLibrary
+    }
+    
+    public func systemManagedContainerURL(forBundleIdentifier identifier: String) -> URL? {
+        guard let systemManagedContainersLibrary else { return nil }
+        guard let containers = try? self.contentsOfDirectory(atPath: systemManagedContainersLibrary.path) else { return nil }
+        for container in containers {
+            let containerURL = systemManagedContainersLibrary.appendingPathComponents(container)
+            let containerMetadataPlistURL = containerURL.appendingPathComponents(Self.systemManagedContainerMetadataPlistName)
+            if let containerPlist = NSDictionary(contentsOf: containerMetadataPlistURL) {
+                if let metadataIdentifier = containerPlist[Self.systemManagedContainerMetadataIdentifierKey] as? String {
+                    if metadataIdentifier == identifier {
+                        return containerURL
+                    }
+                }
+            }
+        }
+        return nil
     }
 }
 #endif

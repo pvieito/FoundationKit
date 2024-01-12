@@ -278,6 +278,11 @@ extension Bundle {
     public static func applicationBundle(name: String) -> Bundle? {
         return NSWorkspace._applicationBundle(name: name)
     }
+    
+    public var systemManagedContainerURL: URL? {
+        guard let bundleIdentifier else { return nil }
+        return FileManager.default.systemManagedContainerURL(forBundleIdentifier: bundleIdentifier)
+    }
 }
 #endif
 
