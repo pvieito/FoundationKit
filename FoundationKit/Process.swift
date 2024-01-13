@@ -6,7 +6,7 @@
 //  Copyright © 2018 Pedro José Pereira Vieito. All rights reserved.
 //
 
-#if !os(iOS) && !os(tvOS) && !os(watchOS)
+#if !os(iOS) && !os(tvOS) && !os(watchOS) && !os(visionOS)
 import Foundation
 
 extension Process {
