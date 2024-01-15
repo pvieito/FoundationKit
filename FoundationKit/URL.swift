@@ -66,7 +66,7 @@ extension URL {
 
 extension URL {
     public var typeIdentifier: String? {
-#if canImport(UIKit) || canImport(Cocoa)
+#if canImport(UniformTypeIdentifiers)
         return UTTypeCreatePreferredIdentifierForTag(
             kUTTagClassFilenameExtension, self.pathExtension as CFString, nil)?.takeRetainedValue() as String?
 #else
@@ -75,7 +75,7 @@ extension URL {
     }
     
     public func typeIdentifierConforms(to otherTypeIdentifier: String) -> Bool {
-#if canImport(UIKit) || canImport(Cocoa)
+#if canImport(UniformTypeIdentifiers)
         guard let typeIdentifier = self.typeIdentifier else {
             return false
         }
