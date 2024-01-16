@@ -204,11 +204,22 @@ extension ProcessInfo {
 }
 #endif
 
-#if canImport(Cocoa)
+#if canImport(Darwin)
 extension ProcessInfo {
+    private static let settingsName = "Settings"
+#if canImport(Cocoa)
+    private static let systemSettingsApplicationDefaultName = "System \(settingsName)"
 	private static let systemSettingsApplicationBundleIdentifier = "com.apple.systempreferences"
+#else
+    private static let systemSettingsApplicationDefaultName = settingsName
+#endif
+    
 	public static let systemSettingsLocalizedName: String = {
-		return Bundle.applicationBundle(identifier: systemSettingsApplicationBundleIdentifier)?.bundleName ?? "System Settings"
+        var systemSettingsLocalizedName: String?
+#if canImport(Cocoa)
+        systemSettingsLocalizedName = Bundle.applicationBundle(identifier: systemSettingsApplicationBundleIdentifier)?.bundleName
+#endif
+		return systemSettingsLocalizedName ?? systemSettingsApplicationDefaultName
 	}()
 }
 #endif
