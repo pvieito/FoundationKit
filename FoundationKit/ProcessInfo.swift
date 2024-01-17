@@ -14,14 +14,17 @@ import ServiceManagement
 #endif
 
 extension ProcessInfo {
-    #if os(Windows)
+    static let pathEnvironmentVariableKey = "PATH"
+    static let pathExtensionsEnvironmentVariableKey = pathEnvironmentVariableKey + "EXT"
+    
+#if os(Windows)
     fileprivate static let dotCharacters = CharacterSet(charactersIn: ".")
     fileprivate static let pathSeparator: Character = ";"
     fileprivate static let defaultExecutableExtensions = ["COM", "EXE", "BAT", "CMD"]
-    #else
+#else
     fileprivate static let pathSeparator: Character = ":"
     fileprivate static let defaultExecutableExtensions = [""]
-    #endif
+#endif
     
     private var uppercasedEnvironment: [String : String] {
         var uppercasedEnvironment: [String : String] = [:]
@@ -31,28 +34,47 @@ extension ProcessInfo {
         return uppercasedEnvironment
     }
     
-    private var environmentPaths: [String] {
-        guard let path = self.uppercasedEnvironment["PATH"] else {
-            return []
-        }
-        
-        return path.paths
+    private var executablePaths: [String] {
+        return self.uppercasedEnvironment[Self.pathEnvironmentVariableKey]?.environmentSeparatedPaths ?? []
     }
     
     var executableDirectories: [URL] {
-        return self.environmentPaths.pathURLs
+        return self.executablePaths.pathURLs
     }
     
     var executableExtensions: [String] {
-        #if os(Windows)
-        guard let pathext = self.uppercasedEnvironment["PATHEXT"] else {
+#if os(Windows)
+        guard let executableExtensions = self.uppercasedEnvironment[Self.pathExtensionsEnvironmentVariableKey] else {
             return ProcessInfo.defaultExecutableExtensions.map { $0.lowercased() }
         }
         
-        return pathext.paths.map { $0.trimmingCharacters(in: ProcessInfo.dotCharacters).lowercased() }
-        #else
+        return executableExtensions.environmentSeparatedPaths.map { $0.trimmingCharacters(in: ProcessInfo.dotCharacters).lowercased() }
+#else
         return ProcessInfo.defaultExecutableExtensions
-        #endif
+#endif
+    }
+}
+
+extension ProcessInfo {
+#if os(macOS)
+    fileprivate static let defaultExtraExecutablePaths: [String] = ["/usr/local/bin", "/usr/local/sbin", "/opt/homebrew/bin", "/opt/homebrew/sbin"]
+#else
+    fileprivate static let defaultExtraExecutablePaths: [String] = []
+#endif
+
+    public func extendEnvironmentExecutableDirectories(at urls: [URL]? = nil) {
+        let urls = Self.defaultExtraExecutablePaths + (urls?.paths ?? Self.defaultExtraExecutablePaths)
+        self.setEnvironmentVariable(key: Self.pathEnvironmentVariableKey, value: urls.environmentJoinedPaths)
+    }
+    
+    public func setEnvironmentVariable(key: String, value: String) {
+        setenv(key, value, 1)
+    }
+    
+    public func setEnvironmentVariables(_ environment: [String: String]) {
+        for (key, value) in environment {
+            self.setEnvironmentVariable(key: key, value: value)
+        }
     }
 }
 
@@ -145,7 +167,7 @@ extension ProcessInfo {
     private static let systemSettingsAutomationPrivacyPaneURISuffix = systemSettingsSecurityPaneURISuffix + "?Privacy_Automation"
     private static let systemSettingsAccessibilityPrivacyPaneURISuffix = systemSettingsSecurityPaneURISuffix + "?Privacy_Accessibility"
     private static let systemSettingsScreenCapturePrivacyPaneURISuffix = systemSettingsSecurityPaneURISuffix + "?Privacy_ScreenCapture"
-
+    
     public func launchSystemSettings() throws {
         try URL(string: Self.systemSettingsURLScheme)!.open()
     }
@@ -158,15 +180,15 @@ extension ProcessInfo {
             try self.launchSystemSettings()
         }
     }
-
-	public func launchPrivacyAndSecurityPaneInSystemSettings() throws {
-		try self.launchPaneInSystemSettings(uriSuffix: Self.systemSettingsSecurityPaneURISuffix)
-	}
-
+    
+    public func launchPrivacyAndSecurityPaneInSystemSettings() throws {
+        try self.launchPaneInSystemSettings(uriSuffix: Self.systemSettingsSecurityPaneURISuffix)
+    }
+    
     public func launchAutomationPrivacyPaneInSystemSettings() throws {
         try self.launchPaneInSystemSettings(uriSuffix: Self.systemSettingsAutomationPrivacyPaneURISuffix)
     }
-
+    
     public func launchAccessibilityPrivacyPaneInSystemSettings() throws {
         try self.launchPaneInSystemSettings(uriSuffix: Self.systemSettingsAccessibilityPrivacyPaneURISuffix)
     }
@@ -181,7 +203,7 @@ extension ProcessInfo {
     public func launchSystemPreferences() throws {
         try self.launchSystemSettings()
     }
-
+    
     @available(*, deprecated, renamed: "launchPaneInSystemSettings(uriSuffix:)")
     public func launchPaneInSystemPreferences(uriSuffix: String) throws {
         try self.launchPaneInSystemSettings(uriSuffix: uriSuffix)
@@ -196,7 +218,7 @@ extension ProcessInfo {
     public func launchAccessibilityPrivacyPaneInSystemPreferences() throws {
         try self.launchAccessibilityPrivacyPaneInSystemSettings()
     }
-
+    
     @available(*, deprecated, renamed: "launchScreenCapturePrivacyPaneInSystemSettings")
     public func launchScreenCapturePrivacyPaneInSystemPreferences() throws {
         try self.launchScreenCapturePrivacyPaneInSystemSettings()
@@ -209,18 +231,18 @@ extension ProcessInfo {
     private static let settingsName = "Settings"
 #if canImport(Cocoa)
     private static let systemSettingsApplicationDefaultName = "System \(settingsName)"
-	private static let systemSettingsApplicationBundleIdentifier = "com.apple.systempreferences"
+    private static let systemSettingsApplicationBundleIdentifier = "com.apple.systempreferences"
 #else
     private static let systemSettingsApplicationDefaultName = settingsName
 #endif
     
-	public static let systemSettingsLocalizedName: String = {
+    public static let systemSettingsLocalizedName: String = {
         var systemSettingsLocalizedName: String?
 #if canImport(Cocoa)
         systemSettingsLocalizedName = Bundle.applicationBundle(identifier: systemSettingsApplicationBundleIdentifier)?.bundleName
 #endif
-		return systemSettingsLocalizedName ?? systemSettingsApplicationDefaultName
-	}()
+        return systemSettingsLocalizedName ?? systemSettingsApplicationDefaultName
+    }()
 }
 #endif
 
@@ -238,31 +260,31 @@ extension ProcessInfo {
             try self.launchSystemSettings()
         }
     }
-
+    
     public func launchUsersPaneInSystemSettings() throws {
         try self.launchPaneInSystemSettings(name: "Accounts")
     }
     
     public func launchUserLoginItemsPaneInSystemSettings() throws {
-        #if canImport(AppIntents)
+#if canImport(AppIntents)
         if #available(macOS 13.0, *) {
             SMAppService.openSystemSettingsLoginItems()
             return
         }
-        #endif
+#endif
         try self.launchUsersPaneInSystemSettings()
     }
     
     public func launchExtensionsPaneInSystemSettings() throws {
-		#if canImport(AppIntents)
-		if #available(macOS 13.0, *) {
-			do {
-				try self.launchPrivacyAndSecurityPaneInSystemSettings()
-				return
-			}
-			catch {}
-		}
-		#endif
+#if canImport(AppIntents)
+        if #available(macOS 13.0, *) {
+            do {
+                try self.launchPrivacyAndSecurityPaneInSystemSettings()
+                return
+            }
+            catch {}
+        }
+#endif
         try self.launchPaneInSystemSettings(name: "Extensions")
     }
 }
@@ -272,7 +294,7 @@ extension ProcessInfo {
     public func launchPaneInSystemPreferences(name: String) throws {
         try self.launchPaneInSystemSettings(name: name)
     }
-
+    
     @available(*, deprecated, renamed: "launchUsersPaneInSystemSettings")
     public func launchUsersPaneInSystemPreferences() throws {
         try self.launchUsersPaneInSystemSettings()
@@ -311,15 +333,21 @@ extension ProcessInfo {
     public func determineAccessibilityPermission(promptUser: Bool = false) -> Bool {
         return AXIsProcessTrustedWithOptions([kAXTrustedCheckOptionPrompt.takeUnretainedValue(): promptUser as CFBoolean] as CFDictionary)
     }
-
+    
     public var hasAccessibilityPermission: Bool {
         return self.determineAccessibilityPermission(promptUser: false)
     }
 }
 #endif
 
-fileprivate extension String {
-    var paths: [String] {
+extension String {
+    var environmentSeparatedPaths: [String] {
         return self.split(separator: ProcessInfo.pathSeparator).map(String.init)
+    }
+}
+
+extension Collection where Element == String {
+    var environmentJoinedPaths: String {
+        return self.joined(separator: String(ProcessInfo.pathSeparator))
     }
 }
