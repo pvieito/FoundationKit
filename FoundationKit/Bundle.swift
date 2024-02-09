@@ -12,21 +12,30 @@ import Foundation
 import Cocoa
 #endif
 
-private let kCFBundleNameKey = "CFBundleName"
-private let kCFBundleDisplayNameKey = "CFBundleDisplayName"
-private let kCFBundleVersionKey = "CFBundleVersion"
-private let kCFBundleShortVersionStringKey = "CFBundleShortVersionString"
-private let kNSPrincipalClassKey = "NSPrincipalClass"
-private let kNSHumanReadableDescriptionKey = "NSHumanReadableDescription"
-private let kNSHumanReadableCopyrightKey = "NSHumanReadableCopyright"
 
 extension Bundle {
+    private static let foundationKitInfoKeyPrefix = "NSX"
+    
+    func foundationKitInfoDictionaryObject(keySuffix: String) -> Any? {
+        return self.object(forInfoDictionaryKey: Self.foundationKitInfoKeyPrefix + keySuffix)
+    }
+}
+
+extension Bundle {
+    private static let coreFoundationBundleNameKey = "CFBundleName"
+    private static let coreFoundationBundleDisplayNameKey = "CFBundleDisplayName"
+    private static let coreFoundationBundleVersionKey = "CFBundleVersion"
+    private static let coreFoundationBundleShortVersionStringKey = "CFBundleShortVersionString"
+    private static let foundationPrincipalClassKey = "NSPrincipalClass"
+    private static let foundationHumanReadableDescriptionKey = "NSHumanReadableDescription"
+    private static let foundationHumanReadableCopyrightKey = "NSHumanReadableCopyright"
+
     private var bundleDisplayName: String? {
-        return self.object(forInfoDictionaryKey: kCFBundleDisplayNameKey) as? String
+        return self.object(forInfoDictionaryKey: Self.coreFoundationBundleDisplayNameKey) as? String
     }
     
     private var bundleBaseName: String? {
-        return self.object(forInfoDictionaryKey: kCFBundleNameKey as String) as? String
+        return self.object(forInfoDictionaryKey: Self.coreFoundationBundleNameKey as String) as? String
     }
     
     private var executableName: String? {
@@ -41,7 +50,7 @@ extension Bundle {
     }
     
     public var bundleVersion: String? {
-        guard let bundleVersion = self.object(forInfoDictionaryKey: kCFBundleVersionKey) as? String,
+        guard let bundleVersion = self.object(forInfoDictionaryKey: Self.coreFoundationBundleVersionKey) as? String,
               bundleVersion != "" else {
             return nil
         }
@@ -50,7 +59,7 @@ extension Bundle {
     }
     
     public var bundleShortVersion: String? {
-        guard let bundleShortVersion = self.object(forInfoDictionaryKey: kCFBundleShortVersionStringKey) as? String,
+        guard let bundleShortVersion = self.object(forInfoDictionaryKey: Self.coreFoundationBundleShortVersionStringKey) as? String,
               bundleShortVersion != "" else {
             return nil
         }
@@ -59,7 +68,7 @@ extension Bundle {
     }
     
     public var principalClassString: String? {
-        guard let principalClassString = self.object(forInfoDictionaryKey: kNSPrincipalClassKey) as? String,
+        guard let principalClassString = self.object(forInfoDictionaryKey: Self.foundationPrincipalClassKey) as? String,
               principalClassString != "" else {
             return nil
         }
@@ -79,11 +88,11 @@ extension Bundle {
     }
     
     public var humanReadableDescription: String? {
-        return self.object(forInfoDictionaryKey: kNSHumanReadableDescriptionKey) as? String
+        return self.object(forInfoDictionaryKey: Self.foundationHumanReadableDescriptionKey) as? String
     }
     
     public var humanReadableCopyright: String? {
-        return self.object(forInfoDictionaryKey: kNSHumanReadableCopyrightKey) as? String
+        return self.object(forInfoDictionaryKey: Self.foundationHumanReadableCopyrightKey) as? String
     }
 }
 
@@ -266,6 +275,31 @@ extension Bundle {
 extension Bundle {
     public var builtInApplicationExtensionBundles: [Bundle] {
         return (self.builtInFoundationApplicationExtensionBundles + self.builtInExtensionKitApplicationExtensionBundles).sorted()
+    }
+}
+
+extension Bundle {
+    func loadFoundationKitInfoDictionaryLink(keySuffix: String) throws -> URL {
+        guard let linkString = self.foundationKitInfoDictionaryObject(keySuffix: keySuffix) as? String, let link = linkString.genericURL else {
+            throw NSError(description: "Valid link with key “\(keySuffix)” not found in the bundle “\(self.bundleName)”.")
+        }
+        return link
+    }
+    
+    func loadPrivacyPolicyLink() throws -> URL {
+        return try loadFoundationKitInfoDictionaryLink(keySuffix: "PrivacyPolicyLink")
+    }
+    
+    func loadTermsOfUseLink() throws -> URL {
+        return try loadFoundationKitInfoDictionaryLink(keySuffix: "TermsOfUseLink")
+    }
+    
+    public func openPrivacyPolicyLink() throws {
+        try loadPrivacyPolicyLink().open()
+    }
+    
+    public func openTermsOfUseLink() throws {
+        try loadTermsOfUseLink().open()
     }
 }
 

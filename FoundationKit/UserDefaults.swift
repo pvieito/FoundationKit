@@ -61,7 +61,7 @@ extension UserDefaults {
         
 #if canImport(CloudKit)
         var cloudContainerIdentifier: String? {
-            return Bundle.main.object(forInfoDictionaryKey: "NSXUserDefaultsCloudContainerIdentifier") as? String
+            return Bundle.main.foundationKitInfoDictionaryObject(keySuffix: "UserDefaultsCloudContainerIdentifier") as? String
         }
         
         var cloudContainer: CKContainer {
