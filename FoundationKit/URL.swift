@@ -7,7 +7,10 @@
 //
 
 import Foundation
+
+#if canImport(CoreFoundation)
 import CoreFoundation
+#endif
 
 #if canImport(UniformTypeIdentifiers)
 import UniformTypeIdentifiers
@@ -209,6 +212,7 @@ extension URL {
     }
 }
 
+#if canImport(CoreFoundation)
 extension URL {
     /// Platform path styles for a file URL.
     public enum PlatformPathStyle: Int, CaseIterable, CustomStringConvertible {
@@ -262,6 +266,7 @@ extension URL {
 #endif
     }
 }
+#endif
 
 #if canImport(LinkPresentation) && !os(tvOS)
 @available(macOS 10.15, *)

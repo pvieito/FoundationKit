@@ -7,10 +7,15 @@
 //
 
 import Foundation
+
+#if canImport(CoreFoundation)
 import CoreFoundation
+#endif
 
 extension RunLoop {
+#if canImport(CoreFoundation)
     public func stop() {
         CFRunLoopStop(self.getCFRunLoop())
     }
+#endif
 }
