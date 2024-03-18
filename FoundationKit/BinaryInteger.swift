@@ -35,3 +35,19 @@ extension BinaryInteger {
         self = self.clamped(to: range)
     }
 }
+
+extension Sequence where Element: AdditiveArithmetic {
+    /// Returns the total sum of all elements in the sequence
+    public func sum() -> Element { reduce(.zero, +) }
+}
+
+extension Collection where Element: BinaryInteger {
+    /// Returns the average of all elements in the array
+    public func average() -> Element? {
+        return self.isEmpty ? nil : self.sum() / Element(self.count)
+    }
+    /// Returns the average of all elements in the array as Floating Point type
+    public func average<T: FloatingPoint>() -> T? {
+        return isEmpty ? nil : T(self.sum()) / T(self.count)
+    }
+}

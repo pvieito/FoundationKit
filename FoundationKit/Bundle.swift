@@ -142,8 +142,13 @@ extension Bundle {
     }
     
     @discardableResult
-    public func launchApplication(options: NSWorkspace.LaunchOptions = []) throws -> NSRunningApplication {
-        return try NSWorkspace.shared.launchApplication(at: self.bundleURL, options: options, configuration: [:])
+    public func launchApplication(options: NSWorkspace.LaunchOptions = [], configuration: [NSWorkspace.LaunchConfigurationKey : Any] = [:]) throws -> NSRunningApplication {
+        return try NSWorkspace.shared.launchApplication(at: self.bundleURL, options: options, configuration: configuration)
+    }
+    
+    @discardableResult
+    public func launchApplicationWith(urls: [URL], configuration: [NSWorkspace.LaunchConfigurationKey : Any] = [:]) throws -> NSRunningApplication {
+        return try NSWorkspace.shared.open(urls, withApplicationAt: self.bundleURL, configuration: configuration)
     }
     
     @available(macOS 10.14, *)

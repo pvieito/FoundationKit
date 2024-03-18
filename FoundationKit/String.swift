@@ -251,6 +251,16 @@ extension String {
     }
 }
 
+extension String {
+    public static func starsRating(value: Int, padding: Bool = true, maximum: Int = 5) -> String {
+        var starsRating = String(repeating: "★", count: value)
+        if padding {
+            starsRating += String(repeating: "☆", count: (maximum - value))
+        }
+        return starsRating
+    }
+}
+
 extension Optional where Wrapped == String {
     /// Returns a valid string with the content of Optional or a dash.
     public var optional: String {
@@ -263,12 +273,64 @@ extension Optional where Wrapped == String {
     }
 }
 
-extension String {
-    public static func starsRating(value: Int, padding: Bool = true, maximum: Int = 5) -> String {
-        var starsRating = String(repeating: "★", count: value)
-        if padding {
-            starsRating += String(repeating: "☆", count: (maximum - value))
-        }
-        return starsRating
+extension Collection where Element == String {
+    /// Returns array of file URLs initialized from the strings.
+    public var pathURLs: [URL] {
+        return self.map { $0.pathURL }
+    }
+    
+    /// Returns array of generic URLs initialized from the strings, removing invalid entries.
+    public var genericURLs: [URL] {
+        return self.compactMap { $0.genericURL }
+    }
+    
+    /// Returns array of resource URLs initialized from the strings, removing invalid entries.
+    public var resourceURLs: [URL] {
+        return self.compactMap { $0.resourceURL }
+    }
+
+    @available(*, deprecated, renamed: "resourceURLs")
+    public var validURLs: [URL] {
+        return self.resourceURLs
     }
 }
+
+extension Collection where Element: StringProtocol {
+    public func joiningLines() -> String {
+        return self.joined(separator: .newLineCharacter)
+    }
+    
+    public func joinedWithSpaces() -> String {
+        return self.joined(separator: .spaceCharacter)
+    }
+}
+
+#if canImport(Darwin)
+@available(macOS 10.15, *)
+@available(iOS 13.0, *)
+@available(tvOS 13.0, *)
+@available(watchOS 6.0, *)
+extension Collection where Element == String {
+    public var listDescription: String {
+        return ListFormatter.localizedString(byJoining: self.map({ $0 }))
+    }
+    
+    public var quotedListDescription: String {
+        return ListFormatter.localizedString(byJoining: self.map({ "“\($0)”" }))
+    }
+}
+
+@available(macOS 10.15, *)
+@available(iOS 13.0, *)
+@available(tvOS 13.0, *)
+@available(watchOS 6.0, *)
+extension Collection where Element: CustomStringConvertible {
+    public var listDescription: String {
+        return self.map(\.description).listDescription
+    }
+    
+    public var quotedListDescription: String {
+        return self.map(\.description).quotedListDescription
+    }
+}
+#endif

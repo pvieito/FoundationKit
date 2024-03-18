@@ -27,11 +27,7 @@ extension Process {
 }
 
 extension Process {
-    public convenience init(executableName: String, arguments: [String]? = nil) throws {
-        guard let executableURL = Process.getExecutableURL(name: executableName) else {
-            throw NSError(description: "Executable “\(executableName)” not found.")
-        }
-        
+    public convenience init(executableURL: URL, arguments: [String]? = nil) {
         self.init()
         
         if #available(macOS 10.13, *) {
@@ -43,6 +39,13 @@ extension Process {
         if let arguments = arguments {
             self.arguments = arguments
         }
+    }
+
+    public convenience init(executableName: String, arguments: [String]? = nil) throws {
+        guard let executableURL = Process.getExecutableURL(name: executableName) else {
+            throw NSError(description: "Executable “\(executableName)” not found.")
+        }
+        try self.init(executableURL: executableURL, arguments: arguments)
     }
 }
 

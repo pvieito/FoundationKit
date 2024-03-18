@@ -122,11 +122,18 @@ extension URL {
 #endif
 
 extension URL {
+#if os(macOS)
+    @available(*, deprecated, renamed: "open(applicationIdentifier:)")
+    public func open(with applicationIdentifier: String) throws {
+        try self.open(withAppBundleIdentifier: applicationIdentifier)
+    }
+#endif
+    
     /// Attempts to open the resource at the specified URL asynchronously.
     @available(iOSApplicationExtension, unavailable)
     @available(tvOSApplicationExtension, unavailable)
     @available(macCatalystApplicationExtension, unavailable)
-    public func open(with applicationIdentifier: String? = nil) throws {
+    public func open(withAppBundleIdentifier: String? = nil) throws {
 #if !os(macOS)
         if let applicationIdentifier = applicationIdentifier {
             throw NSError(description: "Opening URL “\(self.absoluteString)” with application “\(applicationIdentifier)” is not supported on this platform.")
@@ -149,10 +156,9 @@ extension URL {
 #endif
         }
 #elseif os(macOS)
-        if let applicationIdentifier = applicationIdentifier {
-            success = NSWorkspace.shared.open(
-                [self], withAppBundleIdentifier: applicationIdentifier, options: [],
-                additionalEventParamDescriptor: nil, launchIdentifiers: nil)
+        if let applicationIdentifier = withAppBundleIdentifier {
+            try [self].open(withAppBundleIdentifier: applicationIdentifier)
+            success = true
         }
         else {
             success = NSWorkspace.shared.open(self)
@@ -283,6 +289,78 @@ extension URL {
     }
 }
 #endif
+
+extension Collection where Element == URL {
+    /// Returns the first common parent directory of all URLs in the collection.
+    @available(macOS 10.11, *)
+    public var commonParentDirectory: URL? {
+        let stringPaths = self.map({ $0.path })
+        
+        if self.count == 1, let url = self.first {
+            return url.hasDirectoryPath ? url : url.deletingLastPathComponent()
+        }
+        if var commonPath = stringPaths.reduce(stringPaths.max(), { $0?.commonPrefix(with: $1) }) {
+            if commonPath.last != Character(String.slashCharacter) {
+                commonPath = commonPath
+                    .components(separatedBy: String.slashCharacter)
+                    .dropLast()
+                    .joined(separator: String.slashCharacter)
+            }
+            return URL(fileURLWithPath: commonPath)
+        }
+        else {
+            return nil
+        }
+    }
+    
+    @available(macOS 10.11, *)
+    @available(*, deprecated, renamed: "commonParentDirectory")
+    public var commonAntecessor: URL? {
+        return self.commonParentDirectory
+    }
+    
+    /// Returns the URL paths ordered by their last path component.
+    public var alphabeticallyOrdered: [URL] {
+        return self.sorted { $0.lastPathComponent < $1.lastPathComponent }
+    }
+    
+    /// Return the path of each URL in the array.
+    public var paths: [String] {
+        return self.map({ $0.path })
+    }
+    
+    /// Return the last path component of each URL in the array.
+    public var lastPathComponents: [String] {
+        return self.map({ $0.lastPathComponent })
+    }
+}
+
+extension Collection where Element == URL {
+    public func open() throws {
+        var lastError: Error? = nil
+        for url in self {
+            do {
+                try url.open()
+            }
+            catch {
+                lastError = error
+            }
+        }
+        
+        if let lastError {
+            throw lastError
+        }
+    }
+    
+#if os(macOS)
+    public func open(withAppBundleIdentifier bundleIdentifier: String) throws {
+        guard let bundle = Bundle.applicationBundle(identifier: bundleIdentifier) else {
+            throw NSError(description: "Error opening items: application with identifier “\(bundleIdentifier)” not found.")
+        }
+        try bundle.launchApplicationWith(urls: Array(self))
+    }
+#endif
+}
 
 #if canImport(UIKit)
 @objc protocol _URL_UIApplication {
