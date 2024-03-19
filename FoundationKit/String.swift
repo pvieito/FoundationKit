@@ -195,33 +195,33 @@ extension String {
         let index = self.index(offset: offset)
         return self[index]
     }
-
+    
     // [offset.lowerBound..<offset.upperBound]
     public subscript(offset offset: Range<Int>) -> String {
         let i = self.index(offset: offset.lowerBound)
         let j = self.index(offset: offset.upperBound)
         return String(self[i..<j])
     }
-
+    
     // [offset.lowerBound...offset.upperBound]
     public subscript(offset offset: ClosedRange<Int>) -> String {
         let i = self.index(offset: offset.lowerBound)
         let j = self.index(offset: offset.upperBound)
         return String(self[i...j])
     }
-
+    
     // [..<offset.upperBound]
     public subscript(offset offset: PartialRangeUpTo<Int>) -> String {
         let i = self.index(offset: offset.upperBound)
         return String(self[..<i])
     }
-
+    
     // [...offset.upperBound]
     public subscript(offset offset: PartialRangeThrough<Int>) -> String {
         let i = self.index(offset: offset.upperBound)
         return String(self[...i])
     }
-
+    
     // [offset.lowerBound...]
     public subscript(offset offset: PartialRangeFrom<Int>) -> String {
         let i = self.index(offset: offset.lowerBound)
@@ -245,10 +245,10 @@ extension String {
         guard
             let quotationBeginDelimiter = Locale.current.quotationBeginDelimiter,
             let quotationEndDelimiter = Locale.current.quotationEndDelimiter
-            else { return ("\"", "\"") }
+        else { return ("\"", "\"") }
         return (quotationBeginDelimiter, quotationEndDelimiter)
     }
-
+    
     /// Returns a quoted string.
     public var quoted: String {
         return Self.quotationDelimiters.0 + self + Self.quotationDelimiters.1
@@ -292,7 +292,7 @@ extension Collection where Element == String {
     public var resourceURLs: [URL] {
         return self.compactMap { $0.resourceURL }
     }
-
+    
     @available(*, deprecated, renamed: "resourceURLs")
     public var validURLs: [URL] {
         return self.resourceURLs
