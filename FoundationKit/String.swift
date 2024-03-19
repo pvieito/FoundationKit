@@ -15,7 +15,7 @@ extension String {
     public static let newLineCharacter = "\n"
     public static let slashCharacter = "/"
     public static let dashCharacter = "-"
-
+    
     /// Returns an array of components of the string with a maximum length each.
     ///
     /// - Parameter length: Maximum length of each component.
@@ -36,7 +36,7 @@ extension String {
             }
         }
     }
-
+    
     /// Returns the string abbreviated with a maximum length.
     ///
     /// - Parameter length: Maximum length of the returned string.
@@ -58,7 +58,7 @@ extension String {
         }
         return abbreviatedString.trimmingCharacters(in: .whitespacesAndNewlines).appending(ellipsis)
     }
-
+    
     /// Returns the string with a lossy conversion to ASCII.
     public var asciiString: String? {
         if let lossyAsciiData = self.data(using: .ascii, allowLossyConversion: true), let asciiString = String(data: lossyAsciiData, encoding: .ascii) {
@@ -71,44 +71,48 @@ extension String {
     public var isASCII: Bool {
         return self.allSatisfy { $0.isASCII }
     }
-
+    
     /// Returns a Camel Case string converted to Title Case.
     ///
     /// For example it will be "Camel Case" for "camelCase".
     public var decamelized: String {
         var inputString: String = self
         var outputString: String = Self.empty
-
+        
         if let firstUnicodeScalar = self.unicodeScalars.first,
-            CharacterSet.uppercaseLetters.contains(firstUnicodeScalar),
-            let firstCharacter = self.first {
+           CharacterSet.uppercaseLetters.contains(firstUnicodeScalar),
+           let firstCharacter = self.first {
             inputString.remove(at: inputString.startIndex)
             inputString.insert(contentsOf: String(firstCharacter).lowercased(), at: inputString.startIndex)
         }
-
+        
         let upperCase = CharacterSet.uppercaseLetters
         for scalar in inputString.unicodeScalars {
             if upperCase.contains(scalar) {
                 outputString.append(Self.spaceCharacter)
             }
-
+            
             let character = Character(scalar)
             outputString.append(character)
         }
-
+        
         if let firstUnicodeScalar = outputString.unicodeScalars.first,
-            CharacterSet.lowercaseLetters.contains(firstUnicodeScalar),
-            let firstCharacter = outputString.first {
+           CharacterSet.lowercaseLetters.contains(firstUnicodeScalar),
+           let firstCharacter = outputString.first {
             outputString.remove(at: outputString.startIndex)
             outputString.insert(contentsOf: String(firstCharacter).uppercased(), at: inputString.startIndex)
         }
-
+        
         return outputString
     }
     
     /// Returns same string if not empty, else nil.
     public var nonEmptyString: String? {
         self.nonEmptyCollection
+    }
+    
+    public func trimmingWhitespacesAndNewlines() -> String {
+        self.trimmingCharacters(in: .whitespacesAndNewlines)
     }
 }
 
