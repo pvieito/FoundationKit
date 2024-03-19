@@ -31,6 +31,14 @@ import Cocoa
 import WatchKit
 #endif
 
+#if canImport(Darwin)
+import Darwin
+#elseif canImport(Glibc)
+import Glibc
+#elseif os(Windows)
+import CRT
+import WinSDK
+#endif
 
 extension URL {
     enum Error: LocalizedError {
@@ -219,6 +227,13 @@ extension URL {
 }
 
 extension URL {
+    public func loadData(options: Data.ReadingOptions? = nil) throws -> Data {
+        return try Data(contentsOf: self, options: options ?? .init())
+    }
+}
+
+#if canImport(Darwin) || canImport(Glibc)
+extension URL {
     public func loadFileExtendedAttribute(name: String) throws -> Data  {
         let data = try self.withUnsafeFileSystemRepresentation { fileSystemPath -> Data in
             let length = try getxattr(fileSystemPath, name, nil, 0, 0, 0).enforcePOSIXReturnValue()
@@ -270,12 +285,7 @@ extension URL {
         return extendedAttributes
     }
 }
-
-extension URL {
-    public func loadData(options: Data.ReadingOptions? = nil) throws -> Data {
-        return try Data(contentsOf: self, options: options ?? .init())
-    }
-}
+#endif
 
 #if canImport(CoreFoundation)
 extension URL {
