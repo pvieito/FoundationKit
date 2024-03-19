@@ -35,9 +35,6 @@ import WatchKit
 import Darwin
 #elseif canImport(Glibc)
 import Glibc
-#elseif os(Windows)
-import CRT
-import WinSDK
 #endif
 
 extension URL {
