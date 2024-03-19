@@ -133,7 +133,7 @@ extension URL {
     @available(iOSApplicationExtension, unavailable)
     @available(tvOSApplicationExtension, unavailable)
     @available(macCatalystApplicationExtension, unavailable)
-    public func open(withAppBundleIdentifier: String? = nil) throws {
+    public func open(withAppBundleIdentifier applicationIdentifier: String? = nil) throws {
 #if !os(macOS)
         if let applicationIdentifier = applicationIdentifier {
             throw NSError(description: "Opening URL “\(self.absoluteString)” with application “\(applicationIdentifier)” is not supported on this platform.")
@@ -156,7 +156,7 @@ extension URL {
 #endif
         }
 #elseif os(macOS)
-        if let applicationIdentifier = withAppBundleIdentifier {
+        if let applicationIdentifier = applicationIdentifier {
             try [self].open(withAppBundleIdentifier: applicationIdentifier)
             success = true
         }

@@ -45,35 +45,24 @@ extension Process {
         guard let executableURL = Process.getExecutableURL(name: executableName) else {
             throw NSError(description: "Executable “\(executableName)” not found.")
         }
-        try self.init(executableURL: executableURL, arguments: arguments)
+        self.init(executableURL: executableURL, arguments: arguments)
     }
 }
 
 extension Process {
-    public func runReplacingCurrentProcess() throws {
-        var executableURL: URL?
-        
-        if #available(macOS 10.13, *) {
-            executableURL = self.executableURL
-        } else {
-            executableURL = self.launchPath?.pathURL
+    var targetExecutableURL: URL {
+        get throws {
+            var executableURL: URL?
+            if #available(macOS 10.13, *) {
+                executableURL = self.executableURL
+            } else {
+                executableURL = self.launchPath?.pathURL
+            }
+            guard let targetExecutableURL = executableURL else {
+                throw NSError(description: "Error launching unspecified executable.")
+            }
+            return targetExecutableURL
         }
-        
-        guard let targetExecutableURL = executableURL else {
-            throw NSError(description: "Error launching unspecified executable.")
-        }
-        
-        var arguments = self.arguments ?? []
-        arguments = [targetExecutableURL.path] + arguments
-        let cArguments = arguments.map { strdup($0) } + [nil]
-        
-        if let environment {
-            ProcessInfo.processInfo.setEnvironmentVariables(environment)
-        }
-        
-        execv(targetExecutableURL.path, cArguments)
-        
-        throw NSError(description: "Error launching “\(targetExecutableURL.lastPathComponent)” executable.")
     }
     
     public func runAndWaitUntilExit() throws {
@@ -115,4 +104,38 @@ extension Process {
         try killProcess.runAndWaitUntilExit()
     }
 }
+
+#if os(macOS)
+extension Process {
+    public func runReplacingCurrentProcess(disclaimResponsibility: Bool = false) throws {
+        let targetExecutableURL = try targetExecutableURL
+        var arguments = self.arguments ?? []
+        arguments = [targetExecutableURL.path] + arguments
+        let cArguments = arguments.map { strdup($0) } + [nil]
+        
+        if let environment {
+            ProcessInfo.processInfo.setEnvironmentVariables(environment)
+        }
+        
+        var attributes = posix_spawnattr_t(nil as OpaquePointer?)
+        posix_spawnattr_init(&attributes)
+        posix_spawnattr_setflags(&attributes, Int16(POSIX_SPAWN_SETEXEC))
+        
+        if disclaimResponsibility {
+            let setDisclaimError = NSError(description: "Error disclaiming responsibility from “\(targetExecutableURL.lastPathComponent)” executable.")
+            let handle = dlopen(nil, RTLD_NOW)
+            let setDisclaim = dlsym(handle, "responsibility_spawnattrs_setdisclaim")
+            if setDisclaim == nil { throw setDisclaimError }
+            typealias SetDisclaimType = @convention(c) (UnsafeMutablePointer<Optional<posix_spawnattr_t> >, Int32) -> Int32
+            if unsafeBitCast(setDisclaim, to: SetDisclaimType.self)(&attributes, 1) != 0 { throw setDisclaimError }
+        }
+        
+        let returnCode = posix_spawn(nil, targetExecutableURL.path, nil, &attributes, cArguments, environ)
+        if returnCode != 0 {
+            throw NSError(description: "Running executable “\(targetExecutableURL.lastPathComponent)” failed with code \(returnCode).", code: Int(returnCode))
+        }
+    }
+    
+}
+#endif
 #endif
