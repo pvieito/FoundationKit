@@ -219,6 +219,59 @@ extension URL {
 }
 
 extension URL {
+    public func loadFileExtendedAttribute(name: String) throws -> Data  {
+        let data = try self.withUnsafeFileSystemRepresentation { fileSystemPath -> Data in
+            let length = try getxattr(fileSystemPath, name, nil, 0, 0, 0).enforcePOSIXReturnValue()
+            var data = Data(count: length)
+            try data.withUnsafeMutableBytes { [count = data.count] in
+                let _ = try getxattr(fileSystemPath, name, $0.baseAddress, count, 0, 0).enforcePOSIXReturnValue()
+            }
+            return data
+        }
+        return data
+    }
+
+    public func setFileExtendedAttribute(name: String, data: Data) throws {
+        try self.withUnsafeFileSystemRepresentation { fileSystemPath in
+            try data.withUnsafeBytes {
+                let _ = try setxattr(fileSystemPath, name, $0.baseAddress, data.count, 0, 0).enforcePOSIXReturnValue()
+            }
+        }
+    }
+
+    public func removeFileExtendedAttribute(name: String) throws {
+        try self.withUnsafeFileSystemRepresentation { fileSystemPath in
+            let _ = try removexattr(fileSystemPath, name, 0).enforcePOSIXReturnValue()
+        }
+    }
+
+    public func listFileExtendedAttributes() throws -> [String] {
+        let list = try self.withUnsafeFileSystemRepresentation { fileSystemPath -> [String] in
+            let length = try listxattr(fileSystemPath, nil, 0, 0).enforcePOSIXReturnValue()
+            var names = Array<CChar>(repeating: 0, count: length)
+            let _ = try listxattr(fileSystemPath, &names, names.count, 0).enforcePOSIXReturnValue()
+            let list = names.split(separator: 0).compactMap {
+                $0.withUnsafeBufferPointer {
+                    $0.withMemoryRebound(to: UInt8.self) {
+                        String(bytes: $0, encoding: .utf8)
+                    }
+                }
+            }
+            return list
+        }
+        return list
+    }
+    
+    public func loadFileExtendedAttributes() throws -> [String: Data] {
+        var extendedAttributes: [String: Data] = [:]
+        for name in try self.listFileExtendedAttributes() {
+            extendedAttributes[name] = try self.loadFileExtendedAttribute(name: name)
+        }
+        return extendedAttributes
+    }
+}
+
+extension URL {
     public func loadData(options: Data.ReadingOptions? = nil) throws -> Data {
         return try Data(contentsOf: self, options: options ?? .init())
     }

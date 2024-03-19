@@ -103,20 +103,50 @@ extension NSError: LocalizedError {
     }
 }
 
+extension Int {
+    @discardableResult
+    func enforcePOSIXReturnValue() throws -> Self {
+        guard self >= 0 else {
+            var description: String
+            if let errorDescription = strerror(errno) {
+                description = String(cString: errorDescription)
+            }
+            else {
+                description = "POSIX operation could not be completed (\(self))."
+            }
+            throw NSError(description: description, domain: NSPOSIXErrorDomain, code: Int(self))
+        }
+        return self
+    }
+}
+
+extension Int32 {
+    @discardableResult
+    func enforcePOSIXReturnValue() throws -> Self {
+        let result = try Int(self).enforcePOSIXReturnValue()
+        return Int32(result)
+    }
+}
+
+
 #if canImport(Darwin)
 extension OSStatus {
+    @available(*, deprecated, renamed: "enforceOSStatus")
     public func enforce() throws {
+        try self.enforceOSStatus()
+    }
+
+    public func enforceOSStatus() throws {
         guard self == noErr else {
             var description: String
             if #available(watchOS 4.3, iOS 11.3, tvOS 11.3, *),
-                let securityDescription = SecCopyErrorMessageString(self, nil) {
-                    description = securityDescription as String
+               let securityDescription = SecCopyErrorMessageString(self, nil) {
+                description = securityDescription as String
             }
             else {
                 description = "Operation could not be completed (OSError \(self))."
             }
-            
-            throw NSError(description: description, code: Int(self))
+            throw NSError(description: description, domain: NSOSStatusErrorDomain, code: Int(self))
         }
     }
 }

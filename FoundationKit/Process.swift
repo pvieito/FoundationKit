@@ -128,13 +128,10 @@ extension Process {
             let setDisclaim = dlsym(handle, symbolComponents.joined(separator: "_"))
             if setDisclaim == nil { throw setDisclaimError }
             typealias SetDisclaimType = @convention(c) (UnsafeMutablePointer<Optional<posix_spawnattr_t> >, Int32) -> Int32
-            if unsafeBitCast(setDisclaim, to: SetDisclaimType.self)(&attributes, 1) != 0 { throw setDisclaimError }
+            try unsafeBitCast(setDisclaim, to: SetDisclaimType.self)(&attributes, 1).enforcePOSIXReturnValue()
         }
         
-        let returnCode = posix_spawn(nil, targetExecutableURL.path, nil, &attributes, cArguments, environ)
-        if returnCode != 0 {
-            throw NSError(description: "Running executable “\(targetExecutableURL.lastPathComponent)” failed with code \(returnCode).", code: Int(returnCode))
-        }
+        try posix_spawn(nil, targetExecutableURL.path, nil, &attributes, cArguments, environ).enforcePOSIXReturnValue()
     }
     
 }
