@@ -8,7 +8,11 @@
 import Foundation
 
 extension PropertyListSerialization {
-    public static func data(from item: Any, format: PropertyListSerialization.PropertyListFormat = .xml, options: PropertyListSerialization.WriteOptions? = nil) throws -> Data {
-        return try PropertyListSerialization.data(fromPropertyList: item, format: format, options: options ?? 0)
+    public static func data(from propertyList: Any, format: PropertyListSerialization.PropertyListFormat = .xml, options: PropertyListSerialization.WriteOptions? = nil) throws -> Data {
+        return try self.data(fromPropertyList: propertyList, format: format, options: options ?? 0)
+    }
+    
+    public static func propertyList(from data: Data, options: PropertyListSerialization.ReadOptions = []) throws -> Any {
+        return try self.propertyList(from: data, options: options, format: nil)
     }
 }
