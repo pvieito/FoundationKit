@@ -68,6 +68,12 @@ extension URL {
 }
 
 extension URL {
+    public var displayName: String {
+        return FileManager.default.displayName(atPath: self.path)
+    }
+}
+
+extension URL {
     public var typeIdentifier: String? {
 #if canImport(Darwin)
         return UTTypeCreatePreferredIdentifierForTag(
