@@ -68,7 +68,7 @@ extension URL {
 }
 
 extension URL {
-    public var displayName: String {
+    public var fileDisplayName: String {
         return FileManager.default.displayName(atPath: self.path)
     }
 }
