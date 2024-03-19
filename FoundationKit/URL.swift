@@ -31,12 +31,6 @@ import Cocoa
 import WatchKit
 #endif
 
-#if canImport(Darwin)
-import Darwin
-#elseif canImport(Glibc)
-import Glibc
-#endif
-
 extension URL {
     enum Error: LocalizedError {
         case openingFailure(URL)
@@ -229,7 +223,7 @@ extension URL {
     }
 }
 
-#if canImport(Darwin) || canImport(Glibc)
+#if canImport(Darwin)
 extension URL {
     public func loadFileExtendedAttribute(name: String) throws -> Data  {
         let data = try self.withUnsafeFileSystemRepresentation { fileSystemPath -> Data in
