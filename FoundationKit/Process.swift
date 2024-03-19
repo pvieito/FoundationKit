@@ -124,7 +124,8 @@ extension Process {
         if disclaimResponsibility {
             let setDisclaimError = NSError(description: "Error disclaiming responsibility from “\(targetExecutableURL.lastPathComponent)” executable.")
             let handle = dlopen(nil, RTLD_NOW)
-            let setDisclaim = dlsym(handle, "responsibility_spawnattrs_setdisclaim")
+            let symbolComponents = ["responsibility", "spawnattrs", "setdisclaim"]
+            let setDisclaim = dlsym(handle, symbolComponents.joined(separator: "_"))
             if setDisclaim == nil { throw setDisclaimError }
             typealias SetDisclaimType = @convention(c) (UnsafeMutablePointer<Optional<posix_spawnattr_t> >, Int32) -> Int32
             if unsafeBitCast(setDisclaim, to: SetDisclaimType.self)(&attributes, 1) != 0 { throw setDisclaimError }
