@@ -42,17 +42,17 @@ extension FileManager {
     /// Replaces a symbolic link at the specified URL that points to an item at the given URL.
     public func replaceSymbolicLink(
         at url: URL, withDestinationURL destinationURL: URL) throws {
-        try? self.removeItem(at: url)
-        try self.createSymbolicLink(
-            at: url, withDestinationURL: destinationURL)
-    }
+            try? self.removeItem(at: url)
+            try self.createSymbolicLink(
+                at: url, withDestinationURL: destinationURL)
+        }
     
     /// Replaces a symbolic link at the specified path that points to an item at the given destination path.
     public func replaceSymbolicLink(
         atPath path: String, withDestinationPath destinationPath: String) throws {
-        try? self.removeItem(atPath: path)
-        try self.createSymbolicLink(atPath: path, withDestinationPath: destinationPath)
-    }
+            try? self.removeItem(atPath: path)
+            try self.createSymbolicLink(atPath: path, withDestinationPath: destinationPath)
+        }
     
     /// Generates a random file URL on a temporary location.
     public func temporaryRandomFileURL(filename: String? = nil, pathExtension: String? = nil) -> URL {
@@ -70,21 +70,21 @@ extension FileManager {
         return temporaryFileURL
     }
     
-    #if canImport(UniformTypeIdentifiers)
+#if canImport(UniformTypeIdentifiers)
     @available(macOS 11.0, iOS 14.0, watchOS 7.0, tvOS 14.0, *)
     public func temporaryRandomFileURL(filename: String? = nil, for contentType: UTType) -> URL {
         return self.temporaryRandomFileURL(filename: filename).appendingPathExtension(for: contentType)
     }
-    #endif
-
+#endif
+    
     /// Real URL to the user home directory, even in a sandboxed environment.
     public var realHomeDirectoryForCurrentUser: URL {
         var homeDirectoryForCurrentUser = URL(fileURLWithPath: NSHomeDirectory())
-        #if os(macOS) || targetEnvironment(macCatalyst)
+#if os(macOS) || targetEnvironment(macCatalyst)
         if let userPath = getpwuid(getuid())?.pointee.pw_dir {
             homeDirectoryForCurrentUser = URL(fileURLWithPath: String(cString: userPath))
         }
-        #endif
+#endif
         return homeDirectoryForCurrentUser
     }
 }
@@ -194,7 +194,7 @@ extension FileManager {
 extension FileManager {
     private static let systemManagedContainerMetadataPlistName = ".com.apple.containermanagerd.metadata.plist"
     private static let systemManagedContainerMetadataIdentifierKey = "MCMMetadataIdentifier"
-
+    
     private var systemManagedContainersLibrary: URL? {
         let containersLibrary = self.realHomeDirectoryForCurrentUser.appendingPathComponents("Library", "Containers")
         guard self.fileExists(atPath: containersLibrary.path) else {
@@ -209,11 +209,11 @@ extension FileManager {
         for container in try self.contentsOfDirectory(atPath: systemManagedContainersLibrary.path) {
             let container = systemManagedContainersLibrary.appendingPathComponents(container)
             let containerMetadataPlistURL = container.appendingPathComponents(Self.systemManagedContainerMetadataPlistName)
-            if let containerPlist = NSDictionary(contentsOf: containerMetadataPlistURL) {
-                if let metadataIdentifier = containerPlist[Self.systemManagedContainerMetadataIdentifierKey] as? String {
-                    if metadataIdentifier == identifier {
-                        containers += [container]
-                    }
+            guard FileManager.default.nonDirectoryFileExists(at: containerMetadataPlistURL) else { continue }
+            let containerPlist = try NSDictionary(contentsOf: containerMetadataPlistURL, error: ())
+            if let metadataIdentifier = containerPlist[Self.systemManagedContainerMetadataIdentifierKey] as? String {
+                if metadataIdentifier == identifier {
+                    containers += [container]
                 }
             }
         }
