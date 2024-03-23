@@ -58,7 +58,7 @@ extension FileManager {
     public func temporaryRandomFileURL(filename: String? = nil, pathExtension: String? = nil) -> URL {
         let temporaryDirectory = URL(fileURLWithPath: NSTemporaryDirectory())
             .appendingPathComponent(UUID().uuidString)
-        try? FileManager.default.createDirectory(at: temporaryDirectory, withIntermediateDirectories: true)
+        try? self.createDirectory(at: temporaryDirectory, withIntermediateDirectories: true)
         
         let filename = filename ?? UUID().uuidString
         var temporaryFileURL = temporaryDirectory.appendingPathComponent(filename)
@@ -103,19 +103,20 @@ extension FileManager {
         private static var isCleaned = false
         
         static var autocleanedTemporaryDirectory: URL {
+            let fileManager = FileManager.default
             let processName = Bundle.main.bundleIdentifier ?? ProcessInfo.processInfo.processName
             
             let temporaryDirectoryURL = URL(fileURLWithPath: NSTemporaryDirectory())
                 .appendingPathComponent(directoryName)
                 .appendingPathComponent(processName)
             
-            if !isCleaned && FileManager.default.fileExists(atPath: temporaryDirectoryURL.path) {
-                try? FileManager.default.removeItem(at: temporaryDirectoryURL)
+            if !isCleaned && fileManager.fileExists(atPath: temporaryDirectoryURL.path) {
+                try? fileManager.removeItem(at: temporaryDirectoryURL)
             }
             
             isCleaned = true
             
-            try? FileManager.default.createDirectory(at: temporaryDirectoryURL, withIntermediateDirectories: true, attributes: nil)
+            try? fileManager.createDirectory(at: temporaryDirectoryURL, withIntermediateDirectories: true, attributes: nil)
             return temporaryDirectoryURL
         }
     }
@@ -202,21 +203,21 @@ extension FileManager {
         return containersLibrary
     }
     
-    public func systemManagedContainerURL(forBundleIdentifier identifier: String) -> URL? {
-        guard let systemManagedContainersLibrary else { return nil }
-        guard let containers = try? self.contentsOfDirectory(atPath: systemManagedContainersLibrary.path) else { return nil }
-        for container in containers {
-            let containerURL = systemManagedContainersLibrary.appendingPathComponents(container)
-            let containerMetadataPlistURL = containerURL.appendingPathComponents(Self.systemManagedContainerMetadataPlistName)
+    public func systemManagedContainers(forBundleIdentifier identifier: String) throws -> [URL] {
+        guard let systemManagedContainersLibrary else { return [] }
+        var containers: [URL] = []
+        for container in try self.contentsOfDirectory(atPath: systemManagedContainersLibrary.path) {
+            let container = systemManagedContainersLibrary.appendingPathComponents(container)
+            let containerMetadataPlistURL = container.appendingPathComponents(Self.systemManagedContainerMetadataPlistName)
             if let containerPlist = NSDictionary(contentsOf: containerMetadataPlistURL) {
                 if let metadataIdentifier = containerPlist[Self.systemManagedContainerMetadataIdentifierKey] as? String {
                     if metadataIdentifier == identifier {
-                        return containerURL
+                        containers += [container]
                     }
                 }
             }
         }
-        return nil
+        return containers
     }
 }
 #endif
