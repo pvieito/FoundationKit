@@ -209,8 +209,7 @@ extension FileManager {
         for container in try self.contentsOfDirectory(atPath: systemManagedContainersLibrary.path) {
             let container = systemManagedContainersLibrary.appendingPathComponents(container)
             let containerMetadataPlistURL = container.appendingPathComponents(Self.systemManagedContainerMetadataPlistName)
-            guard FileManager.default.nonDirectoryFileExists(at: containerMetadataPlistURL) else { continue }
-            let containerPlist = try NSDictionary(contentsOf: containerMetadataPlistURL, error: ())
+            guard let containerPlist = NSDictionary(contentsOf: containerMetadataPlistURL) else { continue }
             if let metadataIdentifier = containerPlist[Self.systemManagedContainerMetadataIdentifierKey] as? String {
                 if metadataIdentifier == identifier {
                     containers += [container]
