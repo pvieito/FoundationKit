@@ -40,16 +40,14 @@ extension FileManager {
     }
     
     /// Replaces a symbolic link at the specified URL that points to an item at the given URL.
-    public func replaceSymbolicLink(
-        at url: URL, withDestinationURL destinationURL: URL) throws {
+    public func replaceSymbolicLink(at url: URL, withDestinationURL destinationURL: URL) throws {
             try? self.removeItem(at: url)
             try self.createSymbolicLink(
                 at: url, withDestinationURL: destinationURL)
         }
     
     /// Replaces a symbolic link at the specified path that points to an item at the given destination path.
-    public func replaceSymbolicLink(
-        atPath path: String, withDestinationPath destinationPath: String) throws {
+    public func replaceSymbolicLink(atPath path: String, withDestinationPath destinationPath: String) throws {
             try? self.removeItem(atPath: path)
             try self.createSymbolicLink(atPath: path, withDestinationPath: destinationPath)
         }
@@ -68,6 +66,10 @@ extension FileManager {
         }
         
         return temporaryFileURL
+    }
+    
+    public func contentsOfDirectory(at directory: URL) throws -> [URL] {
+        return try self.contentsOfDirectory(atPath: directory.path).map { directory.appendingPathComponents($0) }
     }
     
 #if canImport(UniformTypeIdentifiers)
