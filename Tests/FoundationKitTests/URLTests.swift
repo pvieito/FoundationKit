@@ -22,13 +22,23 @@ class URLTests: XCTestCase {
             .appendingPathComponent("C")
         
         let testB = testURL.appendingPathComponents("A", "B", "C")
-        
+
         var testC = testURL
         testC.appendPathComponents("A", "B", "C")
         
+        let testD = testURL.appending(components: "A", "B", "C")
+
+        var testE = testURL
+        testE.append(components: "A", "B", "C")
+
+        var testG = testURL
+        testG.appendPathComponents(["A", "B", "C"])
+
         XCTAssertNotEqual(testURL, testA)
         XCTAssertEqual(testA, testB)
         XCTAssertEqual(testA, testC)
+        XCTAssertEqual(testA, testD)
+        XCTAssertEqual(testA, testE)
     }
     
     func testURL_isSupported() {

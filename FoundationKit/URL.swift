@@ -66,18 +66,6 @@ extension URL {
     public mutating func appendPathComponents(_ pathComponents: String..., isDirectory: Bool? = nil) {
         self.appendPathComponents(pathComponents, isDirectory: isDirectory)
     }
-    
-    public func appending(components: String..., isDirectory: Bool? = nil) -> URL {
-        return self.appendingPathComponents(pathComponents, isDirectory: isDirectory)
-    }
-    
-    public mutating func appending(components: [String], isDirectory: Bool? = nil) {
-        self = self.appendingPathComponents(pathComponents, isDirectory: isDirectory)
-    }
-    
-    public mutating func appending(components: String..., isDirectory: Bool? = nil) {
-        self.appendingPathComponents(pathComponents, isDirectory: isDirectory)
-    }
 }
 
 extension URL {
