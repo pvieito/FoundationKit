@@ -41,16 +41,16 @@ extension FileManager {
     
     /// Replaces a symbolic link at the specified URL that points to an item at the given URL.
     public func replaceSymbolicLink(at url: URL, withDestinationURL destinationURL: URL) throws {
-            try? self.removeItem(at: url)
-            try self.createSymbolicLink(
-                at: url, withDestinationURL: destinationURL)
-        }
+        try? self.removeItem(at: url)
+        try self.createSymbolicLink(
+            at: url, withDestinationURL: destinationURL)
+    }
     
     /// Replaces a symbolic link at the specified path that points to an item at the given destination path.
     public func replaceSymbolicLink(atPath path: String, withDestinationPath destinationPath: String) throws {
-            try? self.removeItem(atPath: path)
-            try self.createSymbolicLink(atPath: path, withDestinationPath: destinationPath)
-        }
+        try? self.removeItem(atPath: path)
+        try self.createSymbolicLink(atPath: path, withDestinationPath: destinationPath)
+    }
     
     /// Generates a random file URL on a temporary location.
     public func temporaryRandomFileURL(filename: String? = nil, pathExtension: String? = nil) -> URL {
@@ -78,17 +78,6 @@ extension FileManager {
         return self.temporaryRandomFileURL(filename: filename).appendingPathExtension(for: contentType)
     }
 #endif
-    
-    /// Real URL to the user home directory, even in a sandboxed environment.
-    public var realHomeDirectoryForCurrentUser: URL {
-        var homeDirectoryForCurrentUser = URL(fileURLWithPath: NSHomeDirectory())
-#if os(macOS) || targetEnvironment(macCatalyst)
-        if let userPath = getpwuid(getuid())?.pointee.pw_dir {
-            homeDirectoryForCurrentUser = URL(fileURLWithPath: String(cString: userPath))
-        }
-#endif
-        return homeDirectoryForCurrentUser
-    }
 }
 
 extension FileManager {
@@ -124,22 +113,46 @@ extension FileManager {
     }
 }
 
+extension FileManager {
+    private static let libraryName = "Library"
+    
+    
+    public var homeDirectoryForCurrentUser: URL {
+        return URL(fileURLWithPath: NSHomeDirectory())
+    }
+    
+    /// Returns the Library directory for the current user.
+    public var libraryDirectoryForCurrentUser: URL {
+        let libraryDirectory = try? self.url(for: .libraryDirectory, in: .userDomainMask, appropriateFor: nil, create: false)
+        return libraryDirectory ?? self.homeDirectoryForCurrentUser.appendingPathComponents(Self.libraryName)
+    }
+}
+
 #if os(macOS) || targetEnvironment(macCatalyst)
 extension FileManager {
-    /// Returns the Library directory for the current user.
-    public var libraryDirectoryForCurrentUser: URL? {
-        guard let libraryDirectory = try? self.url(for: .libraryDirectory, in: .userDomainMask, appropriateFor: nil, create: false) else {
-            return nil
+    /// Real URL to the user home directory, even in a sandboxed environment.
+    @available(*, deprecated, renamed: "unsandboxedHomeDirectoryForCurrentUser")
+    public var realHomeDirectoryForCurrentUser: URL {
+        return self.unsandboxedHomeDirectoryForCurrentUser
+    }
+    
+    public var unsandboxedHomeDirectoryForCurrentUser: URL {
+        var homeDirectoryForCurrentUser: URL?
+        if let userPath = getpwuid(getuid())?.pointee.pw_dir {
+            homeDirectoryForCurrentUser = URL(fileURLWithPath: String(cString: userPath))
         }
-        
-        return libraryDirectory
+        return homeDirectoryForCurrentUser ?? URL(fileURLWithPath: NSHomeDirectory())
+    }
+    
+    public var unsandboxedLibraryDirectoryForCurrentUser: URL {
+        self.unsandboxedHomeDirectoryForCurrentUser.appendingPathComponents(Self.libraryName)
     }
 }
 
 extension FileManager {
     /// URL to the library of Ubiquity Containers for the user.
     private var ubiquityContainersLibrary: URL? {
-        let ubiquityContainersLibrary = self.realHomeDirectoryForCurrentUser.appendingPathComponents("Library", "Mobile Documents")
+        let ubiquityContainersLibrary = self.unsandboxedLibraryDirectoryForCurrentUser.appendingPathComponents("Mobile Documents")
         guard self.fileExists(atPath: ubiquityContainersLibrary.path) else {
             return nil
         }
@@ -197,19 +210,38 @@ extension FileManager {
     private static let systemManagedContainerMetadataPlistName = ".com.apple.containermanagerd.metadata.plist"
     private static let systemManagedContainerMetadataIdentifierKey = "MCMMetadataIdentifier"
     
-    private var systemManagedContainersLibrary: URL? {
-        let containersLibrary = self.realHomeDirectoryForCurrentUser.appendingPathComponents("Library", "Containers")
+    public enum ContainersLibraryMode {
+        private static let containersName = "Containers"
+
+        case `default`
+        case `daemon`
+        case `group`
+        
+        var containersLibraryDirectoryName: String {
+            switch self {
+            case .default:
+                return Self.containersName
+            case .daemon:
+                return "Daemon \(Self.containersName)"
+            case .group:
+                return "Group \(Self.containersName)"
+            }
+        }
+    }
+    
+    private func systemManagedContainersDirectory(mode: ContainersLibraryMode? = nil) -> URL? {
+        let mode = mode ?? .default
+        let containersLibrary = self.unsandboxedLibraryDirectoryForCurrentUser.appendingPathComponents(mode.containersLibraryDirectoryName)
         guard self.fileExists(atPath: containersLibrary.path) else {
             return nil
         }
         return containersLibrary
     }
     
-    public func systemManagedContainers(forBundleIdentifier identifier: String) throws -> [URL] {
-        guard let systemManagedContainersLibrary else { return [] }
+    private func systemManagedContainers(identifier: String, mode: ContainersLibraryMode? = nil) throws -> [URL] {
+        guard let containersLibrary = self.systemManagedContainersDirectory(mode: mode) else { return [] }
         var containers: [URL] = []
-        for container in try self.contentsOfDirectory(atPath: systemManagedContainersLibrary.path) {
-            let container = systemManagedContainersLibrary.appendingPathComponents(container)
+        for container in try self.contentsOfDirectory(at: containersLibrary) {
             let containerMetadataPlistURL = container.appendingPathComponents(Self.systemManagedContainerMetadataPlistName)
             guard let containerPlist = NSDictionary(contentsOf: containerMetadataPlistURL) else { continue }
             if let metadataIdentifier = containerPlist[Self.systemManagedContainerMetadataIdentifierKey] as? String {
@@ -219,6 +251,10 @@ extension FileManager {
             }
         }
         return containers
+    }
+    
+    public func systemManagedContainer(identifier: String, mode: ContainersLibraryMode? = nil) throws -> URL? {
+        return try self.systemManagedContainers(identifier: identifier, mode: mode).first
     }
 }
 #endif
