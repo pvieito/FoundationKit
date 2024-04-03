@@ -129,7 +129,6 @@ extension FileManager {
     }
 }
 
-#if os(macOS) || targetEnvironment(macCatalyst) || !canImport(Darwin)
 extension FileManager {
     /// Real URL to the user home directory, even in a sandboxed environment.
     @available(*, deprecated, renamed: "unsandboxedHomeDirectoryForCurrentUser")
@@ -145,9 +144,8 @@ extension FileManager {
         return homeDirectoryForCurrentUser ?? self.homeDirectoryForCurrentUser
     }
 }
-#endif
 
-#if os(macOS) || targetEnvironment(macCatalyst)
+#if canImport(Cocoa)
 extension FileManager {
     public var unsandboxedLibraryDirectoryForCurrentUser: URL {
         self.unsandboxedHomeDirectoryForCurrentUser.appendingPathComponents(Self.libraryName)
@@ -215,6 +213,12 @@ extension FileManager {
     private static let systemManagedContainerMetadataPlistName = ".com.apple.containermanagerd.metadata.plist"
     private static let systemManagedContainerMetadataIdentifierKey = "MCMMetadataIdentifier"
     
+    public struct SystemManagedContainer {
+        public let identifier: String
+        public let type: SystemManagedContainerType
+        public let containerRoot: URL
+    }
+    
     public enum SystemManagedContainerType: String {
         private static let containersName = "Containers"
 
@@ -234,8 +238,7 @@ extension FileManager {
         }
     }
     
-    private func systemManagedContainersDirectory(type: SystemManagedContainerType? = nil) -> URL? {
-        let type = type ?? .default
+    private func systemManagedContainersDirectory(type: SystemManagedContainerType) -> URL? {
         let containersLibrary = self.unsandboxedLibraryDirectoryForCurrentUser.appendingPathComponents(type.containersLibraryDirectoryName)
         guard self.fileExists(atPath: containersLibrary.path) else {
             return nil
@@ -243,22 +246,25 @@ extension FileManager {
         return containersLibrary
     }
     
-    private func systemManagedContainers(identifier: String, type: SystemManagedContainerType? = nil) throws -> [URL] {
+    public func systemManagedContainers(identifier: String? = nil, type: SystemManagedContainerType? = nil) throws -> [SystemManagedContainer] {
+        let type = type ?? .default
         guard let containersLibrary = self.systemManagedContainersDirectory(type: type) else { return [] }
-        var containers: [URL] = []
-        for container in try self.contentsOfDirectory(at: containersLibrary) {
-            let containerMetadataPlistURL = container.appendingPathComponents(Self.systemManagedContainerMetadataPlistName)
+        var containers: [SystemManagedContainer] = []
+        for containerRoot in try self.contentsOfDirectory(at: containersLibrary) {
+            let containerMetadataPlistURL = containerRoot.appendingPathComponents(Self.systemManagedContainerMetadataPlistName)
             guard let containerPlist = NSDictionary(contentsOf: containerMetadataPlistURL) else { continue }
             if let metadataIdentifier = containerPlist[Self.systemManagedContainerMetadataIdentifierKey] as? String {
-                if metadataIdentifier == identifier {
-                    containers += [container]
+                if let identifier, metadataIdentifier != identifier {
+                    continue
                 }
+                let container = SystemManagedContainer(identifier: metadataIdentifier, type: type, containerRoot: containerRoot)
+                containers += [container]
             }
         }
         return containers
     }
     
-    public func systemManagedContainer(identifier: String, type: SystemManagedContainerType? = nil) throws -> URL? {
+    public func systemManagedContainer(identifier: String, type: SystemManagedContainerType? = nil) throws -> SystemManagedContainer? {
         return try self.systemManagedContainers(identifier: identifier, type: type).first
     }
 }

@@ -318,7 +318,7 @@ extension Bundle {
         return NSWorkspace._applicationBundle(name: name)
     }
     
-    public func systemManagedContainer(type: FileManager.SystemManagedContainerType? = nil) -> URL? {
+    public func systemManagedContainer(type: FileManager.SystemManagedContainerType? = nil) -> FileManager.SystemManagedContainer? {
         guard let bundleIdentifier else { return nil }
         return try? FileManager.default.systemManagedContainer(identifier: bundleIdentifier, type: type)
     }
