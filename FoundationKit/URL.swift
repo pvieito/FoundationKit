@@ -45,24 +45,38 @@ extension URL {
 }
 
 extension URL {
-    public func appendingPathComponents(_ pathComponents: [String]) -> URL {
+    public func appendingPathComponents(_ pathComponents: [String], isDirectory: Bool? = nil) -> URL {
         var url = self
-        for pathComponent in pathComponents {
-            url.appendPathComponent(pathComponent, isDirectory: false)
+        for (i, pathComponent) in pathComponents.enumerated() {
+            let last = i == pathComponents.count - 1
+            let isDirectory = last ? isDirectory ?? false : true
+            url.appendPathComponent(pathComponent, isDirectory: isDirectory)
         }
         return url
     }
     
-    public func appendingPathComponents(_ pathComponents: String...) -> URL {
-        return self.appendingPathComponents(pathComponents)
+    public func appendingPathComponents(_ pathComponents: String..., isDirectory: Bool? = nil) -> URL {
+        return self.appendingPathComponents(pathComponents, isDirectory: isDirectory)
     }
     
-    public mutating func appendPathComponents(_ pathComponents: [String]) {
-        self = self.appendingPathComponents(pathComponents)
+    public mutating func appendPathComponents(_ pathComponents: [String], isDirectory: Bool? = nil) {
+        self = self.appendingPathComponents(pathComponents, isDirectory: isDirectory)
     }
     
-    public mutating func appendPathComponents(_ pathComponents: String...) {
-        self.appendPathComponents(pathComponents)
+    public mutating func appendPathComponents(_ pathComponents: String..., isDirectory: Bool? = nil) {
+        self.appendPathComponents(pathComponents, isDirectory: isDirectory)
+    }
+    
+    public func appending(components: String..., isDirectory: Bool? = nil) -> URL {
+        return self.appendingPathComponents(pathComponents, isDirectory: isDirectory)
+    }
+    
+    public mutating func appending(components: [String], isDirectory: Bool? = nil) {
+        self = self.appendingPathComponents(pathComponents, isDirectory: isDirectory)
+    }
+    
+    public mutating func appending(components: String..., isDirectory: Bool? = nil) {
+        self.appendingPathComponents(pathComponents, isDirectory: isDirectory)
     }
 }
 
