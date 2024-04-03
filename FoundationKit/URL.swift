@@ -48,11 +48,7 @@ extension URL {
     public func appendingPathComponents(_ pathComponents: [String]) -> URL {
         var url = self
         for pathComponent in pathComponents {
-            if #available(iOS 16, macOS 13, watchOS 9, tvOS 16, *) {
-                url.append(path: pathComponent)
-            } else {
-                url.appendPathComponent(pathComponent)
-            }
+            url.appendPathComponent(pathComponent, isDirectory: false)
         }
         return url
     }
