@@ -116,10 +116,11 @@ extension FileManager {
 extension FileManager {
     private static let libraryName = "Library"
     
-    
+#if canImport(Darwin) && !os(macOS)
     public var homeDirectoryForCurrentUser: URL {
         return URL(fileURLWithPath: NSHomeDirectory())
     }
+#endif
     
     /// Returns the Library directory for the current user.
     public var libraryDirectoryForCurrentUser: URL {
