@@ -211,7 +211,7 @@ extension FileManager {
     private static let systemManagedContainerMetadataPlistName = ".com.apple.containermanagerd.metadata.plist"
     private static let systemManagedContainerMetadataIdentifierKey = "MCMMetadataIdentifier"
     
-    public enum ContainersLibraryMode {
+    public enum ContainersLibraryMode: String {
         private static let containersName = "Containers"
 
         case `default`
