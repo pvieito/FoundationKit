@@ -151,8 +151,3 @@ extension OSStatus {
     }
 }
 #endif
-
-public func printError(_ items: CustomStringConvertible...) {
-    let errorString = items.map({ $0.description }).joined(separator: " ") + "\n"
-    FileHandle.standardError.write(errorString.data(using: .utf8)!)
-}
