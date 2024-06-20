@@ -12,7 +12,7 @@ import XCTest
 
 class URLTests: XCTestCase {
     static let supportedURL = URL(string: "https://pvieito.com")!
-    static let unsupportedURL = URL(string: "___random_scheme_FAKE___://pvieito.com:51234")!
+    static let unsupportedURL = URL(string: "fake-scheme://pvieito.com:51234")!
 
     func testURL_appendingPathComponents() {
         let testURL = URL(fileURLWithPath: "test")
