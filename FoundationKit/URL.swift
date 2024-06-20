@@ -155,8 +155,14 @@ extension URL {
 #if canImport(UIKit)
         let shared: AnyObject? = UIApplication.shared
         if let shared {
-            shared.open(self, options: [:], completionHandler: nil)
-            success = shared.canOpenURL(self)
+            if #available(iOS 18, tvOS 18, *) {
+                shared.open(self, options: [:], completionHandler: nil)
+#warning("TODO: This does not work well for file URLs for example, find a real alternative to `UIApplication.openURL`:")
+                success = shared.canOpenURL(self)
+            }
+            else {
+                success = shared.openURL(self)
+            }
         }
         else {
 #if targetEnvironment(macCatalyst)
