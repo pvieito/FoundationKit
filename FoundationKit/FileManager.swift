@@ -219,12 +219,12 @@ extension FileManager {
         public let containerRoot: URL
     }
     
-    public enum SystemManagedContainerType: String {
+    public enum SystemManagedContainerType: String, CaseIterable {
         private static let containersName = "Containers"
 
         case `default`
-        case `daemon`
         case `group`
+        case `daemon`
         
         var containersLibraryDirectoryName: String {
             switch self {
