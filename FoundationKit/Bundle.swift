@@ -14,6 +14,7 @@ import Cocoa
 
 
 extension Bundle {
+    internal static let foundationKitBundleIdentifier = "com.pvieito.FoundationKit"
     internal static let foundationKitInfoKeyPrefix = "NSX"
     
     func foundationKitInfoDictionaryObject(keySuffix: String) -> Any? {

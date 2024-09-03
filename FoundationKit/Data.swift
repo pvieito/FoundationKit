@@ -19,29 +19,29 @@ extension Data {
 }
 
 extension Data {
-    public func writeTemporaryFile(filename: String? = nil, pathExtension: String? = nil, options: Data.WritingOptions = [], autocleaned: Bool = false, randomDirectory: Bool = true) throws -> URL {
+    public func writeTemporaryFile(filename: String? = nil, pathExtension: String? = nil, options: Data.WritingOptions = [], autocleaned: Bool = false, randomDirectory: Bool = true, directoryName: String? = nil) throws -> URL {
         let temporaryFileURL = FileManager.default.temporaryRandomFileURL(
-            filename: filename, pathExtension: pathExtension, autocleaned: autocleaned, _randomParentDirectory: randomDirectory)
+            filename: filename, pathExtension: pathExtension, autocleaned: autocleaned, randomDirectory: randomDirectory, directoryName: directoryName)
         try self.write(to: temporaryFileURL, options: options)
         return temporaryFileURL
     }
     
-    public func writeTemporaryAutocleanedFile(filename: String? = nil, pathExtension: String? = nil, options: Data.WritingOptions = []) throws -> URL {
-        return try self.writeTemporaryFile(filename: filename, pathExtension: pathExtension, options: options, autocleaned: true)
+    public func writeTemporaryAutocleanedFile(filename: String? = nil, pathExtension: String? = nil, options: Data.WritingOptions = [], randomDirectory: Bool = true, directoryName: String? = nil) throws -> URL {
+        return try self.writeTemporaryFile(filename: filename, pathExtension: pathExtension, options: options, autocleaned: true, randomDirectory: randomDirectory, directoryName: directoryName)
     }
     
 #if canImport(UniformTypeIdentifiers)
     @available(macOS 11.0, iOS 14.0, watchOS 7.0, tvOS 14.0, *)
-    public func writeTemporaryFile(filename: String? = nil, for contentType: UTType, options: Data.WritingOptions = [], autocleaned: Bool = false, randomDirectory: Bool = true) throws -> URL {
+    public func writeTemporaryFile(filename: String? = nil, for contentType: UTType, options: Data.WritingOptions = [], autocleaned: Bool = false, randomDirectory: Bool = true, directoryName: String? = nil) throws -> URL {
         let temporaryFileURL = FileManager.default.temporaryRandomFileURL(
-            filename: filename, for: contentType, autocleaned: autocleaned, _randomParentDirectory: randomDirectory)
+            filename: filename, for: contentType, autocleaned: autocleaned, randomDirectory: randomDirectory, directoryName: directoryName)
         try self.write(to: temporaryFileURL, options: options)
         return temporaryFileURL
     }
     
     @available(macOS 11.0, iOS 14.0, watchOS 7.0, tvOS 14.0, *)
-    public func writeTemporaryAutocleanedFile(filename: String? = nil, for contentType: UTType, options: Data.WritingOptions = []) throws -> URL {
-        return try self.writeTemporaryFile(filename: filename, for: contentType, options: options, autocleaned: true)
+    public func writeTemporaryAutocleanedFile(filename: String? = nil, for contentType: UTType, options: Data.WritingOptions = [], randomDirectory: Bool = true, directoryName: String? = nil) throws -> URL {
+        return try self.writeTemporaryFile(filename: filename, for: contentType, options: options, autocleaned: true, randomDirectory: randomDirectory, directoryName: directoryName)
     }
 #endif
 }

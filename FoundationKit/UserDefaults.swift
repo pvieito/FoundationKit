@@ -36,7 +36,7 @@ extension UserDefaults {
 
 #if canImport(CloudKit)
 extension UserDefaults {
-    static let cloudKitDomain = "com.pvieito.FoundationKit.UserDefaults.CloudKitDomain"
+    static let cloudKitDomain = "\(Bundle.foundationKitBundleIdentifier).UserDefaults.CloudKitDomain"
     public static let cloudKit = UserDefaults(suiteName: cloudKitDomain)!
 }
 #endif
@@ -44,7 +44,7 @@ extension UserDefaults {
 #if canImport(Darwin)
 @available(watchOS 9.0, *)
 extension UserDefaults {
-    static let ubiquitousKeyValueStoreDomain = "com.pvieito.FoundationKit.UserDefaults.UbiquitousKeyValueStoreDomain"
+    static let ubiquitousKeyValueStoreDomain = "\(Bundle.foundationKitBundleIdentifier).UserDefaults.UbiquitousKeyValueStoreDomain"
     public static let ubiquitousKeyValueStore = UserDefaults(suiteName: ubiquitousKeyValueStoreDomain)!
     
     @available(*, deprecated, renamed: "ubiquitousKeyValueStore")
