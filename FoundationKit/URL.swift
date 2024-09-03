@@ -77,14 +77,14 @@ extension URL {
         try FileManager.default.removeItem(at: self)
     }
     
-    public func temporaryFileCopy(filename: String? = nil, autocleaned: Bool = false) throws -> URL {
-        let url = FileManager.default.temporaryRandomFileURL(filename: filename ?? self.lastPathComponent, autocleaned: autocleaned)
+    public func temporaryFileCopy(filename: String? = nil, autocleaned: Bool = false, directoryName: String? = nil, randomDirectory: Bool = true) throws -> URL {
+        let url = FileManager.default.temporaryRandomFileURL(filename: filename ?? self.lastPathComponent, autocleaned: autocleaned, directoryName: directoryName, randomDirectory: randomDirectory)
         try FileManager.default.copyItem(at: self, to: url)
         return url
     }
     
-    public func temporaryAutocleanedFileCopy(filename: String? = nil) throws -> URL {
-        return try self.temporaryFileCopy(filename: filename, autocleaned: true)
+    public func temporaryAutocleanedFileCopy(filename: String? = nil, directoryName: String? = nil, randomDirectory: Bool = true) throws -> URL {
+        return try self.temporaryFileCopy(filename: filename, autocleaned: true, directoryName: directoryName, randomDirectory: randomDirectory)
     }
 }
 
