@@ -15,6 +15,7 @@ import UniformTypeIdentifiers
 extension FileManager {
     private static let foundationKitTemporaryDirectory = URL(fileURLWithPath: NSTemporaryDirectory())
         .appendingPathComponent(Bundle.foundationKitBundleIdentifier)
+        .appendingPathComponent(Bundle.main.bundleIdentifier ?? ProcessInfo.processInfo.processName)
 }
 
 extension FileManager {
@@ -123,10 +124,8 @@ extension FileManager {
         
         static var autocleanedTemporaryDirectory: URL {
             let fileManager = FileManager.default
-            let processIdentifier = Bundle.main.bundleIdentifier ?? ProcessInfo.processInfo.processName
             let temporaryDirectoryURL = foundationKitTemporaryDirectory
                 .appendingPathComponent(directoryName)
-                .appendingPathComponent(processIdentifier)
             
             if !isCleaned && fileManager.fileExists(atPath: temporaryDirectoryURL.path) {
                 try? fileManager.removeItem(at: temporaryDirectoryURL)
