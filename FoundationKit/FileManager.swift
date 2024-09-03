@@ -13,6 +13,11 @@ import UniformTypeIdentifiers
 #endif
 
 extension FileManager {
+    private static let foundationKitTemporaryDirectory = URL(fileURLWithPath: NSTemporaryDirectory())
+        .appendingPathComponent(Bundle.foundationKitInfoKeyPrefix)
+}
+
+extension FileManager {
     /// Returns a Boolean value that indicates whether a file or directory exists at a specified URL.
     public func fileExists(at url: URL) -> Bool {
         return self.fileExists(atPath: url.path)
@@ -60,9 +65,8 @@ extension FileManager {
             temporaryDirectory = self.autocleanedTemporaryDirectory
         }
         else {
-            temporaryDirectory = URL(fileURLWithPath: NSTemporaryDirectory())
+            temporaryDirectory = Self.foundationKitTemporaryDirectory
         }
-        temporaryDirectory.appendPathComponent(Bundle.foundationKitInfoKeyPrefix)
         
         if _randomParentDirectory {
             temporaryDirectory.appendPathComponent(UUID().uuidString)
@@ -111,21 +115,19 @@ extension FileManager {
     }
     
     private struct AutocleanedTemporaryDirectory {
-        private static var directoryName = "AutocleanedTemporaryDirectory"
+        private static var directoryName = "Autocleaned"
         private static var isCleaned = false
         
         static var autocleanedTemporaryDirectory: URL {
             let fileManager = FileManager.default
-            let processName = Bundle.main.bundleIdentifier ?? ProcessInfo.processInfo.processName
-            
-            let temporaryDirectoryURL = URL(fileURLWithPath: NSTemporaryDirectory())
+            let processIdentifier = Bundle.main.bundleIdentifier ?? ProcessInfo.processInfo.processName
+            let temporaryDirectoryURL = foundationKitTemporaryDirectory
                 .appendingPathComponent(directoryName)
-                .appendingPathComponent(processName)
+                .appendingPathComponent(processIdentifier)
             
             if !isCleaned && fileManager.fileExists(atPath: temporaryDirectoryURL.path) {
                 try? fileManager.removeItem(at: temporaryDirectoryURL)
             }
-            
             isCleaned = true
             
             try? fileManager.createDirectory(at: temporaryDirectoryURL, withIntermediateDirectories: true, attributes: nil)
