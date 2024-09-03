@@ -53,9 +53,21 @@ extension FileManager {
     }
     
     /// Generates a random file URL on a temporary location.
-    public func temporaryRandomFileURL(filename: String? = nil, pathExtension: String? = nil) -> URL {
-        let temporaryDirectory = URL(fileURLWithPath: NSTemporaryDirectory())
-            .appendingPathComponent(UUID().uuidString)
+    public func temporaryRandomFileURL(filename: String? = nil, pathExtension: String? = nil, autocleaned: Bool = false, _randomParentDirectory: Bool = true) -> URL {
+        var temporaryDirectory: URL
+        
+        if autocleaned {
+            temporaryDirectory = self.autocleanedTemporaryDirectory
+        }
+        else {
+            temporaryDirectory = URL(fileURLWithPath: NSTemporaryDirectory())
+        }
+        temporaryDirectory.appendPathComponent(Bundle.foundationKitInfoKeyPrefix)
+        
+        if _randomParentDirectory {
+            temporaryDirectory.appendPathComponent(UUID().uuidString)
+        }
+
         try? self.createDirectory(at: temporaryDirectory, withIntermediateDirectories: true)
         
         let filename = filename ?? UUID().uuidString
@@ -68,14 +80,24 @@ extension FileManager {
         return temporaryFileURL
     }
     
+    /// Generates a random file URL on a temporary autocleaned location.
+    public func temporaryAutocleanedRandomFileURL(filename: String? = nil, pathExtension: String? = nil) -> URL {
+        return self.temporaryRandomFileURL(filename: filename, pathExtension: pathExtension, autocleaned: true)
+    }
+    
     public func contentsOfDirectory(at directory: URL) throws -> [URL] {
         return try self.contentsOfDirectory(atPath: directory.path).map { directory.appendingPathComponents($0) }
     }
     
 #if canImport(UniformTypeIdentifiers)
     @available(macOS 11.0, iOS 14.0, watchOS 7.0, tvOS 14.0, *)
-    public func temporaryRandomFileURL(filename: String? = nil, for contentType: UTType) -> URL {
-        return self.temporaryRandomFileURL(filename: filename).appendingPathExtension(for: contentType)
+    public func temporaryRandomFileURL(filename: String? = nil, for contentType: UTType, autocleaned: Bool = false, _randomParentDirectory: Bool = true) -> URL {
+        return self.temporaryRandomFileURL(filename: filename, autocleaned: autocleaned, _randomParentDirectory: _randomParentDirectory).appendingPathExtension(for: contentType)
+    }
+    
+    @available(macOS 11.0, iOS 14.0, watchOS 7.0, tvOS 14.0, *)
+    public func temporaryAutocleanedRandomFileURL(filename: String? = nil, for contentType: UTType) -> URL {
+        return self.temporaryRandomFileURL(filename: filename, for: contentType, autocleaned: true)
     }
 #endif
 }
@@ -89,7 +111,6 @@ extension FileManager {
     }
     
     private struct AutocleanedTemporaryDirectory {
-        
         private static var directoryName = "AutocleanedTemporaryDirectory"
         private static var isCleaned = false
         

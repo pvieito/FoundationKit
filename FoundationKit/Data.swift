@@ -19,26 +19,31 @@ extension Data {
 }
 
 extension Data {
-    public func writeTemporaryFile(
-        filename: String? = nil, pathExtension: String? = nil,
-        options: Data.WritingOptions = []) throws -> URL {
+    public func writeTemporaryFile(filename: String? = nil, pathExtension: String? = nil, options: Data.WritingOptions = [], autocleaned: Bool = false, randomDirectory: Bool = true) throws -> URL {
         let temporaryFileURL = FileManager.default.temporaryRandomFileURL(
-            filename: filename, pathExtension: pathExtension)
+            filename: filename, pathExtension: pathExtension, autocleaned: autocleaned, _randomParentDirectory: randomDirectory)
         try self.write(to: temporaryFileURL, options: options)
         return temporaryFileURL
     }
     
-    #if canImport(UniformTypeIdentifiers)
+    public func writeTemporaryAutocleanedFile(filename: String? = nil, pathExtension: String? = nil, options: Data.WritingOptions = []) throws -> URL {
+        return try self.writeTemporaryFile(filename: filename, pathExtension: pathExtension, options: options, autocleaned: true)
+    }
+    
+#if canImport(UniformTypeIdentifiers)
     @available(macOS 11.0, iOS 14.0, watchOS 7.0, tvOS 14.0, *)
-    public func writeTemporaryFile(
-        filename: String? = nil, for contentType: UTType,
-        options: Data.WritingOptions = []) throws -> URL {
+    public func writeTemporaryFile(filename: String? = nil, for contentType: UTType, options: Data.WritingOptions = [], autocleaned: Bool = false, randomDirectory: Bool = true) throws -> URL {
         let temporaryFileURL = FileManager.default.temporaryRandomFileURL(
-            filename: filename, for: contentType)
+            filename: filename, for: contentType, autocleaned: autocleaned, _randomParentDirectory: randomDirectory)
         try self.write(to: temporaryFileURL, options: options)
         return temporaryFileURL
     }
-    #endif
+    
+    @available(macOS 11.0, iOS 14.0, watchOS 7.0, tvOS 14.0, *)
+    public func writeTemporaryAutocleanedFile(filename: String? = nil, for contentType: UTType, options: Data.WritingOptions = []) throws -> URL {
+        return try self.writeTemporaryFile(filename: filename, for: contentType, options: options, autocleaned: true)
+    }
+#endif
 }
 
 extension Data {
@@ -73,7 +78,7 @@ extension Data {
 }
 
 extension Data {
-    #if canImport(Darwin)
+#if canImport(Darwin)
     @available(watchOS 6.0, *)
     @available(iOS 13.0, *)
     @available(tvOS 13.0, *)
@@ -81,7 +86,7 @@ extension Data {
     public var informationStorageMeasurement: Measurement<UnitInformationStorage> {
         return Measurement(value: Double(self.count), unit: UnitInformationStorage.bytes)
     }
-    #endif
+#endif
     
     public var informationStorageMeasurementString: String {
         return ByteCountFormatter.string(fromByteCount: Int64(self.count), countStyle: .file)

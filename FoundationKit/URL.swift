@@ -72,6 +72,20 @@ extension URL {
     public var fileDisplayName: String {
         return FileManager.default.displayName(atPath: self.path)
     }
+    
+    public func removeFile() throws {
+        try FileManager.default.removeItem(at: self)
+    }
+    
+    public func temporaryFileCopy(filename: String? = nil, autocleaned: Bool = false) throws -> URL {
+        let url = FileManager.default.temporaryRandomFileURL(filename: filename ?? self.lastPathComponent, autocleaned: autocleaned)
+        try FileManager.default.copyItem(at: self, to: url)
+        return url
+    }
+    
+    public func temporaryAutocleanedFileCopy(filename: String? = nil) throws -> URL {
+        return try self.temporaryFileCopy(filename: filename, autocleaned: true)
+    }
 }
 
 extension URL {

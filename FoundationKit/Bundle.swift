@@ -14,7 +14,7 @@ import Cocoa
 
 
 extension Bundle {
-    private static let foundationKitInfoKeyPrefix = "NSX"
+    internal static let foundationKitInfoKeyPrefix = "NSX"
     
     func foundationKitInfoDictionaryObject(keySuffix: String) -> Any? {
         return self.object(forInfoDictionaryKey: Self.foundationKitInfoKeyPrefix + keySuffix)
