@@ -373,28 +373,51 @@ extension URL {
 #endif
 
 extension Collection where Element == URL {
-    /// Returns the first common parent directory of all URLs in the collection.
+    /// Returns the first common parent directory of all URLs in the collection (the common parent directory of a directory is itself).
     @available(macOS 10.11, *)
     public var commonParentDirectory: URL? {
-        let stringPaths = self.map({ $0.path })
+        guard !self.isEmpty else { return nil }
         
-        if self.count == 1, let url = self.first {
-            return url.hasDirectoryPath ? url : url.deletingLastPathComponent()
-        }
-        if var commonPath = stringPaths.reduce(stringPaths.max(), { $0?.commonPrefix(with: $1) }) {
-            if commonPath.last != Character(String.slashCharacter) {
-                commonPath = commonPath
-                    .components(separatedBy: String.slashCharacter)
-                    .dropLast()
-                    .joined(separator: String.slashCharacter)
+        // Map each URL to its parent directory if it is a file, or to itself if it is a directory:
+        let directories = self.map { url -> URL in
+            var url = url
+            if !(url.hasDirectoryPath || FileManager.default.directoryExists(at: url)) {
+                url.deleteLastPathComponent()
             }
-            return URL(fileURLWithPath: commonPath)
+            return url.absoluteURL.standardized
         }
-        else {
+        
+        // Start with the path components of the first directory:
+        guard var commonComponents = directories.first?.pathComponents else {
             return nil
         }
+        
+        // Iterate over the directories starting from the second one:
+        for directory in directories.dropFirst() {
+            let components = directory.pathComponents
+            var newCommonComponents = [String]()
+            
+            // Compare the path components:
+            for (a, b) in zip(commonComponents, components) {
+                if a == b {
+                    newCommonComponents.append(a)
+                } else {
+                    break
+                }
+            }
+            commonComponents = newCommonComponents
+            
+            // If no common components, return nil:
+            if commonComponents.isEmpty {
+                return nil
+            }
+        }
+        
+        // Construct the common directory URL:
+        let commonPath = NSString.path(withComponents: commonComponents)
+        return URL(fileURLWithPath: commonPath, isDirectory: true)
     }
-    
+
     @available(macOS 10.11, *)
     @available(*, deprecated, renamed: "commonParentDirectory")
     public var commonAntecessor: URL? {

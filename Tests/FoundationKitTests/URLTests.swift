@@ -35,6 +35,51 @@ class URLTests: XCTestCase {
         XCTAssertEqual(testA, testD)
     }
     
+    func testURL_commonParentDirectory() {
+        let parentDirectory = URL(fileURLWithPath: "/Users/John/")
+        let documentsDirectory = parentDirectory.appendingPathComponents("Documents", isDirectory: true)
+        let file1 = parentDirectory.appendingPathComponents("Documents", "file1.txt")
+        let file2 = parentDirectory.appendingPathComponents("Documents", "file2.txt")
+        let file3 = parentDirectory.appendingPathComponents("file3.txt")
+        let fileRoot = URL(fileURLWithPath: "/lol.txt")
+        let rootDirectory = URL(fileURLWithPath: "/", isDirectory: true)
+
+        
+        let urls1: [URL] = [
+            file1,
+            file2,
+            parentDirectory,
+        ]
+        XCTAssertEqual(urls1.commonParentDirectory, parentDirectory)
+        
+        let urls2: [URL] = [
+            file1,
+            file2,
+            file3,
+        ]
+        XCTAssertEqual(urls2.commonParentDirectory, parentDirectory)
+
+        let urls3: [URL] = [
+            file1,
+            file2,
+        ]
+        XCTAssertEqual(urls3.commonParentDirectory, documentsDirectory)
+        
+        let urls4: [URL] = [
+            file1,
+            file2,
+            documentsDirectory,
+        ]
+        XCTAssertEqual(urls4.commonParentDirectory, documentsDirectory)
+
+        let urls5: [URL] = [
+            file1,
+            file2,
+            fileRoot,
+        ]
+        XCTAssertEqual(urls5.commonParentDirectory, rootDirectory)
+    }
+    
     func testURL_isSupported() {
         #if (canImport(Cocoa) || canImport(UIKit)) && !os(watchOS) && !os(tvOS)
         XCTAssertTrue(URLTests.supportedURL.isSupported)
