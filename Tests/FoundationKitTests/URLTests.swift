@@ -78,6 +78,20 @@ class URLTests: XCTestCase {
             fileRoot,
         ]
         XCTAssertEqual(urls5.commonParentDirectory, rootDirectory)
+        
+        let urls6: [URL] = [
+            rootDirectory,
+            file2,
+            fileRoot,
+        ]
+        XCTAssertEqual(urls6.commonParentDirectory, rootDirectory)
+        
+        let urls7: [URL] = [
+            documentsDirectory,
+            documentsDirectory,
+            documentsDirectory,
+        ]
+        XCTAssertEqual(urls7.commonParentDirectory, documentsDirectory)
     }
     
     func testURL_isSupported() {
