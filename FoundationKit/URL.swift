@@ -77,15 +77,29 @@ extension URL {
         try FileManager.default.removeItem(at: self)
     }
     
-    public func temporaryFileCopy(filename: String? = nil, autocleaned: Bool = false, directoryName: String? = nil, randomDirectory: Bool = true) throws -> URL {
-        let url = FileManager.default.temporaryRandomFileURL(filename: filename ?? self.lastPathComponent, autocleaned: autocleaned, directoryName: directoryName, randomDirectory: randomDirectory)
+    public func temporaryFileCopy(filename: String? = nil, pathExtension: String? = nil, autocleaned: Bool = false, directoryName: String? = nil, randomDirectory: Bool = true) throws -> URL {
+        let url = FileManager.default.temporaryRandomFileURL(filename: filename ?? self.lastPathComponent, pathExtension: pathExtension, autocleaned: autocleaned, directoryName: directoryName, randomDirectory: randomDirectory)
         try FileManager.default.copyItem(at: self, to: url)
         return url
     }
     
-    public func temporaryAutocleanedFileCopy(filename: String? = nil, directoryName: String? = nil, randomDirectory: Bool = true) throws -> URL {
-        return try self.temporaryFileCopy(filename: filename, autocleaned: true, directoryName: directoryName, randomDirectory: randomDirectory)
+    public func temporaryAutocleanedFileCopy(filename: String? = nil, pathExtension: String? = nil, directoryName: String? = nil, randomDirectory: Bool = true) throws -> URL {
+        return try self.temporaryFileCopy(filename: filename, pathExtension: pathExtension, autocleaned: true, directoryName: directoryName, randomDirectory: randomDirectory)
     }
+    
+#if canImport(UniformTypeIdentifiers)
+    @available(macOS 11.0, iOS 14.0, watchOS 7.0, tvOS 14.0, *)
+    public func temporaryFileCopy(filename: String? = nil, for contentType: UTType, autocleaned: Bool = false, directoryName: String? = nil, randomDirectory: Bool = true) throws -> URL {
+        let url = FileManager.default.temporaryRandomFileURL(filename: filename ?? self.lastPathComponent, for: contentType, autocleaned: autocleaned, directoryName: directoryName, randomDirectory: randomDirectory)
+        try FileManager.default.copyItem(at: self, to: url)
+        return url
+    }
+    
+    @available(macOS 11.0, iOS 14.0, watchOS 7.0, tvOS 14.0, *)
+    public func temporaryAutocleanedFileCopy(filename: String? = nil, for contentType: UTType, directoryName: String? = nil, randomDirectory: Bool = true) throws -> URL {
+        return try self.temporaryFileCopy(filename: filename, for: contentType, autocleaned: true, directoryName: directoryName, randomDirectory: randomDirectory)
+    }
+#endif
 }
 
 extension URL {

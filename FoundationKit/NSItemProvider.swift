@@ -12,6 +12,10 @@ import Foundation
 import MobileCoreServices
 #endif
 
+#if canImport(UniformTypeIdentifiers)
+import UniformTypeIdentifiers
+#endif
+
 #if canImport(Darwin) && !os(watchOS)
 extension NSItemProvider {
     static let conversionError = NSError(description: "Provided item could not be converted to the expected type.")
@@ -49,9 +53,13 @@ extension NSItemProvider {
                 var url = url
                 do {
                     if let notInPlaceURL = url, !isInPlace {
-                        let temporaryURL = FileManager.default.temporaryRandomFileURL(filename: notInPlaceURL.lastPathComponent)
-                        try FileManager.default.copyItem(at: notInPlaceURL, to: temporaryURL)
-                        url = temporaryURL
+                        let temporaryDirectoryName = "\(Bundle.foundationKitBundleIdentifier).NSItemProvider.LoadInPlaceFileRepresentation"
+                        if #available(macOS 11.0, iOS 14.0, watchOS 7.0, tvOS 14.0, *), let contentType = UTType(typeIdentifier) {
+                            url = try notInPlaceURL.temporaryAutocleanedFileCopy(for: contentType, directoryName: temporaryDirectoryName)
+                        }
+                        else {
+                            url = try notInPlaceURL.temporaryAutocleanedFileCopy(directoryName: temporaryDirectoryName)
+                        }
                     }
                 }
                 catch {
