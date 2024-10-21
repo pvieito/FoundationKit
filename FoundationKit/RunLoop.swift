@@ -6,6 +6,7 @@
 //  Copyright © 2020 Pedro José Pereira Vieito. All rights reserved.
 //
 
+#if canImport(Darwin)
 import Foundation
 
 #if canImport(CoreFoundation)
@@ -19,3 +20,4 @@ extension RunLoop {
     }
 #endif
 }
+#endif
