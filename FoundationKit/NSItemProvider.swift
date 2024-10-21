@@ -49,17 +49,12 @@ extension NSItemProvider {
     public func loadInPlaceFileRepresentation(forTypeIdentifier typeIdentifier: String) throws -> URL {
         return try DispatchSemaphore.returningWait { handler in
             self.loadInPlaceFileRepresentation(forTypeIdentifier: typeIdentifier as String) { (url, isInPlace, resultError) in
-                var resultError = resultError
                 var url = url
+                var resultError = resultError
+                
                 do {
                     if let notInPlaceURL = url, !isInPlace {
-                        let temporaryDirectoryName = "\(Bundle.foundationKitBundleIdentifier).NSItemProvider.LoadInPlaceFileRepresentation"
-                        if #available(macOS 11.0, iOS 14.0, watchOS 7.0, tvOS 14.0, *), let contentType = UTType(typeIdentifier) {
-                            url = try notInPlaceURL.temporaryAutocleanedFileCopy(for: contentType, directoryName: temporaryDirectoryName)
-                        }
-                        else {
-                            url = try notInPlaceURL.temporaryAutocleanedFileCopy(directoryName: temporaryDirectoryName)
-                        }
+                        url = try notInPlaceURL.temporaryAutocleanedFileCopy(directoryName: "\(Bundle.foundationKitBundleIdentifier).NSItemProvider.LoadInPlaceFileRepresentation")
                     }
                 }
                 catch {
