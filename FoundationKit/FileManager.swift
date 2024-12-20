@@ -110,6 +110,29 @@ extension FileManager {
 #endif
 }
 
+#if canImport(Darwin)
+extension FileManager {
+    private func loadDarwinDirectory(_ name: Int32) -> URL? {
+        var buffer = [CChar](repeating: 0, count: Int(PATH_MAX))
+        let success = confstr(name, &buffer, buffer.count) >= 0
+        guard success else { return nil }
+        return URL(fileURLWithFileSystemRepresentation: &buffer, isDirectory: true, relativeTo: nil)
+    }
+    
+    public var darwinUserDirectory: URL? {
+        return self.loadDarwinDirectory(_CS_DARWIN_USER_DIR)
+    }
+    
+    public var darwinUserCacheDirectory: URL? {
+        return self.loadDarwinDirectory(_CS_DARWIN_USER_CACHE_DIR)
+    }
+    
+    public var darwinUserTemporaryDirectory: URL? {
+        return self.loadDarwinDirectory(_CS_DARWIN_USER_TEMP_DIR)
+    }
+}
+#endif
+
 extension FileManager {
     /// Returns the temporary directory for the current user.
     ///
