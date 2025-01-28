@@ -278,6 +278,7 @@ extension ProcessInfo {
     public func launchExtensionsPaneInSystemSettings() throws {
 #if canImport(AppIntents)
         if #available(macOS 15.0, *) {
+            // Login Items & Extensions: https://support.apple.com/en-ng/guide/mac-help/mtusr003/15.0/mac/15.0
             SMAppService.openSystemSettingsLoginItems()
             return
         }
