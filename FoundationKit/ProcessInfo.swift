@@ -277,6 +277,11 @@ extension ProcessInfo {
     
     public func launchExtensionsPaneInSystemSettings() throws {
 #if canImport(AppIntents)
+        if #available(macOS 15.0, *) {
+            SMAppService.openSystemSettingsLoginItems()
+            return
+        }
+
         if #available(macOS 13.0, *) {
             do {
                 try self.launchPrivacyAndSecurityPaneInSystemSettings()
