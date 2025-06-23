@@ -158,13 +158,13 @@ extension URL {
 
 extension URL {
 #if os(macOS)
-    @available(*, deprecated, renamed: "open(applicationIdentifier:)")
+    @available(*, deprecated, renamed: "open(withAppBundleIdentifier:)")
     public func open(with applicationIdentifier: String) throws {
         try self.open(withAppBundleIdentifier: applicationIdentifier)
     }
 #endif
     
-    /// Attempts to open the resource at the specified URL asynchronously.
+    /// Attempts to open the resource at the specified URL.
     @available(iOSApplicationExtension, unavailable)
     @available(tvOSApplicationExtension, unavailable)
     @available(macCatalystApplicationExtension, unavailable)
