@@ -90,16 +90,31 @@ extension NSError {
 }
 
 extension NSError: LocalizedError {
+    private static var _errorDescription_ongoing = false
     public var errorDescription: String? {
-        self.localizedDescription
+        if Self._errorDescription_ongoing { return nil }
+        Self._errorDescription_ongoing = true
+        let errorDescription = self.localizedDescription
+        Self._errorDescription_ongoing = false
+        return errorDescription
     }
     
+    private static var _failureReason_ongoing = false
     public var failureReason: String? {
-        self.localizedFailureReason
+        if Self._failureReason_ongoing { return nil }
+        Self._failureReason_ongoing = true
+        let failureReason = self.localizedFailureReason
+        Self._failureReason_ongoing = false
+        return failureReason
     }
 
+    private static var _recoverySuggestion_ongoing = false
     public var recoverySuggestion: String? {
-        self.localizedRecoverySuggestion
+        if Self._recoverySuggestion_ongoing { return nil }
+        Self._recoverySuggestion_ongoing = true
+        let recoverySuggestion = self.localizedRecoverySuggestion
+        Self._recoverySuggestion_ongoing = false
+        return recoverySuggestion
     }
 }
 
