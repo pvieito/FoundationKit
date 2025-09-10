@@ -39,4 +39,16 @@ extension AppVersion {
         let patch = components.get(elementAt: 2) ?? 0
         self.init(majorVersion: major, minorVersion: minor, patchVersion: patch)
     }
+    
+    public var versionString: String {
+        var outputString = "\(majorVersion).\(minorVersion)"
+        if patchVersion != 0 {
+            outputString += ".\(patchVersion)"
+        }
+        return outputString
+    }
+}
+
+extension AppVersion: CustomStringConvertible {
+    public var description: String { self.versionString }
 }
