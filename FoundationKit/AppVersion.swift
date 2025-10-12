@@ -10,6 +10,12 @@ import Foundation
 
 public typealias AppVersion = OperatingSystemVersion
 
+extension AppVersion {
+    public static var zero: AppVersion {
+        return .init(majorVersion: 0, minorVersion: 0, patchVersion: 0)
+    }
+}
+
 extension AppVersion: Comparable {
     public static func == (lhs: AppVersion, rhs: AppVersion) -> Bool {
         return lhs.majorVersion == rhs.majorVersion && lhs.minorVersion == rhs.minorVersion && lhs.patchVersion == rhs.patchVersion
@@ -39,7 +45,7 @@ extension AppVersion {
         let patch = components.get(elementAt: 2) ?? 0
         self.init(majorVersion: major, minorVersion: minor, patchVersion: patch)
     }
-    
+
     public var versionString: String {
         var outputString = "\(majorVersion).\(minorVersion)"
         if patchVersion != 0 {
