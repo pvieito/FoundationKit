@@ -165,10 +165,7 @@ extension URL {
 #endif
     
     /// Attempts to open the resource at the specified URL.
-    @available(iOSApplicationExtension, unavailable)
-    @available(tvOSApplicationExtension, unavailable)
-    @available(macCatalystApplicationExtension, unavailable)
-    public func open(withAppBundleIdentifier applicationIdentifier: String? = nil) throws {
+    public func open(withAppBundleIdentifier applicationIdentifier: String? = nil, responder: AnyObject? = nil) throws {
 #if !os(macOS)
         if let applicationIdentifier = applicationIdentifier {
             throw NSError(description: "Opening URL “\(self.absoluteString)” with application “\(applicationIdentifier)” is not supported on this platform.")
@@ -181,14 +178,26 @@ extension URL {
         var success = false
         
 #if canImport(UIKit)
-        let shared: AnyObject? = UIApplication.shared
-        if let shared {
+        var application: AnyObject? = UIApplication.shared
+#if !targetEnvironment(macCatalyst)
+        if application == nil, let responder = responder as? UIResponder {
+            var responder: UIResponder? = responder
+            while responder != nil {
+                if let appResponder = responder as? UIApplication {
+                    application = appResponder
+                    break
+                }
+                responder = responder?.next
+            }
+        }
+#endif
+        if let application = application {
             if #available(iOS 18, tvOS 18, *) {
-                shared.open(self, options: [:], completionHandler: nil)
-                success = shared.canOpenURL(self)
+                application.open(self, options: [:], completionHandler: nil)
+                success = application.canOpenURL(self)
             }
             else {
-                success = shared.openURL(self)
+                success = application.openURL(self)
             }
         }
         else {
@@ -486,3 +495,4 @@ extension Collection where Element == URL {
     func openURL(_ url: URL) -> Bool
 }
 #endif
+
