@@ -380,8 +380,7 @@ extension URL {
 #endif
 
 #if canImport(LinkPresentation) && !os(tvOS)
-@available(macOS 10.15, *)
-@available(iOS 13, *)
+@available(macOS 10.15, iOS 13, watchOS 9.0, *)
 extension URL {
     public func fetchLinkMetadata(timeout: TimeInterval? = nil) throws -> LPLinkMetadata {
         let linkMetadataProvider = LPMetadataProvider()
