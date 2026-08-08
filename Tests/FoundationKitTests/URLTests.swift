@@ -10,6 +10,14 @@ import Foundation
 import FoundationKit
 import XCTest
 
+#if canImport(Darwin)
+import Darwin
+#endif
+
+#if canImport(UniformTypeIdentifiers)
+import UniformTypeIdentifiers
+#endif
+
 class URLTests: XCTestCase {
     static let supportedURL = URL(string: "https://pvieito.com")!
     static let unsupportedURL = URL(string: "fake-scheme://pvieito.com:51234")!
@@ -98,6 +106,52 @@ class URLTests: XCTestCase {
         #if (canImport(Cocoa) || canImport(UIKit)) && !os(watchOS) && !os(tvOS)
         XCTAssertTrue(URLTests.supportedURL.isSupported)
         XCTAssertFalse(URLTests.unsupportedURL.isSupported)
+        #endif
+    }
+
+    func testURL_fileContentTypeUsesItemMetadata() throws {
+        #if os(macOS)
+        let temporaryDirectory = FileManager.default.temporaryDirectory
+            .appendingPathComponent(UUID().uuidString, isDirectory: true)
+        let fileURL = temporaryDirectory.appendingPathComponent("document")
+        try FileManager.default.createDirectory(at: temporaryDirectory, withIntermediateDirectories: true)
+        try Data().write(to: fileURL)
+        defer { try? FileManager.default.removeItem(at: temporaryDirectory) }
+
+        var finderInfo = Data(repeating: 0, count: 32)
+        finderInfo.replaceSubrange(0..<4, with: Data("PDF ".utf8))
+        let result = finderInfo.withUnsafeBytes { bytes in
+            setxattr(fileURL.path, "com.apple.FinderInfo", bytes.baseAddress, bytes.count, 0, 0)
+        }
+        XCTAssertEqual(result, 0)
+
+        if #available(macOS 11.0, *) {
+            XCTAssertEqual(fileURL.fileContentType, .pdf)
+            XCTAssertTrue(fileURL.fileContentTypeConforms(to: .data))
+            XCTAssertTrue(fileURL.fileContentTypeConforms(to: [.image, .pdf]))
+        }
+        #endif
+    }
+
+    func testURL_remoteFileContentTypeDoesNotInferPathExtension() {
+        #if canImport(UniformTypeIdentifiers)
+        if #available(macOS 11.0, iOS 14.0, watchOS 7.0, tvOS 14.0, *) {
+            let remoteURL = URL(string: "https://example.invalid/video.mp4")!
+
+            XCTAssertNil(remoteURL.fileContentType)
+            XCTAssertNotNil(UTType(filenameExtension: remoteURL.pathExtension))
+        }
+        #endif
+    }
+
+    func testURL_missingItemHasNoFileContentType() {
+        let fileURL = FileManager.default.temporaryDirectory
+            .appendingPathComponent(UUID().uuidString)
+
+        #if canImport(UniformTypeIdentifiers)
+        if #available(macOS 11.0, iOS 14.0, watchOS 7.0, tvOS 14.0, *) {
+            XCTAssertNil(fileURL.fileContentType)
+        }
         #endif
     }
 }

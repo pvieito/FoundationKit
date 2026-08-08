@@ -22,7 +22,6 @@ import LinkPresentation
 
 #if canImport(UIKit)
 import UIKit
-import MobileCoreServices
 #elseif canImport(Cocoa)
 import Cocoa
 #endif
@@ -102,56 +101,23 @@ extension URL {
 #endif
 }
 
-extension URL {
-    public var typeIdentifier: String? {
-#if canImport(Darwin)
-        return UTTypeCreatePreferredIdentifierForTag(
-            kUTTagClassFilenameExtension, self.pathExtension as CFString, nil)?.takeRetainedValue() as String?
-#else
-        return nil
-#endif
-    }
-    
-    public func typeIdentifierConforms(to otherTypeIdentifier: String) -> Bool {
-#if canImport(Darwin)
-        guard let typeIdentifier = self.typeIdentifier else {
-            return false
-        }
-        
-        return UTTypeConformsTo(typeIdentifier as CFString, otherTypeIdentifier as CFString)
-#else
-        return false
-#endif
-    }
-    
-    public func typeIdentifierConforms(to otherTypeIdentifiers: [String]) -> Bool {
-        for otherTypeIdentifier in otherTypeIdentifiers {
-            if self.typeIdentifierConforms(to: otherTypeIdentifier) {
-                return true
-            }
-        }
-        
-        return false
-    }
-}
-
 #if canImport(UniformTypeIdentifiers)
 @available(iOS 14, *)
 @available(macOS 11, *)
 @available(watchOS 7, *)
 @available(tvOS 14, *)
 extension URL {
-    public var uniformTypeIdentifier: UTType? {
-        guard let typeIdentifier = self.typeIdentifier else { return nil }
-        return UTType(typeIdentifier)
+    public var fileContentType: UTType? {
+        guard self.isFileURL else { return nil }
+        return try? self.resourceValues(forKeys: [.contentTypeKey]).contentType
     }
-    
-    public func typeIdentifierConforms(to otherTypeIdentifier: UTType) -> Bool {
-        return self.typeIdentifierConforms(to: otherTypeIdentifier.identifier)
+
+    public func fileContentTypeConforms(to otherContentType: UTType) -> Bool {
+        return self.fileContentType?.conforms(to: otherContentType) ?? false
     }
-    
-    public func typeIdentifierConforms(to otherTypeIdentifiers: [UTType]) -> Bool {
-        return self.typeIdentifierConforms(to: otherTypeIdentifiers.map(\.identifier))
+
+    public func fileContentTypeConforms(to otherContentTypes: [UTType]) -> Bool {
+        return otherContentTypes.contains { self.fileContentTypeConforms(to: $0) }
     }
 }
 #endif
@@ -494,4 +460,3 @@ extension Collection where Element == URL {
     func openURL(_ url: URL) -> Bool
 }
 #endif
-
