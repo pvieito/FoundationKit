@@ -107,7 +107,7 @@ extension Process {
 
 #if os(macOS)
 extension Process {
-    public func runReplacingCurrentProcess(disclaimResponsibility: Bool = false) throws {
+    public func runReplacingCurrentProcess(disclaimResponsibility: Bool = false, _platformID: Int32? = nil) throws {
         let targetExecutableURL = try targetExecutableURL
         var arguments = self.arguments ?? []
         arguments = [targetExecutableURL.path] + arguments
@@ -120,6 +120,16 @@ extension Process {
         var attributes = posix_spawnattr_t(nil as OpaquePointer?)
         posix_spawnattr_init(&attributes)
         posix_spawnattr_setflags(&attributes, Int16(POSIX_SPAWN_SETEXEC))
+
+        if let platformID = _platformID {
+            let setPlatformError = NSError(description: "Error setting process platform ID \(platformID) for “\(targetExecutableURL.lastPathComponent)” executable.")
+            let handle = dlopen(nil, RTLD_NOW)
+            let symbolComponents = ["posix", "spawnattr", "set", "platform", "np"]
+            let setPlatform = dlsym(handle, symbolComponents.joined(separator: "_"))
+            if setPlatform == nil { throw setPlatformError }
+            typealias SetPlatformType = @convention(c) (UnsafeMutablePointer<Optional<posix_spawnattr_t>>, Int32, UInt32) -> Int32
+            try unsafeBitCast(setPlatform, to: SetPlatformType.self)(&attributes, platformID, 0).enforcePOSIXReturnValue()
+        }
         
         if disclaimResponsibility {
             let setDisclaimError = NSError(description: "Error disclaiming responsibility from “\(targetExecutableURL.lastPathComponent)” executable.")
