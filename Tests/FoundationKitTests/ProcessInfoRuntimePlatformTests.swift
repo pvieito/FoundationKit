@@ -56,7 +56,7 @@ final class ProcessInfoRuntimePlatformTests: XCTestCase {
         XCTAssertEqual(platform.name, "Unknown")
     }
 
-    func testCurrentProcessPlatforms() {
+    func testCurrentProcessRuntimePlatforms() {
         let processInfo = ProcessInfo.processInfo
 
         XCTAssertEqual(processInfo.processRuntimePlatform, .macOS)

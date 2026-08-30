@@ -18,7 +18,7 @@ extension ProcessInfo {
             case little
         }
 
-        private typealias ProcessInformationFunction = @convention(c) (
+        private typealias ProcessRuntimePlatformInformationFunction = @convention(c) (
             Int32,
             Int32,
             UInt64,
@@ -27,10 +27,10 @@ extension ProcessInfo {
         ) -> Int32
         private typealias LinkerRuntimePlatformFunction = @convention(c) () -> UInt32
 
-        private static let processPlatformInformationFlavor: Int32 = 30
+        private static let processRuntimePlatformInformationFlavor: Int32 = 30
         private static let dynamicLibraryHandle = dlopen(nil, RTLD_NOW)
-        private static let processInformationFunction:
-            ProcessInformationFunction? = resolve("proc_pidinfo")
+        private static let processRuntimePlatformInformationFunction:
+            ProcessRuntimePlatformInformationFunction? = resolve("proc_pidinfo")
         private static let linkerRuntimePlatformFunction:
             LinkerRuntimePlatformFunction? = resolve("dyld_get_active_platform")
 
@@ -115,14 +115,14 @@ extension ProcessInfo {
         }
 
         public static func processRuntimePlatform(for processIdentifier: Int32) -> Self? {
-            guard let processInformationFunction = self.processInformationFunction else {
+            guard let processRuntimePlatformInformationFunction = self.processRuntimePlatformInformationFunction else {
                 return nil
             }
             var rawPlatform: UInt32 = 0
             let expectedSize = MemoryLayout<UInt32>.size
-            guard processInformationFunction(
+            guard processRuntimePlatformInformationFunction(
                 processIdentifier,
-                self.processPlatformInformationFlavor,
+                self.processRuntimePlatformInformationFlavor,
                 0,
                 &rawPlatform,
                 Int32(expectedSize)
