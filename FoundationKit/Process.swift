@@ -107,7 +107,10 @@ extension Process {
 
 #if os(macOS)
 extension Process {
-    public func runReplacingCurrentProcess(disclaimResponsibility: Bool = false, _platformID: Int32? = nil) throws {
+    public func runReplacingCurrentProcess(
+        disclaimResponsibility: Bool = false,
+        _runtimePlatform: ProcessInfo.RuntimePlatform? = nil
+    ) throws {
         let targetExecutableURL = try targetExecutableURL
         var arguments = self.arguments ?? []
         arguments = [targetExecutableURL.path] + arguments
@@ -121,7 +124,8 @@ extension Process {
         posix_spawnattr_init(&attributes)
         posix_spawnattr_setflags(&attributes, Int16(POSIX_SPAWN_SETEXEC))
 
-        if let platformID = _platformID {
+        if let platform = _runtimePlatform {
+            let platformID = platform.rawValue
             let setPlatformError = NSError(description: "Error setting process platform ID \(platformID) for “\(targetExecutableURL.lastPathComponent)” executable.")
             let handle = dlopen(nil, RTLD_NOW)
             let symbolComponents = ["posix", "spawnattr", "set", "platform", "np"]
