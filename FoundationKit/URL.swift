@@ -144,7 +144,7 @@ extension URL {
         var success = false
         
 #if canImport(UIKit)
-        var application: AnyObject? = UIApplication.shared
+        var application: AnyObject? = UIApplication.sharedIfAvailable
 #if !targetEnvironment(macCatalyst)
         if application == nil, let responder = responder as? UIResponder {
             var responder: UIResponder? = responder
@@ -458,5 +458,13 @@ extension Collection where Element == URL {
 #if canImport(UIKit)
 @objc protocol _URL_UIApplication {
     func openURL(_ url: URL) -> Bool
+}
+
+private extension UIApplication {
+    static var sharedIfAvailable: UIApplication? {
+        let applicationClass: AnyObject = UIApplication.self
+        return applicationClass.perform(NSSelectorFromString("sharedApplication"))?
+            .takeUnretainedValue() as? UIApplication
+    }
 }
 #endif
